@@ -2,6 +2,13 @@ import React from "react";
 import { formatHHMMSS } from "../lib/time";
 import type { City } from "../types/city";
 
+interface NowOverlayRowProps {
+  cities: City[];
+  labelWidthPx: number;
+  rowHeightPx: number;
+  getNowTopPx: (now: Date) => number;
+}
+
 /**
  * Absolutely positioned inside the scroll content, so it scrolls naturally.
  * Only this component updates every second (position + HH:MM:SS text).
@@ -11,16 +18,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
   labelWidthPx,
   rowHeightPx,
   getNowTopPx,
-  didInitialCenterRef,
-  centerNowInView,
-}: {
-  cities: City[];
-  labelWidthPx: number;
-  rowHeightPx: number;
-  getNowTopPx: (now: Date) => number;
-  didInitialCenterRef: React.MutableRefObject<boolean>;
-  centerNowInView: (nowTopPx: number) => void;
-}) {
+}: NowOverlayRowProps) {
   const rowRef = React.useRef<HTMLDivElement | null>(null);
   const [now, setNow] = React.useState(() => new Date());
 
@@ -37,13 +35,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
 
     const top = getNowTopPx(now);
     el.style.top = `${top}px`;
-
-    // Ensure initial centering happens once, after we know our top.
-    if (!didInitialCenterRef.current) {
-      didInitialCenterRef.current = true;
-      centerNowInView(top);
-    }
-  }, [now, getNowTopPx, centerNowInView, didInitialCenterRef]);
+  }, [now, getNowTopPx]);
 
   return (
     <div
