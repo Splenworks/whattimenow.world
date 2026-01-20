@@ -55,7 +55,22 @@ export function ScrollableReel({
     [startDate, stepMinutes, rowHeightPx, contentHeight]
   );
 
-  const scrollerRef = React.useRef<HTMLDivElement | null>(null);
+  const contentRef = React.useRef<HTMLDivElement | null>(null);
+  const didInitialScroll = React.useRef(false);
+
+  React.useLayoutEffect(() => {
+    if (didInitialScroll.current) return;
+    const contentEl = contentRef.current;
+    if (!contentEl) return;
+
+    const nowTopPx = getNowTopPx(new Date());
+    const contentTopPx = contentEl.getBoundingClientRect().top + window.scrollY;
+    const targetTop =
+      contentTopPx + nowTopPx - (window.innerHeight / 2 - rowHeightPx / 2);
+
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "auto" });
+    didInitialScroll.current = true;
+  }, [getNowTopPx, rowHeightPx]);
 
   return (
     <div className="w-full p-6 mx-auto">
@@ -75,12 +90,9 @@ export function ScrollableReel({
       </div>
 
       <div>
-        <div
-          ref={scrollerRef}
-          className="h-full"
-        >
+        <div className="h-full">
           {/* Scroll content */}
-          <div className="relative" style={{ height: contentHeight }}>
+          <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
             {/* Static step rows */}
             {stepDates.map((d, i) => (
               <div
