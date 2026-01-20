@@ -16,7 +16,8 @@ export function ScrollableReel({
   totalHours = 48,
   rowHeightPx = 56,
 }: Props) {
-  const labelWidthPx = 72;
+  const labelWidthPx = 60;
+  const minGridWidthPx = 180;
 
   // Build a stable step timeline ONCE (no shifting as seconds pass).
   // We anchor around a step boundary at mount time.
@@ -62,7 +63,7 @@ export function ScrollableReel({
       <div className="sticky top-0 z-10 bg-white/95 p-4">
         <div
           className="grid gap-3"
-          style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(200px, 1fr))` }}
+          style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))` }}
         >
           <div />
           {cities.map((c) => (
@@ -91,7 +92,7 @@ export function ScrollableReel({
                   right: 0,
                   top: i * rowHeightPx,
                   height: rowHeightPx,
-                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(200px, 1fr))`,
+                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))`,
                 }}
               >
                 <div />
@@ -106,6 +107,7 @@ export function ScrollableReel({
             <NowRow
               cities={cities}
               labelWidthPx={labelWidthPx}
+              minGridWidthPx={minGridWidthPx}
               rowHeightPx={rowHeightPx}
               getNowTopPx={getNowTopPx}
             />
