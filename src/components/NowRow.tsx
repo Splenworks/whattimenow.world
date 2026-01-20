@@ -6,6 +6,7 @@ interface NowOverlayRowProps {
   cities: City[];
   labelWidthPx: number;
   minGridWidthPx: number;
+  maxGridWidthPx: number;
   rowHeightPx: number;
   getNowTopPx: (now: Date) => number;
 }
@@ -18,6 +19,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
   cities,
   labelWidthPx,
   minGridWidthPx,
+  maxGridWidthPx,
   rowHeightPx,
   getNowTopPx,
 }: NowOverlayRowProps) {
@@ -45,7 +47,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
       className="absolute left-0 right-0 px-4 grid gap-3 items-center"
       style={{
         height: rowHeightPx,
-        gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))`,
+        gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, ${maxGridWidthPx}px))`,
         // top is set imperatively
       }}
     >

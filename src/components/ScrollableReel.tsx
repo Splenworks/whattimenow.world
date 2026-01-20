@@ -17,7 +17,9 @@ export function ScrollableReel({
   rowHeightPx = 56,
 }: Props) {
   const labelWidthPx = 110;
-  const minGridWidthPx = 180;
+  const minGridWidthPx = 120;
+  const maxGridWidthPx = 200; // 1fr
+
   const [nowMinute, setNowMinute] = React.useState(() => new Date());
 
   // Build a stable step timeline ONCE (no shifting as seconds pass).
@@ -108,7 +110,7 @@ export function ScrollableReel({
       <div className="sticky top-0 z-10 bg-white/95 p-4">
         <div
           className="grid gap-3"
-          style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))` }}
+          style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, ${maxGridWidthPx}px))` }}
         >
           <div />
           {cities.map((c) => (
@@ -119,65 +121,64 @@ export function ScrollableReel({
         </div>
       </div>
 
-      <div>
-        <div className="h-full">
-          {/* Scroll content */}
-          <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
-            {/* Static step rows */}
-            {stepDates.map((d, i) => {
-              if (i === closestStepIndex) return null;
-              return (
-                <div
-                  key={d.getTime()}
-                  className="px-4 grid gap-3 items-center"
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: i * rowHeightPx,
-                    height: rowHeightPx,
-                    gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))`,
-                  }}
-                >
-                  <div />
-                  {cities.map((c) => (
-                    <div key={c.id} className="tracking-tight text-2xl text-gray-400 font-mono text-center">
-                      {formatHHMM(d, c.tz)}
-                    </div>
-                  ))}
-                </div>
-              );
-            })}
+      <div className="h-full">
+        {/* Scroll content */}
+        <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
+          {/* Static step rows */}
+          {stepDates.map((d, i) => {
+            if (i === closestStepIndex) return null;
+            return (
+              <div
+                key={d.getTime()}
+                className="px-4 grid gap-3 items-center"
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  top: i * rowHeightPx,
+                  height: rowHeightPx,
+                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, ${maxGridWidthPx}px))`,
+                }}
+              >
+                <div />
+                {cities.map((c) => (
+                  <div key={c.id} className="tracking-tight text-2xl text-gray-400 font-mono text-center">
+                    {formatHHMM(d, c.tz)}
+                  </div>
+                ))}
+              </div>
+            );
+          })}
 
-            {offsetHours.map((h) => {
-              const d = addMinutes(nowMinute, h * 60);
-              const label = h > 0 ? `${h} hrs later` : `${-h} hrs ago`;
-              return (
-                <div
-                  key={h}
-                  className="absolute left-0 right-0 px-4 grid gap-3 items-center"
-                  style={{
-                    top: getNowTopPx(d),
-                    height: rowHeightPx,
-                    gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))`,
-                  }}
-                >
-                  <div className="text-xl font-semibold text-gray-700 text-right">{label}</div>
-                  {cities.map((c) => (
-                    <div key={c.id} />
-                  ))}
-                </div>
-              );
-            })}
+          {offsetHours.map((h) => {
+            const d = addMinutes(nowMinute, h * 60);
+            const label = h > 0 ? `${h} hrs later` : `${-h} hrs ago`;
+            return (
+              <div
+                key={h}
+                className="absolute left-0 right-0 px-4 grid gap-3 items-center"
+                style={{
+                  top: getNowTopPx(d),
+                  height: rowHeightPx,
+                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, ${maxGridWidthPx}px))`,
+                }}
+              >
+                <div className="text-xl font-semibold text-gray-700 text-right">{label}</div>
+                {cities.map((c) => (
+                  <div key={c.id} />
+                ))}
+              </div>
+            );
+          })}
 
-            <NowRow
-              cities={cities}
-              labelWidthPx={labelWidthPx}
-              minGridWidthPx={minGridWidthPx}
-              rowHeightPx={rowHeightPx}
-              getNowTopPx={getNowTopPx}
-            />
-          </div>
+          <NowRow
+            cities={cities}
+            labelWidthPx={labelWidthPx}
+            minGridWidthPx={minGridWidthPx}
+            maxGridWidthPx={maxGridWidthPx}
+            rowHeightPx={rowHeightPx}
+            getNowTopPx={getNowTopPx}
+          />
         </div>
       </div>
     </div>
