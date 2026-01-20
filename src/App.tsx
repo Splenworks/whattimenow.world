@@ -10,7 +10,7 @@ const cities = [
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-slate-50 py-8">
+    <div className="min-h-screen">
       <ScrollableReel cities={cities} stepMinutes={15} totalHours={48} />
     </div>
   );

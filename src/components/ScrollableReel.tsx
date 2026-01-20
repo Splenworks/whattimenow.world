@@ -8,7 +8,6 @@ type Props = {
   stepMinutes?: number; // default: 15
   totalHours?: number;  // default: 48 (±24h)
   rowHeightPx?: number; // default: 56
-  className?: string;
 };
 
 export function ScrollableReel({
@@ -16,7 +15,6 @@ export function ScrollableReel({
   stepMinutes = 15,
   totalHours = 48,
   rowHeightPx = 56,
-  className,
 }: Props) {
   const labelWidthPx = 72;
 
@@ -95,33 +93,26 @@ export function ScrollableReel({
   }, [getNowTopPx, centerNowInView]);
 
   return (
-    <div className={["w-full", className].filter(Boolean).join(" ")}>
+    <div className="w-full p-6 mx-auto">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-white/95 backdrop-blur border-b">
-        <div className="mx-auto max-w-5xl px-4 py-3">
-          <div className="flex items-end justify-between gap-4">
-            <div className="text-sm font-medium text-slate-900">whattimeis.world</div>
-            <div className="text-xs text-slate-500">Step {stepMinutes}m</div>
-          </div>
-
-          <div
-            className="mt-3 grid gap-3 items-end"
-            style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(0, 1fr))` }}
-          >
-            <div className="text-xs font-semibold text-slate-400" />
-            {cities.map((c) => (
-              <div key={c.id} className="text-xs font-semibold text-slate-700 truncate">
-                {c.label}
-              </div>
-            ))}
-          </div>
+      <div className="sticky top-0 z-10 bg-white/95 p-4">
+        <div
+          className="grid gap-3"
+          style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(0, 1fr))` }}
+        >
+          <div />
+          {cities.map((c) => (
+            <div key={c.id} className="font-semibold text-2xl text-gray-800 truncate text-center">
+              {c.label}
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-4">
+      <div>
         <div
           ref={scrollerRef}
-          className="mt-4 h-[560px] overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white"
+          className="h-full"
         >
           {/* Scroll content */}
           <div className="relative" style={{ height: contentHeight }}>
@@ -129,7 +120,7 @@ export function ScrollableReel({
             {stepDates.map((d, i) => (
               <div
                 key={d.getTime()}
-                className="px-3 grid gap-3 items-center"
+                className="px-4 grid gap-3 items-center"
                 style={{
                   position: "absolute",
                   left: 0,
@@ -139,10 +130,10 @@ export function ScrollableReel({
                   gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(0, 1fr))`,
                 }}
               >
-                <div className="text-xs font-semibold text-slate-500" />
+                <div />
                 {cities.map((c) => (
-                  <div key={c.id} className="tabular-nums tracking-tight text-slate-600 font-normal">
-                    <span className="text-2xl opacity-80">{formatHHMM(d, c.tz)}</span>
+                  <div key={c.id} className="tracking-tight text-2xl text-gray-400 font-mono text-center">
+                    {formatHHMM(d, c.tz)}
                   </div>
                 ))}
               </div>
