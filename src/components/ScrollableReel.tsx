@@ -18,6 +18,7 @@ export function ScrollableReel({
 }: Props) {
   const labelWidthPx = 60;
   const minGridWidthPx = 180;
+  const [nowMinute, setNowMinute] = React.useState(() => new Date());
 
   // Build a stable step timeline ONCE (no shifting as seconds pass).
   // We anchor around a step boundary at mount time.
@@ -40,6 +41,19 @@ export function ScrollableReel({
 
   const contentHeight = totalSteps * rowHeightPx;
 
+  React.useEffect(() => {
+    let intervalId: number | undefined;
+    const msToNextMinute = 60_000 - (Date.now() % 60_000);
+    const timeoutId = window.setTimeout(() => {
+      setNowMinute(new Date());
+      intervalId = window.setInterval(() => setNowMinute(new Date()), 60_000);
+    }, msToNextMinute);
+    return () => {
+      window.clearTimeout(timeoutId);
+      if (intervalId) window.clearInterval(intervalId);
+    };
+  }, []);
+
   // Convert "now" to a top offset within the scroll content (continuous).
   const getNowTopPx = React.useCallback(
     (now: Date) => {
@@ -54,6 +68,13 @@ export function ScrollableReel({
     },
     [startDate, stepMinutes, rowHeightPx, contentHeight]
   );
+
+  const closestStepIndex = React.useMemo(() => {
+    const minutesFromStart = (nowMinute.getTime() - startDate.getTime()) / 60_000;
+    const rowFloat = minutesFromStart / stepMinutes;
+    const nearest = Math.round(rowFloat);
+    return Math.min(totalSteps - 1, Math.max(0, nearest));
+  }, [nowMinute, startDate, stepMinutes, totalSteps]);
 
   const contentRef = React.useRef<HTMLDivElement | null>(null);
   const didInitialScroll = React.useRef(false);
@@ -94,27 +115,30 @@ export function ScrollableReel({
           {/* Scroll content */}
           <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
             {/* Static step rows */}
-            {stepDates.map((d, i) => (
-              <div
-                key={d.getTime()}
-                className="px-4 grid gap-3 items-center"
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  top: i * rowHeightPx,
-                  height: rowHeightPx,
-                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))`,
-                }}
-              >
-                <div />
-                {cities.map((c) => (
-                  <div key={c.id} className="tracking-tight text-2xl text-gray-400 font-mono text-center">
-                    {formatHHMM(d, c.tz)}
-                  </div>
-                ))}
-              </div>
-            ))}
+            {stepDates.map((d, i) => {
+              if (i === closestStepIndex) return null;
+              return (
+                <div
+                  key={d.getTime()}
+                  className="px-4 grid gap-3 items-center"
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    top: i * rowHeightPx,
+                    height: rowHeightPx,
+                    gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))`,
+                  }}
+                >
+                  <div />
+                  {cities.map((c) => (
+                    <div key={c.id} className="tracking-tight text-2xl text-gray-400 font-mono text-center">
+                      {formatHHMM(d, c.tz)}
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
 
             <NowRow
               cities={cities}
