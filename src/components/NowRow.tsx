@@ -4,6 +4,7 @@ import type { City } from "../types/city";
 
 interface NowOverlayRowProps {
   cities: City[];
+  labelWidthPx: number;
   rowHeightPx: number;
   getNowTopPx: (now: Date) => number;
 }
@@ -14,6 +15,7 @@ interface NowOverlayRowProps {
  */
 const NowOverlayRow = React.memo(function NowOverlayRow({
   cities,
+  labelWidthPx,
   rowHeightPx,
   getNowTopPx,
 }: NowOverlayRowProps) {
@@ -41,7 +43,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
       className="absolute left-0 right-0 px-4 grid gap-3 items-center"
       style={{
         height: rowHeightPx,
-        gridTemplateColumns: `100px repeat(${cities.length}, 200px)`,
+        gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(0, 1fr))`,
         // top is set imperatively
       }}
     >
