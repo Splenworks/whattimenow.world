@@ -1,7 +1,7 @@
 import * as React from "react";
 import { addMinutes, ceilToStep, formatHHMM } from "../lib/time";
 import type { City } from "../types/city";
-import NowOverlayRow from "./NowRow";
+import NowRow from "./NowRow";
 
 type Props = {
   cities: City[];
@@ -103,7 +103,7 @@ export function ScrollableReel({
               </div>
             ))}
 
-            <NowOverlayRow
+            <NowRow
               cities={cities}
               labelWidthPx={labelWidthPx}
               rowHeightPx={rowHeightPx}
