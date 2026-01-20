@@ -16,7 +16,7 @@ export function ScrollableReel({
   totalHours = 48,
   rowHeightPx = 56,
 }: Props) {
-  const labelWidthPx = 60;
+  const labelWidthPx = 110;
   const minGridWidthPx = 180;
   const [nowMinute, setNowMinute] = React.useState(() => new Date());
 
@@ -40,6 +40,15 @@ export function ScrollableReel({
   }, [totalSteps, startDate, stepMinutes]);
 
   const contentHeight = totalSteps * rowHeightPx;
+
+  const offsetHours = React.useMemo(() => {
+    const halfHours = Math.floor(totalHours / 2);
+    const arr: number[] = [];
+    for (let h = -halfHours; h <= halfHours; h += 4) {
+      if (h !== 0) arr.push(h);
+    }
+    return arr;
+  }, [totalHours]);
 
   React.useEffect(() => {
     let intervalId: number | undefined;
@@ -135,6 +144,27 @@ export function ScrollableReel({
                     <div key={c.id} className="tracking-tight text-2xl text-gray-400 font-mono text-center">
                       {formatHHMM(d, c.tz)}
                     </div>
+                  ))}
+                </div>
+              );
+            })}
+
+            {offsetHours.map((h) => {
+              const d = addMinutes(nowMinute, h * 60);
+              const label = h > 0 ? `${h} hrs later` : `${-h} hrs ago`;
+              return (
+                <div
+                  key={h}
+                  className="absolute left-0 right-0 px-4 grid gap-3 items-center"
+                  style={{
+                    top: getNowTopPx(d),
+                    height: rowHeightPx,
+                    gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, 1fr))`,
+                  }}
+                >
+                  <div className="text-xl font-semibold text-gray-700 text-right">{label}</div>
+                  {cities.map((c) => (
+                    <div key={c.id} />
                   ))}
                 </div>
               );
