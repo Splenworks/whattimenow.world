@@ -62,7 +62,7 @@ export function ScrollableReel({
       <div className="sticky top-0 z-10 bg-white/95 p-4">
         <div
           className="grid gap-3"
-          style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(0, 1fr))` }}
+          style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(200px, 1fr))` }}
         >
           <div />
           {cities.map((c) => (
@@ -91,7 +91,7 @@ export function ScrollableReel({
                   right: 0,
                   top: i * rowHeightPx,
                   height: rowHeightPx,
-                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(0, 1fr))`,
+                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(200px, 1fr))`,
                 }}
               >
                 <div />

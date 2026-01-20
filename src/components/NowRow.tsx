@@ -43,7 +43,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
       className="absolute left-0 right-0 px-4 grid gap-3 items-center"
       style={{
         height: rowHeightPx,
-        gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(0, 1fr))`,
+        gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(200px, 1fr))`,
         // top is set imperatively
       }}
     >
