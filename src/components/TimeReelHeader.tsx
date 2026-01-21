@@ -17,7 +17,10 @@ export function TimeReelHeader({ cities, labelWidthPx, cellWidthPx }: Props) {
             className="truncate text-center flex flex-col justify-center items-center gap-1"
             style={{ width: cellWidthPx }}
           >
-            <span className="font-semibold text-2xl text-gray-800">{c.label}</span>
+            <span className="font-semibold text-2xl text-gray-800">
+              {c.label}
+              <span className="ml-1 opacity-90">{c.flag}</span>
+            </span>
             <span className="text-sm text-gray-500">UTC{c.utcOffset}</span>
           </div>
         ))}
