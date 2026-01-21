@@ -3,6 +3,7 @@ import { addMinutes, ceilToStep, formatHHMM } from "../lib/time";
 import type { City } from "../types/city";
 import NowRow from "./NowRow";
 import OffsetHourRow from "./OffsetHourRow";
+import { TimeReelHeader } from "./TimeReelHeader";
 
 type Props = {
   cities: City[];
@@ -106,23 +107,11 @@ export function TimeReel({
 
   return (
     <div>
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-white/95 p-4">
-        <div
-          className="flex flex-nowrap gap-3"
-        >
-          <div style={{ width: labelWidthPx }} />
-          {cities.map((c) => (
-            <div
-              key={c.id}
-              className="font-semibold text-2xl text-gray-800 truncate text-center"
-              style={{ width: cellWidthPx }}
-            >
-              {c.label}
-            </div>
-          ))}
-        </div>
-      </div>
+      <TimeReelHeader
+        cities={cities}
+        labelWidthPx={labelWidthPx}
+        cellWidthPx={cellWidthPx}
+      />
 
       {/* Scroll content */}
       <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
