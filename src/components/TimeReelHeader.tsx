@@ -1,4 +1,5 @@
 import * as React from "react";
+import { twJoin } from "tailwind-merge";
 import type { City } from "../types/city";
 
 type Props = {
@@ -43,7 +44,7 @@ export function TimeReelHeader({
           {cities.map((c) => (
             <div
               key={c.id}
-              className="text-center flex flex-col justify-center items-center gap-1"
+              className="py-2 group relative flex flex-col justify-center items-center gap-1 hover:bg-gray-100 rounded-md"
               style={{ width: cellWidthPx }}
             >
               <div className="flex items-center gap-2">
@@ -54,12 +55,17 @@ export function TimeReelHeader({
                 {c.id !== "local" ? (
                   <button
                     type="button"
-                    onClick={() => onRemoveCity(c.id)}
-                    className="text-gray-400 hover:text-gray-800 transition-colors"
                     aria-label={`Remove ${c.label}`}
-                    title={`Remove ${c.label}`}
+                    onClick={() => onRemoveCity(c.id)}
+                    className={twJoin(
+                      "absolute right-2 top-0 cursor-pointer",
+                      "text-gray-400 hover:text-gray-600 transition",
+                      "opacity-0 pointer-events-none",
+                      "group-hover:opacity-100 group-hover:pointer-events-auto",
+                      "focus-visible:opacity-100 focus-visible:pointer-events-auto focus-visible:outline-none",
+                    )}
                   >
-                    ×
+                    <span aria-hidden className="text-lg leading-none">×</span>
                   </button>
                 ) : null}
               </div>
