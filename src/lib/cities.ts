@@ -31,7 +31,12 @@ export const cities: City[] = [
   { id: "brussels", label: "Brussels", tz: "Europe/Brussels", utcOffset: "+01:00" },
   { id: "bucharest", label: "Bucharest", tz: "Europe/Bucharest", utcOffset: "+02:00" },
   { id: "budapest", label: "Budapest", tz: "Europe/Budapest", utcOffset: "+01:00" },
-  { id: "buenos-aires", label: "Buenos Aires", tz: "America/Argentina/Buenos_Aires", utcOffset: "-03:00" },
+  {
+    id: "buenos-aires",
+    label: "Buenos Aires",
+    tz: "America/Argentina/Buenos_Aires",
+    utcOffset: "-03:00",
+  },
   { id: "busan", label: "Busan", tz: "Asia/Seoul", utcOffset: "+09:00" },
   { id: "cairo", label: "Cairo", tz: "Africa/Cairo", utcOffset: "+02:00" },
   { id: "calgary", label: "Calgary", tz: "America/Edmonton", utcOffset: "-07:00" },
@@ -68,7 +73,12 @@ export const cities: City[] = [
   { id: "harare", label: "Harare", tz: "Africa/Harare", utcOffset: "+02:00" },
   { id: "havana", label: "Havana", tz: "America/Havana", utcOffset: "-05:00" },
   { id: "helsinki", label: "Helsinki", tz: "Europe/Helsinki", utcOffset: "+02:00" },
-  { id: "ho-chi-minh-city", label: "Ho Chi Minh City", tz: "Asia/Ho_Chi_Minh", utcOffset: "+07:00" },
+  {
+    id: "ho-chi-minh-city",
+    label: "Ho Chi Minh City",
+    tz: "Asia/Ho_Chi_Minh",
+    utcOffset: "+07:00",
+  },
   { id: "hong-kong", label: "Hong Kong", tz: "Asia/Hong_Kong", utcOffset: "+08:00" },
   { id: "honolulu", label: "Honolulu", tz: "Pacific/Honolulu", utcOffset: "-10:00" },
   { id: "houston", label: "Houston", tz: "America/Chicago", utcOffset: "-06:00" },
@@ -173,3 +183,7 @@ export const cities: City[] = [
   { id: "zagreb", label: "Zagreb", tz: "Europe/Zagreb", utcOffset: "+01:00" },
   { id: "zurich", label: "Zurich", tz: "Europe/Zurich", utcOffset: "+01:00" },
 ]
+
+const baseCityIds = ["new-york", "london", "tokyo", "sydney", "paris"]
+
+export const baseCities = cities.filter((city) => baseCityIds.includes(city.id))

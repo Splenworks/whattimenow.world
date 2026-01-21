@@ -1,12 +1,6 @@
 import { TimeReel } from "./components/TimeReel";
+import { baseCities } from "./lib/cities";
 import type { City } from "./types/city";
-
-const baseCities: City[] = [
-  { id: "la", label: "LA", tz: "America/Los_Angeles", utcOffset: "-08:00" },
-  { id: "nyc", label: "NYC", tz: "America/New_York", utcOffset: "-05:00" },
-  { id: "lon", label: "London", tz: "Europe/London", utcOffset: "+00:00" },
-  { id: "sel", label: "Seoul", tz: "Asia/Seoul", utcOffset: "+09:00" },
-];
 
 const now = new Date();
 const getUtcOffset = (timeZone: string) => {
