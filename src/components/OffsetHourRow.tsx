@@ -7,8 +7,7 @@ interface OffsetHourRowProps {
   nowMinute: Date;
   cities: City[];
   labelWidthPx: number;
-  minGridWidthPx: number;
-  maxGridWidthPx: number;
+  cellWidthPx: number;
   rowHeightPx: number;
   getNowTopPx: (now: Date) => number;
 }
@@ -18,8 +17,7 @@ const OffsetHourRow = React.memo(function OffsetHourRow({
   nowMinute,
   cities,
   labelWidthPx,
-  minGridWidthPx,
-  maxGridWidthPx,
+  cellWidthPx,
   rowHeightPx,
   getNowTopPx,
 }: OffsetHourRowProps) {
@@ -31,16 +29,17 @@ const OffsetHourRow = React.memo(function OffsetHourRow({
 
   return (
     <div
-      className="absolute left-0 right-0 px-4 grid gap-3 items-center"
+      className="absolute left-0 right-0 px-4 flex flex-nowrap gap-3 items-center"
       style={{
         top: getNowTopPx(d),
         height: rowHeightPx,
-        gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, ${maxGridWidthPx}px))`,
       }}
     >
-      <div className="text-xl font-semibold text-gray-700 text-right">{label}</div>
+      <div className="text-xl font-semibold text-gray-700 text-right" style={{ width: labelWidthPx }}>
+        {label}
+      </div>
       {cities.map((c) => (
-        <div key={c.id} />
+        <div key={c.id} style={{ width: cellWidthPx }} />
       ))}
     </div>
   );

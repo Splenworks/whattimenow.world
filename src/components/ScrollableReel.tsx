@@ -18,8 +18,7 @@ export function ScrollableReel({
   rowHeightPx = 56,
 }: Props) {
   const labelWidthPx = 110;
-  const minGridWidthPx = 120;
-  const maxGridWidthPx = 200; // 1fr
+  const cellWidthPx = 160;
 
   const [nowMinute, setNowMinute] = React.useState(() => new Date());
 
@@ -110,12 +109,15 @@ export function ScrollableReel({
       {/* Header */}
       <div className="sticky top-0 z-10 bg-white/95 p-4">
         <div
-          className="grid gap-3"
-          style={{ gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, ${maxGridWidthPx}px))` }}
+          className="flex flex-nowrap gap-3"
         >
-          <div />
+          <div style={{ width: labelWidthPx }} />
           {cities.map((c) => (
-            <div key={c.id} className="font-semibold text-2xl text-gray-800 truncate text-center">
+            <div
+              key={c.id}
+              className="font-semibold text-2xl text-gray-800 truncate text-center"
+              style={{ width: cellWidthPx }}
+            >
               {c.label}
             </div>
           ))}
@@ -131,19 +133,22 @@ export function ScrollableReel({
             return (
               <div
                 key={d.getTime()}
-                className="px-4 grid gap-3 items-center"
+                className="px-4 flex flex-nowrap gap-3 items-center"
                 style={{
                   position: "absolute",
                   left: 0,
                   right: 0,
                   top: i * rowHeightPx,
                   height: rowHeightPx,
-                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, ${maxGridWidthPx}px))`,
                 }}
               >
-                <div />
+                <div style={{ width: labelWidthPx }} />
                 {cities.map((c) => (
-                  <div key={c.id} className="tracking-tight text-2xl text-gray-400 font-mono text-center">
+                  <div
+                    key={c.id}
+                    className="tracking-tight text-2xl text-gray-400 font-mono text-center"
+                    style={{ width: cellWidthPx }}
+                  >
                     {formatHHMM(d, c.tz)}
                   </div>
                 ))}
@@ -158,8 +163,7 @@ export function ScrollableReel({
               nowMinute={nowMinute}
               cities={cities}
               labelWidthPx={labelWidthPx}
-              minGridWidthPx={minGridWidthPx}
-              maxGridWidthPx={maxGridWidthPx}
+              cellWidthPx={cellWidthPx}
               rowHeightPx={rowHeightPx}
               getNowTopPx={getNowTopPx}
             />
@@ -168,8 +172,7 @@ export function ScrollableReel({
           <NowRow
             cities={cities}
             labelWidthPx={labelWidthPx}
-            minGridWidthPx={minGridWidthPx}
-            maxGridWidthPx={maxGridWidthPx}
+            cellWidthPx={cellWidthPx}
             rowHeightPx={rowHeightPx}
             getNowTopPx={getNowTopPx}
           />
