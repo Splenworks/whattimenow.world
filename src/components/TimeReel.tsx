@@ -7,6 +7,9 @@ import { TimeReelHeader } from "./TimeReelHeader";
 
 type Props = {
   cities: City[];
+  availableCities: City[];
+  onAddCity: (cityId: string) => void;
+  onRemoveCity: (cityId: string) => void;
   stepMinutes?: number; // default: 15
   totalHours?: number;  // default: 48 (±24h)
   rowHeightPx?: number; // default: 56
@@ -14,6 +17,9 @@ type Props = {
 
 export function TimeReel({
   cities,
+  availableCities,
+  onAddCity,
+  onRemoveCity,
   stepMinutes = 15,
   totalHours = 48,
   rowHeightPx = 56,
@@ -109,6 +115,9 @@ export function TimeReel({
     <div>
       <TimeReelHeader
         cities={cities}
+        availableCities={availableCities}
+        onAddCity={onAddCity}
+        onRemoveCity={onRemoveCity}
         labelWidthPx={labelWidthPx}
         cellWidthPx={cellWidthPx}
       />

@@ -1,5 +1,6 @@
+import { useLocalStorage } from "usehooks-ts";
 import { TimeReel } from "./components/TimeReel";
-import { baseCities } from "./lib/cities";
+import { baseCities, cities as allCities } from "./lib/cities";
 import type { City } from "./types/city";
 
 const now = new Date();
@@ -26,14 +27,46 @@ const localCity: City = {
   label: "Local",
   tz,
   utcOffset: getUtcOffset(tz),
-}
-
-const cities = [localCity, ...baseCities.filter((city) => city.tz !== tz)];
+};
+const cityById = new Map(allCities.map((city) => [city.id, city]));
+const defaultCityIds = baseCities
+  .filter((city) => city.tz !== tz)
+  .map((city) => city.id);
+const STORAGE_KEY = "wtim-selected-cities";
 
 export default function App() {
+  const [storedCityIds, setStoredCityIds] = useLocalStorage<string[]>(
+    STORAGE_KEY,
+    defaultCityIds
+  );
+  const selectedCities = storedCityIds
+    .map((id) => cityById.get(id))
+    .filter(Boolean) as City[];
+  const cities = [localCity, ...selectedCities];
+  const availableCities = allCities.filter(
+    (city) => !storedCityIds.includes(city.id)
+  );
+
+  const handleAddCity = (cityId: string) => {
+    setStoredCityIds((prev) =>
+      prev.includes(cityId) ? prev : [...prev, cityId]
+    );
+  };
+
+  const handleRemoveCity = (cityId: string) => {
+    setStoredCityIds((prev) => prev.filter((id) => id !== cityId));
+  };
+
   return (
     <div className="min-h-screen flex justify-left md:justify-center">
-      <TimeReel cities={cities} stepMinutes={15} totalHours={48} />
+      <TimeReel
+        cities={cities}
+        availableCities={availableCities}
+        onAddCity={handleAddCity}
+        onRemoveCity={handleRemoveCity}
+        stepMinutes={15}
+        totalHours={48}
+      />
     </div>
   );
 }
