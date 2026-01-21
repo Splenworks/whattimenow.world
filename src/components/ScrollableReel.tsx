@@ -105,7 +105,7 @@ export function ScrollableReel({
   }, [getNowTopPx, rowHeightPx]);
 
   return (
-    <div className="w-full p-6 mx-auto">
+    <div>
       {/* Header */}
       <div className="sticky top-0 z-10 bg-white/95 p-4">
         <div
@@ -124,59 +124,57 @@ export function ScrollableReel({
         </div>
       </div>
 
-      <div className="h-full">
-        {/* Scroll content */}
-        <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
-          {/* Static step rows */}
-          {stepDates.map((d, i) => {
-            if (i === closestStepIndex) return null;
-            return (
-              <div
-                key={d.getTime()}
-                className="px-4 flex flex-nowrap gap-3 items-center"
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  right: 0,
-                  top: i * rowHeightPx,
-                  height: rowHeightPx,
-                }}
-              >
-                <div style={{ width: labelWidthPx }} />
-                {cities.map((c) => (
-                  <div
-                    key={c.id}
-                    className="tracking-tight text-2xl text-gray-400 font-mono text-center"
-                    style={{ width: cellWidthPx }}
-                  >
-                    {formatHHMM(d, c.tz)}
-                  </div>
-                ))}
-              </div>
-            );
-          })}
+      {/* Scroll content */}
+      <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
+        {/* Static step rows */}
+        {stepDates.map((d, i) => {
+          // if (i === closestStepIndex) return null;
+          return (
+            <div
+              key={d.getTime()}
+              className="px-4 flex flex-nowrap gap-3 items-center"
+              style={{
+                // position: "absolute",
+                // left: 0,
+                // right: 0,
+                // top: i * rowHeightPx,
+                height: rowHeightPx,
+              }}
+            >
+              <div style={{ width: labelWidthPx }} />
+              {cities.map((c) => (
+                <div
+                  key={c.id}
+                  className="tracking-tight text-2xl text-gray-400 font-mono text-center"
+                  style={{ width: cellWidthPx }}
+                >
+                  {i !== closestStepIndex ? formatHHMM(d, c.tz) : ""}
+                </div>
+              ))}
+            </div>
+          );
+        })}
 
-          {offsetHours.map((h) => (
-            <OffsetHourRow
-              key={h}
-              hourOffset={h}
-              nowMinute={nowMinute}
-              cities={cities}
-              labelWidthPx={labelWidthPx}
-              cellWidthPx={cellWidthPx}
-              rowHeightPx={rowHeightPx}
-              getNowTopPx={getNowTopPx}
-            />
-          ))}
-
-          <NowRow
+        {offsetHours.map((h) => (
+          <OffsetHourRow
+            key={h}
+            hourOffset={h}
+            nowMinute={nowMinute}
             cities={cities}
             labelWidthPx={labelWidthPx}
             cellWidthPx={cellWidthPx}
             rowHeightPx={rowHeightPx}
             getNowTopPx={getNowTopPx}
           />
-        </div>
+        ))}
+
+        <NowRow
+          cities={cities}
+          labelWidthPx={labelWidthPx}
+          cellWidthPx={cellWidthPx}
+          rowHeightPx={rowHeightPx}
+          getNowTopPx={getNowTopPx}
+        />
       </div>
     </div>
   );

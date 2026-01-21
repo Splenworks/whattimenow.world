@@ -29,7 +29,7 @@ const OffsetHourRow = React.memo(function OffsetHourRow({
 
   return (
     <div
-      className="absolute left-0 right-0 px-4 flex flex-nowrap gap-3 items-center"
+      className="absolute left-0 px-4 flex flex-nowrap gap-3 items-center"
       style={{
         top: getNowTopPx(d),
         height: rowHeightPx,
