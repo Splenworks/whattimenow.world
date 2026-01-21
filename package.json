@@ -1,11 +1,11 @@
 {
   "name": "whattimenow.world",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 3024",
+    "dev": "vite --port 3025",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
