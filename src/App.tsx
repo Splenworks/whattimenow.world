@@ -1,4 +1,4 @@
-import { ScrollableReel } from "./components/ScrollableReel";
+import { TimeReel } from "./components/TimeReel";
 import type { City } from "./types/city";
 
 const baseCities: City[] = [
@@ -20,7 +20,7 @@ const cities = [localCity, ...baseCities.filter((city) => city.tz !== tz)];
 export default function App() {
   return (
     <div className="min-h-screen flex justify-left md:justify-center">
-      <ScrollableReel cities={cities} stepMinutes={15} totalHours={48} />
+      <TimeReel cities={cities} stepMinutes={15} totalHours={48} />
     </div>
   );
 }

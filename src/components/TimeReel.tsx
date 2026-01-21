@@ -11,7 +11,7 @@ type Props = {
   rowHeightPx?: number; // default: 56
 };
 
-export function ScrollableReel({
+export function TimeReel({
   cities,
   stepMinutes = 15,
   totalHours = 48,
