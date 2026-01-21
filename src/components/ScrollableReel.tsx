@@ -2,6 +2,7 @@ import * as React from "react";
 import { addMinutes, ceilToStep, formatHHMM } from "../lib/time";
 import type { City } from "../types/city";
 import NowRow from "./NowRow";
+import OffsetHourRow from "./OffsetHourRow";
 
 type Props = {
   cities: City[];
@@ -150,26 +151,19 @@ export function ScrollableReel({
             );
           })}
 
-          {offsetHours.map((h) => {
-            const d = addMinutes(nowMinute, h * 60);
-            const label = h > 0 ? `${h} hrs later` : `${-h} hrs ago`;
-            return (
-              <div
-                key={h}
-                className="absolute left-0 right-0 px-4 grid gap-3 items-center"
-                style={{
-                  top: getNowTopPx(d),
-                  height: rowHeightPx,
-                  gridTemplateColumns: `${labelWidthPx}px repeat(${cities.length}, minmax(${minGridWidthPx}px, ${maxGridWidthPx}px))`,
-                }}
-              >
-                <div className="text-xl font-semibold text-gray-700 text-right">{label}</div>
-                {cities.map((c) => (
-                  <div key={c.id} />
-                ))}
-              </div>
-            );
-          })}
+          {offsetHours.map((h) => (
+            <OffsetHourRow
+              key={h}
+              hourOffset={h}
+              nowMinute={nowMinute}
+              cities={cities}
+              labelWidthPx={labelWidthPx}
+              minGridWidthPx={minGridWidthPx}
+              maxGridWidthPx={maxGridWidthPx}
+              rowHeightPx={rowHeightPx}
+              getNowTopPx={getNowTopPx}
+            />
+          ))}
 
           <NowRow
             cities={cities}
