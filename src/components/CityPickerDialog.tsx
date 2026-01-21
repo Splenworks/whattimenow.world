@@ -61,32 +61,47 @@ export function CityPickerDialog({
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
-      className="border border-gray-200 bg-white p-0 shadow-2xl m-auto h-fit max-h-[85vh] w-[92vw] max-w-md rounded-lg overflow-y-auto"
+      className="
+        m-auto h-fit max-h-[85vh] w-[92vw] max-w-md overflow-hidden
+        rounded-2xl border border-gray-200 bg-white p-0 shadow-xl
+        backdrop:bg-black/20
+      "
     >
-      <div className="py-4 px-6">
-        <div className="flex items-center justify-between gap-4">
-          <h2
-            id="city-picker-title"
-            className="text-lg font-semibold text-gray-800"
-          >
-            Add a city
-          </h2>
+      <div className="p-5 sm:p-6">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2
+              id="city-picker-title"
+              className="text-base font-semibold text-gray-900"
+            >
+              Add a city
+            </h2>
+            <p className="mt-1 text-sm text-gray-500">
+              Search and select a city to add.
+            </p>
+          </div>
+
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition cursor-pointer focus-visible:outline-none focus-visible:text-gray-600"
+            aria-label="Close"
+            className="
+              inline-flex h-8 w-8 items-center justify-center rounded-full
+              text-gray-400 transition
+              hover:bg-gray-100 hover:text-gray-600
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-200
+            "
           >
-            <span aria-hidden className="text-xl leading-none">
-              ×
-            </span>
-            <span className="sr-only">Close</span>
+            <span aria-hidden className="text-lg leading-none">×</span>
           </button>
         </div>
 
-        <div className="mt-3">
+        {/* Search */}
+        <div className="mt-4">
           <label
             htmlFor="city-search-input"
-            className="text-xs uppercase tracking-wide text-gray-500"
+            className="text-xs font-medium uppercase tracking-wide text-gray-500"
           >
             Search
           </label>
@@ -95,28 +110,44 @@ export function CityPickerDialog({
             id="city-search-input"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search by name or code..."
-            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-gray-400 focus:outline-none"
+            placeholder="Search by city name…"
+            className="
+              mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2
+              text-sm text-gray-900 placeholder:text-gray-400
+              outline-none transition
+              focus:border-gray-300 focus:ring-2 focus:ring-gray-200
+            "
           />
         </div>
 
-        <div className="mt-4 max-h-64 overflow-y-auto rounded-md border border-gray-200">
+        {/* Results */}
+        <div className="mt-4 overflow-hidden rounded-xl border border-gray-200">
           {filteredCities.length ? (
-            <ul className="divide-y divide-gray-100">
+            <ul className="max-h-72 divide-y divide-gray-100 overflow-y-auto">
               {filteredCities.map((city) => (
                 <li key={city.id}>
                   <button
                     type="button"
                     onClick={() => handleSelect(city.id)}
-                    className="flex w-full items-center justify-between gap-3 px-3 py-2 text-left transition hover:bg-gray-100 cursor-pointer"
+                    className="
+                      flex w-full items-center justify-between gap-3 px-4 py-3 text-left
+                      transition
+                      hover:bg-gray-50
+                      focus-visible:outline-none focus-visible:bg-gray-50
+                    "
                   >
-                    <span className="text-sm font-medium text-gray-800">
-                      {city.label}
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="truncate text-sm font-medium text-gray-900">
+                        {city.label}
+                      </span>
                       {city.flag ? (
-                        <span className="ml-1 opacity-80">{city.flag}</span>
+                        <span className="text-base leading-none opacity-80">
+                          {city.flag}
+                        </span>
                       ) : null}
-                    </span>
-                    <span className="text-xs text-gray-500">
+                    </div>
+
+                    <span className="shrink-0 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
                       UTC{city.utcOffset}
                     </span>
                   </button>
@@ -124,19 +155,25 @@ export function CityPickerDialog({
               ))}
             </ul>
           ) : (
-            <p className="px-3 py-4 text-sm text-gray-500">
+            <p className="px-4 py-6 text-sm text-gray-500">
               {availableCities.length
-                ? `No cities match "${query}".`
+                ? `No cities match “${query}”.`
                 : "No cities available to add."}
             </p>
           )}
         </div>
 
+        {/* Footer */}
         <div className="mt-4 flex justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-gray-200 px-3 py-1.5 text-sm text-gray-600 transition hover:border-gray-300 hover:text-gray-800 cursor-pointer"
+            className="
+              inline-flex items-center rounded-full border border-gray-200
+              bg-white px-4 py-2 text-sm font-medium text-gray-700
+              transition hover:bg-gray-50
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-200
+            "
           >
             Cancel
           </button>
