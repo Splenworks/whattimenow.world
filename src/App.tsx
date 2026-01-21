@@ -10,7 +10,7 @@ const cities = [
 
 export default function App() {
   return (
-    <div className="min-h-screen flex justify-center">
+    <div className="min-h-screen flex justify-left md:justify-center">
       <ScrollableReel cities={cities} stepMinutes={15} totalHours={48} />
     </div>
   );
