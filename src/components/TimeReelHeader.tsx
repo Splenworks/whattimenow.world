@@ -1,6 +1,7 @@
 import * as React from "react";
 import { twJoin } from "tailwind-merge";
 import type { City } from "../types/city";
+import { CityPickerDialog } from "./CityPickerDialog";
 
 type Props = {
   cities: City[];
@@ -11,8 +12,6 @@ type Props = {
   cellWidthPx: number;
 };
 
-const normalize = (value: string) => value.trim().toLowerCase();
-
 export function TimeReelHeader({
   cities,
   availableCities,
@@ -21,20 +20,7 @@ export function TimeReelHeader({
   labelWidthPx,
   cellWidthPx,
 }: Props) {
-  const [query, setQuery] = React.useState("");
-  const normalizedQuery = normalize(query);
-  const matchedCity = availableCities.find((city) => {
-    const label = normalize(city.label);
-    const id = normalize(city.id);
-    return label === normalizedQuery || id === normalizedQuery;
-  });
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!matchedCity) return;
-    onAddCity(matchedCity.id);
-    setQuery("");
-  };
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
 
   return (
     <div className="sticky top-0 z-10 bg-white/95 p-4">
@@ -74,37 +60,22 @@ export function TimeReelHeader({
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="flex items-center gap-2 ml-3">
-          <div className="flex flex-col items-start">
-            <label
-              htmlFor="city-add-input"
-              className="text-xs uppercase tracking-wide text-gray-500"
-            >
-              Add City
-            </label>
-            <input
-              id="city-add-input"
-              list="city-suggestions"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder="Start typing..."
-              className="w-48 rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-800 shadow-sm focus:border-gray-400 focus:outline-none"
-            />
-            <datalist id="city-suggestions">
-              {availableCities.map((city) => (
-                <option key={city.id} value={city.label} />
-              ))}
-            </datalist>
-          </div>
+        <div className="ml-3">
           <button
-            type="submit"
-            disabled={!matchedCity}
-            className="mt-4 rounded-md border border-gray-900 bg-gray-900 px-3 py-1.5 text-sm font-semibold text-white transition-opacity disabled:cursor-not-allowed disabled:opacity-30"
+            type="button"
+            onClick={() => setIsDialogOpen(true)}
+            className="rounded-md border border-gray-900 bg-gray-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-gray-800"
           >
-            Add
+            Add city
           </button>
-        </form>
+        </div>
       </div>
+      <CityPickerDialog
+        availableCities={availableCities}
+        isOpen={isDialogOpen}
+        onAddCity={onAddCity}
+        onClose={() => setIsDialogOpen(false)}
+      />
     </div>
   );
 }
