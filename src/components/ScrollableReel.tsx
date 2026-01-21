@@ -128,16 +128,11 @@ export function ScrollableReel({
       <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
         {/* Static step rows */}
         {stepDates.map((d, i) => {
-          // if (i === closestStepIndex) return null;
           return (
             <div
               key={d.getTime()}
               className="px-4 flex flex-nowrap gap-3 items-center"
               style={{
-                // position: "absolute",
-                // left: 0,
-                // right: 0,
-                // top: i * rowHeightPx,
                 height: rowHeightPx,
               }}
             >
@@ -148,7 +143,7 @@ export function ScrollableReel({
                   className="tracking-tight text-2xl text-gray-400 font-mono text-center"
                   style={{ width: cellWidthPx }}
                 >
-                  {i !== closestStepIndex ? formatHHMM(d, c.tz) : ""}
+                  {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
                 </div>
               ))}
             </div>
