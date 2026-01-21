@@ -1,6 +1,6 @@
 import { useLocalStorage } from "usehooks-ts";
 import { TimeReel } from "./components/TimeReel";
-import { baseCities, cities as allCities } from "./lib/cities";
+import { cities as allCities, baseCities } from "./lib/cities";
 import type { City } from "./types/city";
 
 const now = new Date();
@@ -32,7 +32,7 @@ const cityById = new Map(allCities.map((city) => [city.id, city]));
 const defaultCityIds = baseCities
   .filter((city) => city.tz !== tz)
   .map((city) => city.id);
-const STORAGE_KEY = "wtim-selected-cities";
+const STORAGE_KEY = "wtnw-cities";
 
 export default function App() {
   const [storedCityIds, setStoredCityIds] = useLocalStorage<string[]>(
