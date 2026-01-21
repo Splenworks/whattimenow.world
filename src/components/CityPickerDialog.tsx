@@ -61,9 +61,9 @@ export function CityPickerDialog({
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
-      className="w-[92vw] max-w-md rounded-lg border border-gray-200 bg-white p-0 shadow-2xl"
+      className="border border-gray-200 bg-white p-0 shadow-2xl m-auto h-fit max-h-[85vh] w-[92vw] max-w-md rounded-lg overflow-y-auto"
     >
-      <div className="p-4">
+      <div className="py-4 px-6">
         <div className="flex items-center justify-between gap-4">
           <h2
             id="city-picker-title"
@@ -74,7 +74,7 @@ export function CityPickerDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full px-2 py-1 text-gray-400 transition hover:text-gray-700"
+            className="text-gray-400 hover:text-gray-600 transition cursor-pointer focus-visible:outline-none focus-visible:text-gray-600"
           >
             <span aria-hidden className="text-xl leading-none">
               ×
@@ -96,11 +96,11 @@ export function CityPickerDialog({
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search by name or code..."
-            className="mt-1 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-800 shadow-sm focus:border-gray-400 focus:outline-none"
+            className="mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-800 focus:border-gray-400 focus:outline-none"
           />
         </div>
 
-        <div className="mt-4 max-h-64 overflow-y-auto rounded-md border border-gray-100">
+        <div className="mt-4 max-h-64 overflow-y-auto rounded-md border border-gray-200">
           {filteredCities.length ? (
             <ul className="divide-y divide-gray-100">
               {filteredCities.map((city) => (
@@ -108,7 +108,7 @@ export function CityPickerDialog({
                   <button
                     type="button"
                     onClick={() => handleSelect(city.id)}
-                    className="flex w-full items-center justify-between gap-3 px-3 py-2 text-left transition hover:bg-gray-50"
+                    className="flex w-full items-center justify-between gap-3 px-3 py-2 text-left transition hover:bg-gray-100 cursor-pointer"
                   >
                     <span className="text-sm font-medium text-gray-800">
                       {city.label}
@@ -136,7 +136,7 @@ export function CityPickerDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-gray-200 px-3 py-1.5 text-sm text-gray-600 transition hover:border-gray-300 hover:text-gray-800"
+            className="rounded-md border border-gray-200 px-3 py-1.5 text-sm text-gray-600 transition hover:border-gray-300 hover:text-gray-800 cursor-pointer"
           >
             Cancel
           </button>
