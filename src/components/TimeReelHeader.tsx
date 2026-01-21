@@ -1,5 +1,5 @@
 import * as React from "react";
-import { twJoin } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 import type { City } from "../types/city";
 import { CityPickerDialog } from "./CityPickerDialog";
 
@@ -29,7 +29,10 @@ export function TimeReelHeader({
         {cities.map((c) => (
           <div
             key={c.id}
-            className="py-2 group relative flex flex-col justify-center items-center gap-1 hover:bg-gray-100 rounded-md"
+            className={twMerge(
+              "py-2 group relative flex flex-col justify-center items-center gap-1 rounded-md",
+              c.id !== "local" && "hover:bg-gray-100"
+            )}
             style={{ width: cellWidthPx }}
           >
             <div className="flex items-center gap-2">
