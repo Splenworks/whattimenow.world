@@ -1,19 +1,19 @@
-import * as React from "react";
-import { addMinutes, ceilToStep, formatHHMM } from "../lib/time";
-import type { City } from "../types/city";
-import NowRow from "./NowRow";
-import OffsetHourRow from "./OffsetHourRow";
-import { TimeReelHeader } from "./TimeReelHeader";
+import * as React from "react"
+import { addMinutes, ceilToStep, formatHHMM } from "../lib/time"
+import type { City } from "../types/city"
+import NowRow from "./NowRow"
+import OffsetHourRow from "./OffsetHourRow"
+import { TimeReelHeader } from "./TimeReelHeader"
 
 type Props = {
-  cities: City[];
-  availableCities: City[];
-  onAddCity: (cityId: string) => void;
-  onRemoveCity: (cityId: string) => void;
-  stepMinutes?: number; // default: 15
-  totalHours?: number;  // default: 48 (±24h)
-  rowHeightPx?: number; // default: 56
-};
+  cities: City[]
+  availableCities: City[]
+  onAddCity: (cityId: string) => void
+  onRemoveCity: (cityId: string) => void
+  stepMinutes?: number // default: 15
+  totalHours?: number // default: 48 (±24h)
+  rowHeightPx?: number // default: 56
+}
 
 export function TimeReel({
   cities,
@@ -24,92 +24,94 @@ export function TimeReel({
   totalHours = 48,
   rowHeightPx = 44,
 }: Props) {
-  const labelWidthPx = 100;
-  const cellWidthPx = 180;
+  const labelWidthPx = 100
+  const cellWidthPx = 180
 
-  const [nowMinute, setNowMinute] = React.useState(() => new Date());
+  const [nowMinute, setNowMinute] = React.useState(() => new Date())
 
   // Build a stable step timeline ONCE (no shifting as seconds pass).
   // We anchor around a step boundary at mount time.
-  const anchor = React.useMemo(() => ceilToStep(new Date(), stepMinutes), [stepMinutes]);
+  const anchor = React.useMemo(() => ceilToStep(new Date(), stepMinutes), [stepMinutes])
 
-  const stepsPerHour = Math.max(1, Math.round(60 / stepMinutes));
-  const totalSteps = Math.max(stepsPerHour, totalHours * stepsPerHour);
-  const half = Math.floor(totalSteps / 2);
+  const stepsPerHour = Math.max(1, Math.round(60 / stepMinutes))
+  const totalSteps = Math.max(stepsPerHour, totalHours * stepsPerHour)
+  const half = Math.floor(totalSteps / 2)
 
   // Timeline start time (top of the scroll content)
-  const startDate = React.useMemo(() => addMinutes(anchor, -half * stepMinutes), [anchor, half, stepMinutes]);
+  const startDate = React.useMemo(
+    () => addMinutes(anchor, -half * stepMinutes),
+    [anchor, half, stepMinutes],
+  )
 
   const stepDates = React.useMemo(() => {
-    const arr: Date[] = [];
+    const arr: Date[] = []
     for (let i = 0; i < totalSteps; i++) {
-      arr.push(addMinutes(startDate, i * stepMinutes));
+      arr.push(addMinutes(startDate, i * stepMinutes))
     }
-    return arr;
-  }, [totalSteps, startDate, stepMinutes]);
+    return arr
+  }, [totalSteps, startDate, stepMinutes])
 
-  const contentHeight = totalSteps * rowHeightPx;
+  const contentHeight = totalSteps * rowHeightPx
 
   const offsetHours = React.useMemo(() => {
-    const halfHours = Math.floor(totalHours / 2);
-    const arr: number[] = [];
+    const halfHours = Math.floor(totalHours / 2)
+    const arr: number[] = []
     for (let h = -halfHours; h <= halfHours; h += 4) {
-      if (h !== 0) arr.push(h);
+      if (h !== 0) arr.push(h)
     }
-    return arr;
-  }, [totalHours]);
+    return arr
+  }, [totalHours])
 
   React.useEffect(() => {
-    let intervalId: number | undefined;
-    const msToNextMinute = 60_000 - (Date.now() % 60_000);
+    let intervalId: number | undefined
+    const msToNextMinute = 60_000 - (Date.now() % 60_000)
     const timeoutId = window.setTimeout(() => {
-      setNowMinute(new Date());
-      intervalId = window.setInterval(() => setNowMinute(new Date()), 60_000);
-    }, msToNextMinute);
+      setNowMinute(new Date())
+      intervalId = window.setInterval(() => setNowMinute(new Date()), 60_000)
+    }, msToNextMinute)
     return () => {
-      window.clearTimeout(timeoutId);
-      if (intervalId) window.clearInterval(intervalId);
-    };
-  }, []);
+      window.clearTimeout(timeoutId)
+      if (intervalId) window.clearInterval(intervalId)
+    }
+  }, [])
 
   // Convert "now" to a top offset within the scroll content (continuous).
   const getNowTopPx = React.useCallback(
     (now: Date) => {
-      const minutesFromStart = (now.getTime() - startDate.getTime()) / 60_000;
-      const rowFloat = minutesFromStart / stepMinutes; // continuous
-      const top = rowFloat * rowHeightPx;
+      const minutesFromStart = (now.getTime() - startDate.getTime()) / 60_000
+      const rowFloat = minutesFromStart / stepMinutes // continuous
+      const top = rowFloat * rowHeightPx
 
       // Clamp so it stays within scroll content bounds.
-      const min = 0;
-      const max = Math.max(0, contentHeight - rowHeightPx);
-      return Math.min(max, Math.max(min, top));
+      const min = 0
+      const max = Math.max(0, contentHeight - rowHeightPx)
+      return Math.min(max, Math.max(min, top))
     },
-    [startDate, stepMinutes, rowHeightPx, contentHeight]
-  );
+    [startDate, stepMinutes, rowHeightPx, contentHeight],
+  )
 
   const closestStepIndex = React.useMemo(() => {
-    const minutesFromStart = (nowMinute.getTime() - startDate.getTime()) / 60_000;
-    const rowFloat = minutesFromStart / stepMinutes;
-    const nearest = Math.round(rowFloat);
-    return Math.min(totalSteps - 1, Math.max(0, nearest));
-  }, [nowMinute, startDate, stepMinutes, totalSteps]);
+    const minutesFromStart = (nowMinute.getTime() - startDate.getTime()) / 60_000
+    const rowFloat = minutesFromStart / stepMinutes
+    const nearest = Math.round(rowFloat)
+    return Math.min(totalSteps - 1, Math.max(0, nearest))
+  }, [nowMinute, startDate, stepMinutes, totalSteps])
 
-  const contentRef = React.useRef<HTMLDivElement | null>(null);
-  const didInitialScroll = React.useRef(false);
+  const contentRef = React.useRef<HTMLDivElement | null>(null)
+  const didInitialScroll = React.useRef(false)
 
   React.useLayoutEffect(() => {
-    if (didInitialScroll.current) return;
-    const contentEl = contentRef.current;
-    if (!contentEl) return;
+    if (didInitialScroll.current) return
+    const contentEl = contentRef.current
+    if (!contentEl) return
 
-    const nowTopPx = getNowTopPx(new Date());
-    const contentTopPx = contentEl.getBoundingClientRect().top + window.scrollY;
-    const targetTop =
-      contentTopPx + nowTopPx - (window.innerHeight / 2 - rowHeightPx / 2);
+    const nowTopPx = getNowTopPx(new Date())
+    const contentTopPx = contentEl.getBoundingClientRect().top + window.scrollY
+    const targetTop = contentTopPx + nowTopPx - (window.innerHeight / 2 - rowHeightPx / 2)
 
-    window.scrollTo({ top: Math.max(0, targetTop), behavior: "auto" });
-    didInitialScroll.current = true;
-  }, [getNowTopPx, rowHeightPx]);
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "auto" })
+    didInitialScroll.current = true
+  }, [getNowTopPx, rowHeightPx])
 
   return (
     <div>
@@ -127,7 +129,7 @@ export function TimeReel({
           return (
             <div
               key={d.getTime()}
-              className="px-4 flex flex-nowrap gap-3 items-center"
+              className="flex flex-nowrap items-center gap-3 px-4"
               style={{
                 height: rowHeightPx,
               }}
@@ -136,14 +138,14 @@ export function TimeReel({
               {cities.map((c) => (
                 <div
                   key={c.id}
-                  className="tracking-tight text-xl text-gray-400 font-mono text-center"
+                  className="text-center font-mono text-xl tracking-tight text-gray-400"
                   style={{ width: cellWidthPx }}
                 >
                   {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
                 </div>
               ))}
             </div>
-          );
+          )
         })}
 
         {offsetHours.map((h) => (
@@ -151,9 +153,7 @@ export function TimeReel({
             key={h}
             hourOffset={h}
             nowMinute={nowMinute}
-            cities={cities}
             labelWidthPx={labelWidthPx}
-            cellWidthPx={cellWidthPx}
             rowHeightPx={rowHeightPx}
             getNowTopPx={getNowTopPx}
           />
@@ -168,5 +168,5 @@ export function TimeReel({
         />
       </div>
     </div>
-  );
+  )
 }
