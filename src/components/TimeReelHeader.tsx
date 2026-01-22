@@ -35,29 +35,29 @@ export function TimeReelHeader({
             )}
             style={{ width: cellWidthPx }}
           >
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-2xl text-gray-800 truncate">
+            <div className="flex items-center gap-1 text-2xl">
+              <span className="font-semibold text-gray-800 truncate block">
                 {c.label}
-                <span className="ml-1 opacity-90">{c.flag}</span>
               </span>
-              {c.id !== "local" ? (
-                <button
-                  type="button"
-                  aria-label={`Remove ${c.label}`}
-                  onClick={() => onRemoveCity(c.id)}
-                  className={twJoin(
-                    "absolute right-2 top-0 cursor-pointer",
-                    "text-gray-400 hover:text-gray-600 transition",
-                    "opacity-0 pointer-events-none",
-                    "group-hover:opacity-100 group-hover:pointer-events-auto",
-                    "focus-visible:opacity-100 focus-visible:pointer-events-auto focus-visible:outline-none",
-                  )}
-                >
-                  <span aria-hidden className="text-lg leading-none">×</span>
-                </button>
-              ) : null}
+              <span className="opacity-90">{c.flag}</span>
             </div>
             <span className="text-sm text-gray-500">UTC{c.utcOffset}</span>
+            {c.id !== "local" ? (
+              <button
+                type="button"
+                aria-label={`Remove ${c.label}`}
+                onClick={() => onRemoveCity(c.id)}
+                className={twJoin(
+                  "absolute right-2 top-0 cursor-pointer",
+                  "text-gray-400 hover:text-gray-600 transition",
+                  "opacity-0 pointer-events-none",
+                  "group-hover:opacity-100 group-hover:pointer-events-auto",
+                  "focus-visible:opacity-100 focus-visible:pointer-events-auto focus-visible:outline-none",
+                )}
+              >
+                <span aria-hidden className="text-lg leading-none">×</span>
+              </button>
+            ) : null}
           </div>
         ))}
         <div style={{ width: labelWidthPx }}>
