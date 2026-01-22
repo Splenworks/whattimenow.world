@@ -57,15 +57,17 @@ export default function App() {
   }
 
   return (
-    <div className="justify-left flex min-h-screen md:justify-center">
-      <TimeReel
-        cities={cities}
-        availableCities={availableCities}
-        onAddCity={handleAddCity}
-        onRemoveCity={handleRemoveCity}
-        stepMinutes={15}
-        totalHours={48}
-      />
+    <div className="min-h-screen">
+      <div className="mx-auto w-max">
+        <TimeReel
+          cities={cities}
+          availableCities={availableCities}
+          onAddCity={handleAddCity}
+          onRemoveCity={handleRemoveCity}
+          stepMinutes={15}
+          totalHours={48}
+        />
+      </div>
     </div>
   )
 }
