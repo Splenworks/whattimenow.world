@@ -35,7 +35,7 @@ export function TimeReelHeader({
             )}
             style={{ width: cellWidthPx }}
           >
-            <div className="flex items-center gap-1 text-2xl">
+            <div className="flex items-center gap-1 text-xl">
               <span className="font-semibold text-gray-800 truncate block">
                 {c.label}
               </span>
@@ -65,12 +65,10 @@ export function TimeReelHeader({
             className="relative flex flex-col justify-center items-center gap-1"
             style={{ width: cellWidthPx }}
           >
-            <div className="flex items-center gap-2">
-              <div className="px-4 py-2 font-semibold text-2xl text-gray-800 truncate cursor-pointer hover:bg-gray-100 rounded-md"
-                onClick={() => setIsDialogOpen(true)}
-              >
-                Add+
-              </div>
+            <div className="px-4 py-2 font-semibold text-xl text-gray-800 cursor-pointer hover:bg-gray-100 rounded-md"
+              onClick={() => setIsDialogOpen(true)}
+            >
+              Add+
             </div>
             <span className="text-sm">&nbsp;</span>
           </div>

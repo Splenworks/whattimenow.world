@@ -20,12 +20,12 @@ export function TimeReel({
   availableCities,
   onAddCity,
   onRemoveCity,
-  stepMinutes = 15,
+  stepMinutes = 30,
   totalHours = 48,
-  rowHeightPx = 56,
+  rowHeightPx = 44,
 }: Props) {
-  const labelWidthPx = 110;
-  const cellWidthPx = 160;
+  const labelWidthPx = 100;
+  const cellWidthPx = 180;
 
   const [nowMinute, setNowMinute] = React.useState(() => new Date());
 
@@ -122,9 +122,7 @@ export function TimeReel({
         cellWidthPx={cellWidthPx}
       />
 
-      {/* Scroll content */}
       <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
-        {/* Static step rows */}
         {stepDates.map((d, i) => {
           return (
             <div
@@ -138,7 +136,7 @@ export function TimeReel({
               {cities.map((c) => (
                 <div
                   key={c.id}
-                  className="tracking-tight text-2xl text-gray-400 font-mono text-center"
+                  className="tracking-tight text-xl text-gray-400 font-mono text-center"
                   style={{ width: cellWidthPx }}
                 >
                   {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}

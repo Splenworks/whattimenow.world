@@ -35,7 +35,7 @@ const OffsetHourRow = React.memo(function OffsetHourRow({
         height: rowHeightPx,
       }}
     >
-      <div className="text-xl font-semibold text-gray-700 text-right" style={{ width: labelWidthPx }}>
+      <div className="text-lg font-semibold text-gray-700 text-right" style={{ width: labelWidthPx }}>
         {label}
       </div>
       {cities.map((c) => (

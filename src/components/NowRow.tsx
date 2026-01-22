@@ -55,7 +55,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
       {cities.map((c) => (
         <div
           key={c.id}
-          className="font-mono text-2xl tracking-tight text-gray-900 font-semibold text-center"
+          className="font-mono text-xl tracking-tight text-gray-900 font-semibold text-center"
           style={{ width: cellWidthPx }}
         >
           {formatHHMMSS(now, c.tz)}
