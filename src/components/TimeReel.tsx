@@ -4,6 +4,7 @@ import type { City } from "../types/city"
 import NowRow from "./NowRow"
 import OffsetHourRow from "./OffsetHourRow"
 import { TimeReelHeader } from "./TimeReelHeader"
+import { twJoin } from "tailwind-merge"
 
 type Props = {
   cities: City[]
@@ -129,16 +130,20 @@ export function TimeReel({
           return (
             <div
               key={d.getTime()}
-              className="flex flex-nowrap items-center gap-3 px-4"
+              className="group flex flex-nowrap items-center px-4"
               style={{
                 height: rowHeightPx,
               }}
             >
               <div style={{ width: labelWidthPx }} />
-              {cities.map((c) => (
+              {cities.map((c, cityIndex) => (
                 <div
                   key={c.id}
-                  className="text-center font-mono text-xl tracking-tight text-gray-400"
+                  className={twJoin(
+                    "cursor-default text-center font-mono text-xl tracking-tight text-gray-400 transition-colors group-hover:bg-gray-100",
+                    cityIndex === 0 && "rounded-l-md",
+                    cityIndex === cities.length - 1 && "rounded-r-md",
+                  )}
                   style={{ width: cellWidthPx }}
                 >
                   {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}

@@ -24,7 +24,7 @@ export function TimeReelHeader({
 
   return (
     <div className="sticky top-0 z-10 bg-white/95 px-4 py-2">
-      <div className="flex flex-nowrap items-center gap-3">
+      <div className="flex flex-nowrap items-center">
         <div style={{ width: labelWidthPx }} />
         {cities.map((c) => (
           <div

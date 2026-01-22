@@ -1,13 +1,13 @@
-import React from "react";
-import { formatHHMMSS } from "../lib/time";
-import type { City } from "../types/city";
+import React from "react"
+import { formatHHMMSS } from "../lib/time"
+import type { City } from "../types/city"
 
 interface NowOverlayRowProps {
-  cities: City[];
-  labelWidthPx: number;
-  cellWidthPx: number;
-  rowHeightPx: number;
-  getNowTopPx: (now: Date) => number;
+  cities: City[]
+  labelWidthPx: number
+  cellWidthPx: number
+  rowHeightPx: number
+  getNowTopPx: (now: Date) => number
 }
 
 /**
@@ -21,48 +21,51 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
   rowHeightPx,
   getNowTopPx,
 }: NowOverlayRowProps) {
-  const rowRef = React.useRef<HTMLDivElement | null>(null);
-  const [now, setNow] = React.useState(() => new Date());
+  const rowRef = React.useRef<HTMLDivElement | null>(null)
+  const [now, setNow] = React.useState(() => new Date())
 
   // Update time + position once per second (minimal scope: this component only).
   React.useEffect(() => {
-    const id = window.setInterval(() => setNow(new Date()), 1000);
-    return () => window.clearInterval(id);
-  }, []);
+    const id = window.setInterval(() => setNow(new Date()), 1000)
+    return () => window.clearInterval(id)
+  }, [])
 
   // Apply top position imperatively so layout is cheap.
   React.useLayoutEffect(() => {
-    const el = rowRef.current;
-    if (!el) return;
+    const el = rowRef.current
+    if (!el) return
 
-    const top = getNowTopPx(now);
-    el.style.top = `${top}px`;
-  }, [now, getNowTopPx]);
+    const top = getNowTopPx(now)
+    el.style.top = `${top}px`
+  }, [now, getNowTopPx])
 
   return (
     <div
       ref={rowRef}
-      className="absolute left-0 px-4 flex flex-nowrap gap-3 items-center"
+      className="absolute left-0 flex flex-nowrap items-center px-4"
       style={{
         height: rowHeightPx,
         // top is set imperatively
       }}
     >
-      <div className="text-2xl font-semibold text-gray-900 text-right mb-0.5" style={{ width: labelWidthPx }}>
+      <div
+        className="mb-0.5 text-right text-2xl font-semibold text-gray-900"
+        style={{ width: labelWidthPx }}
+      >
         Now →
       </div>
 
       {cities.map((c) => (
         <div
           key={c.id}
-          className="font-mono text-xl tracking-tight text-gray-900 font-semibold text-center"
+          className="text-center font-mono text-xl font-semibold tracking-tight text-gray-900"
           style={{ width: cellWidthPx }}
         >
           {formatHHMMSS(now, c.tz)}
         </div>
       ))}
     </div>
-  );
-});
+  )
+})
 
-export default NowOverlayRow;
+export default NowOverlayRow
