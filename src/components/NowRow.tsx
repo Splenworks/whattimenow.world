@@ -42,7 +42,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
   return (
     <div
       ref={rowRef}
-      className="absolute left-0 flex flex-nowrap items-center px-4"
+      className="absolute left-0 flex cursor-default flex-nowrap items-center px-4"
       style={{
         height: rowHeightPx,
         // top is set imperatively
