@@ -140,7 +140,10 @@ export function TimeReel({
                 <div
                   key={c.id}
                   className={twJoin(
-                    "cursor-default text-center font-mono text-xl tracking-tight text-gray-400 transition-colors group-hover:bg-gray-100",
+                    "cursor-default py-2 text-center font-mono text-xl tracking-tight text-gray-400",
+                    i !== closestStepIndex && "transition-colors group-hover:bg-gray-100",
+                    (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
+                      "group-hover:bg-gray-50",
                     cityIndex === 0 && "rounded-l-md",
                     cityIndex === cities.length - 1 && "rounded-r-md",
                   )}
