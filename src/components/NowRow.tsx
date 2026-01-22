@@ -49,7 +49,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
       }}
     >
       <div className="text-2xl font-semibold text-gray-900 text-right mb-0.5" style={{ width: labelWidthPx }}>
-        Now
+        Now →
       </div>
 
       {cities.map((c) => (
