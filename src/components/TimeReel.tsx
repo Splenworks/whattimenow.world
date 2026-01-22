@@ -21,7 +21,7 @@ export function TimeReel({
   availableCities,
   onAddCity,
   onRemoveCity,
-  stepMinutes = 30,
+  stepMinutes = 15,
   totalHours = 48,
   rowHeightPx = 44,
 }: Props) {
