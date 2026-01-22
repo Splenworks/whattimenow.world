@@ -10,6 +10,7 @@ type Props = {
   onRemoveCity: (cityId: string) => void
   labelWidthPx: number
   cellWidthPx: number
+  onGoToNow: () => void
 }
 
 export function TimeReelHeader({
@@ -19,13 +20,22 @@ export function TimeReelHeader({
   onRemoveCity,
   labelWidthPx,
   cellWidthPx,
+  onGoToNow,
 }: Props) {
   const [isDialogOpen, setIsDialogOpen] = React.useState(false)
 
   return (
     <div className="sticky top-0 z-10 bg-white/95 px-4 py-2">
       <div className="flex flex-nowrap items-center">
-        <div style={{ width: labelWidthPx }} />
+        <div className="flex items-center justify-center" style={{ width: labelWidthPx }}>
+          <button
+            type="button"
+            onClick={onGoToNow}
+            className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-600 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300"
+          >
+            Now
+          </button>
+        </div>
         {cities.map((c) => (
           <div
             key={c.id}

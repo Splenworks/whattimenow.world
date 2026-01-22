@@ -101,6 +101,17 @@ export function TimeReel({
   const contentRef = React.useRef<HTMLDivElement | null>(null)
   const didInitialScroll = React.useRef(false)
 
+  const handleGoToNow = React.useCallback(() => {
+    const contentEl = contentRef.current
+    if (!contentEl) return
+
+    const nowTopPx = getNowTopPx(new Date())
+    const contentTopPx = contentEl.getBoundingClientRect().top + window.scrollY
+    const targetTop = contentTopPx + nowTopPx - (window.innerHeight / 2 - rowHeightPx / 2)
+
+    window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" })
+  }, [getNowTopPx, rowHeightPx])
+
   React.useLayoutEffect(() => {
     if (didInitialScroll.current) return
     const contentEl = contentRef.current
@@ -123,6 +134,7 @@ export function TimeReel({
         onRemoveCity={onRemoveCity}
         labelWidthPx={labelWidthPx}
         cellWidthPx={cellWidthPx}
+        onGoToNow={handleGoToNow}
       />
 
       <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
