@@ -1,7 +1,7 @@
 import * as React from "react"
 import { twJoin, twMerge } from "tailwind-merge"
 import type { City } from "../types/city"
-import { CityPickerDialog } from "./CityPickerDialog"
+import { AddCityInline } from "./AddCityInline"
 
 type Props = {
   cities: City[]
@@ -22,20 +22,33 @@ export function TimeReelHeader({
   cellWidthPx,
   onGoToNow,
 }: Props) {
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false)
+  const [isAdding, setIsAdding] = React.useState(false)
 
   return (
-    <div className="sticky top-0 z-10 bg-white/95 px-4 py-2">
+    <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 px-4 py-2 backdrop-blur">
       <div className="flex flex-nowrap items-center">
-        <div className="flex items-center justify-center" style={{ width: labelWidthPx }}>
+        {/* Left gutter: quiet "Now" */}
+        <div className="flex items-center justify-start" style={{ width: labelWidthPx }}>
           <button
             type="button"
             onClick={onGoToNow}
-            className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-gray-600 shadow-sm transition hover:border-gray-300 hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300"
+            className={twJoin(
+              // quiet utility button
+              "inline-flex items-center gap-2 rounded-md px-2 py-1",
+              "text-xs font-semibold tracking-wide text-gray-600 uppercase",
+              "hover:bg-gray-100 hover:text-gray-900",
+              "focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:outline-none",
+            )}
+            title="Go to current time"
           >
-            Now
+            <span>Now</span>
+            <span aria-hidden className="text-gray-400">
+              →
+            </span>
           </button>
         </div>
+
+        {/* City columns */}
         {cities.map((c) => (
           <div
             key={c.id}
@@ -45,22 +58,24 @@ export function TimeReelHeader({
             )}
             style={{ width: cellWidthPx }}
           >
-            <div className="flex items-center gap-1 text-xl">
-              <span className="block truncate font-semibold text-gray-800">{c.label}</span>
+            <div className="flex max-w-full items-center gap-1">
+              <span className="block truncate text-lg font-semibold text-gray-900">{c.label}</span>
               <span className="opacity-90">{c.flag}</span>
             </div>
-            <span className="text-sm text-gray-500">UTC{c.utcOffset}</span>
+            <span className="text-xs font-medium text-gray-500">UTC{c.utcOffset}</span>
+
             {c.id !== "local" ? (
               <button
                 type="button"
                 aria-label={`Remove ${c.label}`}
                 onClick={() => onRemoveCity(c.id)}
                 className={twJoin(
-                  "absolute top-0 right-2 cursor-pointer",
-                  "text-gray-400 transition hover:text-gray-600",
+                  "absolute top-1 right-2 rounded p-1",
+                  "text-gray-400 transition hover:bg-white hover:text-gray-700",
                   "pointer-events-none opacity-0",
                   "group-hover:pointer-events-auto group-hover:opacity-100",
                   "focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-none",
+                  "focus-visible:ring-2 focus-visible:ring-gray-300",
                 )}
               >
                 <span aria-hidden className="text-lg leading-none">
@@ -70,24 +85,30 @@ export function TimeReelHeader({
             ) : null}
           </div>
         ))}
-        <div style={{ width: labelWidthPx }}>
-          <div className="flex flex-col items-center justify-center gap-1">
-            <div
-              className="cursor-pointer rounded-md px-4 py-2 text-xl font-semibold text-gray-800 hover:bg-gray-100"
-              onClick={() => setIsDialogOpen(true)}
+
+        {isAdding ? (
+          <AddCityInline
+            widthPx={labelWidthPx}
+            availableCities={availableCities}
+            onAddCity={onAddCity}
+            onClose={() => setIsAdding(false)}
+          />
+        ) : (
+          <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
+            <button
+              type="button"
+              onClick={() => setIsAdding(true)}
+              className={`inline-flex items-center justify-center rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:outline-none`}
+              aria-label="Add a city"
+              title="Add city"
             >
-              Add+
-            </div>
-            <span className="text-sm">&nbsp;</span>
+              <span aria-hidden className="text-lg leading-none">
+                +
+              </span>
+            </button>
           </div>
-        </div>
+        )}
       </div>
-      <CityPickerDialog
-        availableCities={availableCities}
-        isOpen={isDialogOpen}
-        onAddCity={onAddCity}
-        onClose={() => setIsDialogOpen(false)}
-      />
     </div>
   )
 }
