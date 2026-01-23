@@ -57,7 +57,7 @@ export function TimeReel({
   const offsetHours = React.useMemo(() => {
     const halfHours = Math.floor(totalHours / 2)
     const arr: number[] = []
-    for (let h = -halfHours; h <= halfHours; h += 4) {
+    for (let h = -halfHours; h <= halfHours; h += 2) {
       if (h !== 0) arr.push(h)
     }
     return arr.slice(1, -1) // remove endpoints

@@ -53,7 +53,6 @@ const NowRow = React.memo(function NowOverlayRow({
         style={{ width: labelWidthPx }}
       >
         <span className="text-xs font-semibold text-gray-900 tracking-wide uppercase">Now</span>
-        {/* <ArrowRight size={16} className="inline-block text-gray-700" /> */}
       </div>
 
       {cities.map((c) => (
