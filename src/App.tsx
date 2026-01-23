@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useLocalStorage } from "usehooks-ts"
 import { TimeReel } from "./components/TimeReel"
-import { allCities, cityMapping, defaultCityIds, localCity } from "./lib/cities"
+import { allCities, cityMapping, defaultCityIds } from "./lib/city"
 import type { City } from "./types/city"
 
 const STORAGE_KEY = "wtnw-cities"
@@ -17,8 +17,7 @@ export default function App() {
   }, [])
 
   const [storedCityIds, setStoredCityIds] = useLocalStorage<string[]>(STORAGE_KEY, defaultCityIds)
-  const selectedCities = storedCityIds.map((id) => cityMapping.get(id)).filter(Boolean) as City[]
-  const cities = localCity ? [localCity, ...selectedCities] : selectedCities
+  const storedCities = storedCityIds.map((id) => cityMapping.get(id)).filter(Boolean) as City[]
   const availableCities = allCities.filter((city) => !storedCityIds.includes(city.id))
 
   const handleAddCity = (cityId: string) => {
@@ -32,7 +31,7 @@ export default function App() {
   return (
     <div className="min-h-screen">
       <TimeReel
-        cities={cities}
+        cities={storedCities ?? defaultCityIds.map((id) => cityMapping.get(id)) as City[]}
         availableCities={availableCities}
         onAddCity={handleAddCity}
         onRemoveCity={handleRemoveCity}

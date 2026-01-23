@@ -1,6 +1,6 @@
 import type { City } from "../types/city"
 
-export const allCities: City[] = [
+export const cities: City[] = [
   { id: "abidjan", label: "Abidjan", flag: "🇨🇮", tz: "Africa/Abidjan", utcOffset: "+00:00" },
   { id: "abu-dhabi", label: "Abu Dhabi", flag: "🇦🇪", tz: "Asia/Dubai", utcOffset: "+04:00" },
   { id: "accra", label: "Accra", flag: "🇬🇭", tz: "Africa/Accra", utcOffset: "+00:00" },
@@ -341,35 +341,3 @@ export const allCities: City[] = [
   { id: "zagreb", label: "Zagreb", flag: "🇭🇷", tz: "Europe/Zagreb", utcOffset: "+01:00" },
   { id: "zurich", label: "Zurich", flag: "🇨🇭", tz: "Europe/Zurich", utcOffset: "+01:00" },
 ]
-
-export const cityMapping = new Map(allCities.map((city) => [city.id, city]))
-
-export const defaultCityIds = ["new-york", "london", "tokyo", "sydney", "paris"]
-
-export const defaultCities = allCities.filter((city) => defaultCityIds.includes(city.id))
-
-const now = new Date()
-const getUtcOffset = (timeZone: string) => {
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone,
-    timeZoneName: "shortOffset",
-  }).formatToParts(now)
-  const tzPart = parts.find((p) => p.type === "timeZoneName")?.value ?? "GMT"
-
-  if (tzPart === "GMT" || tzPart === "UTC") return "+00:00"
-  const match = tzPart.match(/GMT([+-]\d{1,2})(?::(\d{2}))?/)
-  if (!match) return "+00:00"
-
-  const sign = match[1].startsWith("-") ? "-" : "+"
-  const hours = Math.abs(parseInt(match[1], 10))
-  const minutes = match[2] ? parseInt(match[2], 10) : 0
-  return `${sign}${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`
-}
-
-const localTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-export const localCity = {
-  id: "local",
-  label: "Local Time",
-  tz: localTimezone,
-  utcOffset: getUtcOffset(localTimezone),
-}

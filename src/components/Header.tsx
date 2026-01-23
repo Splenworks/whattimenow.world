@@ -55,8 +55,7 @@ export function Header({
           <div
             key={c.id}
             className={twMerge(
-              "group relative flex flex-col items-center justify-center gap-1 rounded-md py-2",
-              c.id !== "local" && "hover:bg-gray-100",
+              "group relative flex flex-col items-center justify-center gap-1 rounded-md py-2 hover:bg-gray-100",
             )}
             style={{ width: cellWidthPx }}
           >
@@ -66,28 +65,7 @@ export function Header({
             </div>
             <span className="text-xs font-medium text-gray-500">UTC{c.utcOffset}</span>
 
-            {c.id !== "local" ? (
-              <CloseButton
-                onClick={() => onRemoveCity(c.id)}
-              />
-              // <button
-              //   type="button"
-              //   aria-label={`Remove ${c.label}`}
-              //   onClick={() => onRemoveCity(c.id)}
-              //   className={twJoin(
-              //     "absolute top-1 right-2 rounded p-1",
-              //     "text-gray-400 transition hover:bg-white hover:text-gray-700",
-              //     "pointer-events-none opacity-0",
-              //     "group-hover:pointer-events-auto group-hover:opacity-100",
-              //     "focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-none",
-              //     "focus-visible:ring-2 focus-visible:ring-gray-300",
-              //   )}
-              // >
-              //   <span aria-hidden className="text-lg leading-none">
-              //     ×
-              //   </span>
-              // </button>
-            ) : null}
+            <CloseButton onClick={() => onRemoveCity(c.id)} />
           </div>
         ))}
 
