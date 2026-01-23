@@ -1,9 +1,10 @@
 import * as React from "react"
-import { twJoin, twMerge } from "tailwind-merge"
+import { twMerge } from "tailwind-merge"
 import type { City } from "../types/city"
 import { AddButton } from "./AddButton"
 import { AddCityInline } from "./AddCityInline"
 import { CloseButton } from "./CloseButton"
+import { NowButton } from "./NowButton"
 
 type HeaderProps = {
   cities: City[]
@@ -30,24 +31,8 @@ export function Header({
     <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 backdrop-blur">
       <div className="mx-auto flex w-max flex-nowrap items-center px-4 py-2">
         {/* Left gutter: quiet "Now" */}
-        <div className="flex items-center justify-start" style={{ width: labelWidthPx }}>
-          <button
-            type="button"
-            onClick={onGoToNow}
-            className={twJoin(
-              // quiet utility button
-              "inline-flex items-center gap-2 rounded-md px-2 py-1",
-              "text-xs font-semibold tracking-wide text-gray-600 uppercase",
-              "hover:bg-gray-100 hover:text-gray-900",
-              "focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:outline-none",
-            )}
-            title="Go to current time"
-          >
-            <span>Now</span>
-            <span aria-hidden className="text-gray-400">
-              →
-            </span>
-          </button>
+        <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
+          <NowButton onClick={onGoToNow} />
         </div>
 
         {/* City columns */}
