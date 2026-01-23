@@ -64,6 +64,7 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
           {formatHHMMSS(now, c.tz)}
         </div>
       ))}
+      <div className="shrink-0" style={{ width: labelWidthPx }} />
     </div>
   )
 })

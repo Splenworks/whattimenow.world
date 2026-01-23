@@ -137,7 +137,11 @@ export function TimeReel({
         onGoToNow={handleGoToNow}
       />
 
-      <div ref={contentRef} className="relative" style={{ height: contentHeight }}>
+      <div
+        ref={contentRef}
+        className="relative mx-auto w-max"
+        style={{ height: contentHeight }}
+      >
         {stepDates.map((d, i) => {
           return (
             <div
@@ -164,6 +168,7 @@ export function TimeReel({
                   {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
                 </div>
               ))}
+              <div className="shrink-0" style={{ width: labelWidthPx }} />
             </div>
           )
         })}

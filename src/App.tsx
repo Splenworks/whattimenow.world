@@ -58,16 +58,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen">
-      <div className="mx-auto w-max">
-        <TimeReel
-          cities={cities}
-          availableCities={availableCities}
-          onAddCity={handleAddCity}
-          onRemoveCity={handleRemoveCity}
-          stepMinutes={15}
-          totalHours={48}
-        />
-      </div>
+      <TimeReel
+        cities={cities}
+        availableCities={availableCities}
+        onAddCity={handleAddCity}
+        onRemoveCity={handleRemoveCity}
+        stepMinutes={15}
+        totalHours={48}
+      />
     </div>
   )
 }

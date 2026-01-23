@@ -25,8 +25,8 @@ export function TimeReelHeader({
   const [isAdding, setIsAdding] = React.useState(false)
 
   return (
-    <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 px-4 py-2 backdrop-blur">
-      <div className="flex flex-nowrap items-center">
+    <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 backdrop-blur">
+      <div className="mx-auto flex w-max flex-nowrap items-center px-4 py-2">
         {/* Left gutter: quiet "Now" */}
         <div className="flex items-center justify-start" style={{ width: labelWidthPx }}>
           <button
