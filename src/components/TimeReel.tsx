@@ -152,7 +152,7 @@ export function TimeReel({
                 <div
                   key={c.id}
                   className={twJoin(
-                    "cursor-default py-2 text-center font-mono text-xl tracking-tight text-gray-400",
+                    "cursor-default py-2 text-center font-mono text-lg tracking-tight text-gray-400 font-light",
                     i !== closestStepIndex && "transition-colors group-hover:bg-gray-100",
                     (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
                     "group-hover:bg-gray-50",

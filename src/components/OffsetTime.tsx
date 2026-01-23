@@ -28,7 +28,7 @@ const OffsetTime = React.memo(function OffsetHourRow({
       }}
     >
       <div
-        className="text-right text-lg font-semibold text-gray-700"
+        className="text-right text-xs font-semibold tracking-wide text-gray-600 uppercase"
         style={{ width: labelWidthPx }}
       >
         {label}

@@ -49,7 +49,7 @@ const NowRow = React.memo(function NowOverlayRow({
       }}
     >
       <div
-        className="mb-0.5 text-right text-2xl font-semibold text-gray-900"
+        className="text-right text-lg font-semibold text-gray-900 tracking-wide uppercase"
         style={{ width: labelWidthPx }}
       >
         Now →
