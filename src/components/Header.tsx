@@ -1,6 +1,7 @@
 import * as React from "react"
 import { twJoin, twMerge } from "tailwind-merge"
 import type { City } from "../types/city"
+import { AddButton } from "./AddButton"
 import { AddCityInline } from "./AddCityInline"
 
 type HeaderProps = {
@@ -94,18 +95,8 @@ export function Header({
             onClose={() => setIsAdding(false)}
           />
         ) : (
-          <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
-            <button
-              type="button"
-              onClick={() => setIsAdding(true)}
-              className={`inline-flex items-center justify-center rounded-md p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:outline-none`}
-              aria-label="Add a city"
-              title="Add city"
-            >
-              <span aria-hidden className="text-lg leading-none">
-                +
-              </span>
-            </button>
+          <div className="flex items-center justify-center" style={{ width: labelWidthPx }}>
+            <AddButton widthPx={labelWidthPx} onClick={() => setIsAdding(true)} />
           </div>
         )}
       </div>
