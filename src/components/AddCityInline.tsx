@@ -61,39 +61,33 @@ export function AddCityInline({ availableCities, onAddCity, onClose, widthPx }: 
       className="relative flex items-center justify-end"
       style={{ width: widthPx }}
     >
-      {/* Input (quiet, no pill) */}
       <div className="w-full">
         <input
           ref={inputRef}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Add city…"
-          className={`w-full rounded-md border border-transparent bg-transparent px-2 py-1 text-sm font-semibold text-gray-700 transition outline-none placeholder:text-gray-400 hover:bg-gray-100 focus:border-gray-200 focus:bg-white focus:ring-2 focus:ring-gray-200`}
-          aria-label="Search city"
+          className={`w-full rounded-md border border-gray-100 px-2 py-1.5 text-sm text-gray-700 transition outline-none placeholder:text-gray-400 hover:bg-gray-100 focus:border-gray-200 focus:bg-white focus:ring-0`}
         />
 
-        {/* Results dropdown */}
-        <div className="absolute right-0 mt-2 w-[min(360px,90vw)] overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl">
+        <div className="absolute right-0 mt-2 w-40 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl">
           {filteredCities.length ? (
             <ul className="max-h-72 divide-y divide-gray-100 overflow-y-auto">
-              {filteredCities.slice(0, 50).map((city) => (
+              {filteredCities.map((city) => (
                 <li key={city.id}>
                   <button
                     type="button"
                     onClick={() => handleSelect(city.id)}
-                    className={`flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition hover:bg-gray-50 focus-visible:bg-gray-50 focus-visible:outline-none`}
+                    className={`cursor-pointer flex w-full items-center justify-start gap-3 px-4 py-3 text-left transition hover:bg-gray-50 focus-visible:bg-gray-50 focus-visible:outline-none`}
                   >
                     <div className="flex min-w-0 items-center gap-2">
-                      <span className="truncate text-sm font-medium text-gray-900">
-                        {city.label}
-                      </span>
                       {city.flag ? (
                         <span className="text-base leading-none opacity-80">{city.flag}</span>
                       ) : null}
+                      <span className="truncate text-sm font-medium text-gray-900">
+                        {city.label}
+                      </span>
                     </div>
-                    <span className="shrink-0 rounded-full bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600">
-                      UTC{city.utcOffset}
-                    </span>
                   </button>
                 </li>
               ))}

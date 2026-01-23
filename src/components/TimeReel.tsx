@@ -25,7 +25,7 @@ export function TimeReel({
   totalHours = 48,
   rowHeightPx = 44,
 }: Props) {
-  const labelWidthPx = 100
+  const labelWidthPx = 160
   const cellWidthPx = 170
 
   const [nowMinute, setNowMinute] = React.useState(() => new Date())
