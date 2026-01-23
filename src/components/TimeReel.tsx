@@ -3,7 +3,7 @@ import { addMinutes, ceilToStep, formatHHMM } from "../lib/time"
 import type { City } from "../types/city"
 import NowRow from "./NowRow"
 import OffsetHourRow from "./OffsetHourRow"
-import { TimeReelHeader } from "./TimeReelHeader"
+import { Header } from "./Header"
 import { twJoin } from "tailwind-merge"
 
 type Props = {
@@ -127,7 +127,7 @@ export function TimeReel({
 
   return (
     <div>
-      <TimeReelHeader
+      <Header
         cities={cities}
         availableCities={availableCities}
         onAddCity={onAddCity}
@@ -137,11 +137,7 @@ export function TimeReel({
         onGoToNow={handleGoToNow}
       />
 
-      <div
-        ref={contentRef}
-        className="relative mx-auto w-max"
-        style={{ height: contentHeight }}
-      >
+      <div ref={contentRef} className="relative mx-auto w-max" style={{ height: contentHeight }}>
         {stepDates.map((d, i) => {
           return (
             <div

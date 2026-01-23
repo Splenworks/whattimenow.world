@@ -13,7 +13,7 @@ type Props = {
   onGoToNow: () => void
 }
 
-export function TimeReelHeader({
+export function Header({
   cities,
   availableCities,
   onAddCity,
