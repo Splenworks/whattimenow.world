@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react"
 import React from "react"
 import { formatHHMMSS } from "../lib/time"
 import type { City } from "../types/city"
@@ -50,11 +49,11 @@ const NowRow = React.memo(function NowOverlayRow({
       }}
     >
       <div
-        className="flex items-center justify-end gap-1"
+        className="flex items-center justify-end"
         style={{ width: labelWidthPx }}
       >
-        <span className="text-base font-semibold text-gray-900 tracking-wide uppercase">Now</span>
-        <ArrowRight size={16} className="inline-block text-gray-700" />
+        <span className="text-xs font-semibold text-gray-900 tracking-wide uppercase">Now</span>
+        {/* <ArrowRight size={16} className="inline-block text-gray-700" /> */}
       </div>
 
       {cities.map((c) => (
