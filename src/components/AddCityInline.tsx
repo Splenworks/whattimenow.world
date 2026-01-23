@@ -1,7 +1,7 @@
 import * as React from "react"
 import type { City } from "../types/city"
 
-type Props = {
+type AddCityInlineProps = {
   availableCities: City[]
   onAddCity: (cityId: string) => void
   onClose: () => void
@@ -10,7 +10,7 @@ type Props = {
 
 const normalize = (value: string) => value.trim().toLowerCase()
 
-export function AddCityInline({ availableCities, onAddCity, onClose, widthPx }: Props) {
+export function AddCityInline({ availableCities, onAddCity, onClose, widthPx }: AddCityInlineProps) {
   const rootRef = React.useRef<HTMLDivElement | null>(null)
   const inputRef = React.useRef<HTMLInputElement | null>(null)
   const [query, setQuery] = React.useState("")

@@ -1,7 +1,7 @@
 import React from "react"
 import { addMinutes } from "../lib/time"
 
-interface OffsetHourRowProps {
+interface OffsetTimeProps {
   hourOffset: number
   nowMinute: Date
   labelWidthPx: number
@@ -9,13 +9,13 @@ interface OffsetHourRowProps {
   getNowTopPx: (now: Date) => number
 }
 
-const OffsetHourRow = React.memo(function OffsetHourRow({
+const OffsetTime = React.memo(function OffsetHourRow({
   hourOffset,
   nowMinute,
   labelWidthPx,
   rowHeightPx,
   getNowTopPx,
-}: OffsetHourRowProps) {
+}: OffsetTimeProps) {
   const d = React.useMemo(() => addMinutes(nowMinute, hourOffset * 60), [nowMinute, hourOffset])
   const label = hourOffset > 0 ? `${hourOffset} hrs later` : `${-hourOffset} hrs ago`
 
@@ -37,4 +37,4 @@ const OffsetHourRow = React.memo(function OffsetHourRow({
   )
 })
 
-export default OffsetHourRow
+export default OffsetTime

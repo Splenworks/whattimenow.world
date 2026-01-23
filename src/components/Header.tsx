@@ -3,7 +3,7 @@ import { twJoin, twMerge } from "tailwind-merge"
 import type { City } from "../types/city"
 import { AddCityInline } from "./AddCityInline"
 
-type Props = {
+type HeaderProps = {
   cities: City[]
   availableCities: City[]
   onAddCity: (cityId: string) => void
@@ -21,7 +21,7 @@ export function Header({
   labelWidthPx,
   cellWidthPx,
   onGoToNow,
-}: Props) {
+}: HeaderProps) {
   const [isAdding, setIsAdding] = React.useState(false)
 
   return (

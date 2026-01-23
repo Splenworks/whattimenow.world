@@ -1,10 +1,10 @@
 import * as React from "react"
+import { twJoin } from "tailwind-merge"
 import { addMinutes, ceilToStep, formatHHMM } from "../lib/time"
 import type { City } from "../types/city"
-import NowRow from "./NowRow"
-import OffsetHourRow from "./OffsetHourRow"
 import { Header } from "./Header"
-import { twJoin } from "tailwind-merge"
+import NowRow from "./NowRow"
+import OffsetTime from "./OffsetTime"
 
 type Props = {
   cities: City[]
@@ -155,7 +155,7 @@ export function TimeReel({
                     "cursor-default py-2 text-center font-mono text-xl tracking-tight text-gray-400",
                     i !== closestStepIndex && "transition-colors group-hover:bg-gray-100",
                     (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
-                      "group-hover:bg-gray-50",
+                    "group-hover:bg-gray-50",
                     cityIndex === 0 && "rounded-l-md",
                     cityIndex === cities.length - 1 && "rounded-r-md",
                   )}
@@ -170,7 +170,7 @@ export function TimeReel({
         })}
 
         {offsetHours.map((h) => (
-          <OffsetHourRow
+          <OffsetTime
             key={h}
             hourOffset={h}
             nowMinute={nowMinute}

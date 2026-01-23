@@ -2,7 +2,7 @@ import React from "react"
 import { formatHHMMSS } from "../lib/time"
 import type { City } from "../types/city"
 
-interface NowOverlayRowProps {
+interface NowRowProps {
   cities: City[]
   labelWidthPx: number
   cellWidthPx: number
@@ -14,13 +14,13 @@ interface NowOverlayRowProps {
  * Absolutely positioned inside the scroll content, so it scrolls naturally.
  * Only this component updates every second (position + HH:MM:SS text).
  */
-const NowOverlayRow = React.memo(function NowOverlayRow({
+const NowRow = React.memo(function NowOverlayRow({
   cities,
   labelWidthPx,
   cellWidthPx,
   rowHeightPx,
   getNowTopPx,
-}: NowOverlayRowProps) {
+}: NowRowProps) {
   const rowRef = React.useRef<HTMLDivElement | null>(null)
   const [now, setNow] = React.useState(() => new Date())
 
@@ -69,4 +69,4 @@ const NowOverlayRow = React.memo(function NowOverlayRow({
   )
 })
 
-export default NowOverlayRow
+export default NowRow
