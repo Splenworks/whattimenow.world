@@ -49,7 +49,9 @@ export function Header({
             </div>
             <span className="text-xs font-medium text-gray-500">UTC{c.utcOffset}</span>
 
-            <CloseButton onClick={() => onRemoveCity(c.id)} />
+            {cities.length > 2 && (
+              <CloseButton onClick={() => onRemoveCity(c.id)} />
+            )}
           </div>
         ))}
 
