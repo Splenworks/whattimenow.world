@@ -63,7 +63,7 @@ export function Header({
             onClose={() => setIsAdding(false)}
           />
         ) : (
-          <div className="flex items-center justify-center" style={{ width: labelWidthPx }}>
+          <div className="flex items-center justify-left" style={{ width: labelWidthPx }}>
             <AddButton onClick={() => setIsAdding(true)} />
           </div>
         )}
