@@ -3,6 +3,7 @@ import { twJoin, twMerge } from "tailwind-merge"
 import type { City } from "../types/city"
 import { AddButton } from "./AddButton"
 import { AddCityInline } from "./AddCityInline"
+import { CloseButton } from "./CloseButton"
 
 type HeaderProps = {
   cities: City[]
@@ -66,23 +67,26 @@ export function Header({
             <span className="text-xs font-medium text-gray-500">UTC{c.utcOffset}</span>
 
             {c.id !== "local" ? (
-              <button
-                type="button"
-                aria-label={`Remove ${c.label}`}
+              <CloseButton
                 onClick={() => onRemoveCity(c.id)}
-                className={twJoin(
-                  "absolute top-1 right-2 rounded p-1",
-                  "text-gray-400 transition hover:bg-white hover:text-gray-700",
-                  "pointer-events-none opacity-0",
-                  "group-hover:pointer-events-auto group-hover:opacity-100",
-                  "focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-none",
-                  "focus-visible:ring-2 focus-visible:ring-gray-300",
-                )}
-              >
-                <span aria-hidden className="text-lg leading-none">
-                  ×
-                </span>
-              </button>
+              />
+              // <button
+              //   type="button"
+              //   aria-label={`Remove ${c.label}`}
+              //   onClick={() => onRemoveCity(c.id)}
+              //   className={twJoin(
+              //     "absolute top-1 right-2 rounded p-1",
+              //     "text-gray-400 transition hover:bg-white hover:text-gray-700",
+              //     "pointer-events-none opacity-0",
+              //     "group-hover:pointer-events-auto group-hover:opacity-100",
+              //     "focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-none",
+              //     "focus-visible:ring-2 focus-visible:ring-gray-300",
+              //   )}
+              // >
+              //   <span aria-hidden className="text-lg leading-none">
+              //     ×
+              //   </span>
+              // </button>
             ) : null}
           </div>
         ))}
@@ -96,7 +100,7 @@ export function Header({
           />
         ) : (
           <div className="flex items-center justify-center" style={{ width: labelWidthPx }}>
-            <AddButton widthPx={labelWidthPx} onClick={() => setIsAdding(true)} />
+            <AddButton onClick={() => setIsAdding(true)} />
           </div>
         )}
       </div>
