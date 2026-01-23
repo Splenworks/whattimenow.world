@@ -60,7 +60,7 @@ export function TimeReel({
     for (let h = -halfHours; h <= halfHours; h += 4) {
       if (h !== 0) arr.push(h)
     }
-    return arr
+    return arr.slice(1, -1) // remove endpoints
   }, [totalHours])
 
   React.useEffect(() => {
