@@ -38,6 +38,6 @@ export const allCities: City[] = [local, utc, ...cities]
 
 export const cityMapping = new Map(allCities.map((city) => [city.id, city]))
 
-export const defaultCityIds = ["local", "new-york", "london", "mumbai", "seoul", "utc"]
+export const defaultCityIds = ["local", "new-york", "dubai", "mumbai", "seoul", "utc"]
 
 export const defaultCities = allCities.filter((city) => defaultCityIds.includes(city.id))
