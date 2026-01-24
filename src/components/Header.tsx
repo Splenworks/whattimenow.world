@@ -14,6 +14,7 @@ type HeaderProps = {
   labelWidthPx: number
   cellWidthPx: number
   onGoToNow: () => void
+  showNowButton: boolean
 }
 
 export function Header({
@@ -24,6 +25,7 @@ export function Header({
   labelWidthPx,
   cellWidthPx,
   onGoToNow,
+  showNowButton,
 }: HeaderProps) {
   const [isAdding, setIsAdding] = React.useState(false)
 
@@ -31,7 +33,10 @@ export function Header({
     <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 backdrop-blur">
       <div className="mx-auto flex w-max flex-nowrap items-center px-4 py-2">
         <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
-          <NowButton onClick={onGoToNow} />
+          <NowButton
+            onClick={onGoToNow}
+            className={showNowButton ? "opacity-100" : "pointer-events-none opacity-0"}
+          />
         </div>
 
         {/* City columns */}

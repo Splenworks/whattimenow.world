@@ -99,6 +99,8 @@ export function TimeReel({
   }, [nowMinute, startDate, stepMinutes, totalSteps])
 
   const contentRef = React.useRef<HTMLDivElement | null>(null)
+  const nowRowRef = React.useRef<HTMLDivElement | null>(null)
+  const [isNowRowVisible, setIsNowRowVisible] = React.useState(true) // set initially true to avoid flicker
   const didInitialScroll = React.useRef(false)
 
   const handleGoToNow = React.useCallback(() => {
@@ -125,6 +127,21 @@ export function TimeReel({
     didInitialScroll.current = true
   }, [getNowTopPx, rowHeightPx])
 
+  React.useEffect(() => {
+    const el = nowRowRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsNowRowVisible(entry.isIntersecting)
+      },
+      { root: null, threshold: 0.1 },
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div>
       <Header
@@ -135,6 +152,7 @@ export function TimeReel({
         labelWidthPx={labelWidthPx}
         cellWidthPx={cellWidthPx}
         onGoToNow={handleGoToNow}
+        showNowButton={!isNowRowVisible}
       />
 
       <div ref={contentRef} className="relative mx-auto w-max" style={{ height: contentHeight }}>
@@ -152,10 +170,10 @@ export function TimeReel({
                 <div
                   key={c.id}
                   className={twJoin(
-                    "cursor-default py-2 text-center font-mono text-lg tracking-tight text-gray-400 font-light",
+                    "cursor-default py-2 text-center font-mono text-lg font-light tracking-tight text-gray-400",
                     i !== closestStepIndex && "transition-colors group-hover:bg-gray-100",
                     (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
-                    "group-hover:bg-gray-50",
+                      "group-hover:bg-gray-50",
                     cityIndex === 0 && "rounded-l-md",
                     cityIndex === cities.length - 1 && "rounded-r-md",
                   )}
@@ -181,6 +199,7 @@ export function TimeReel({
         ))}
 
         <NowRow
+          ref={nowRowRef}
           cities={cities}
           labelWidthPx={labelWidthPx}
           cellWidthPx={cellWidthPx}
