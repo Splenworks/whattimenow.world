@@ -155,7 +155,11 @@ export function TimeReel({
         showNowButton={!isNowRowVisible}
       />
 
-      <div ref={contentRef} className="relative mx-auto w-max" style={{ height: contentHeight }}>
+      <div
+        ref={contentRef}
+        className="relative mx-auto w-max bg-white dark:bg-gray-950"
+        style={{ height: contentHeight }}
+      >
         {stepDates.map((d, i) => {
           return (
             <div

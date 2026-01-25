@@ -29,7 +29,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
       <TimeReel
         cities={storedCities ?? defaultCityIds.map((id) => cityMapping.get(id)) as City[]}
         availableCities={availableCities}
