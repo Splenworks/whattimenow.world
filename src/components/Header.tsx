@@ -30,7 +30,7 @@ export function Header({
   const [isAdding, setIsAdding] = React.useState(false)
 
   return (
-    <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 backdrop-blur">
+    <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
       <div className="mx-auto flex w-max flex-nowrap items-center px-4 py-2">
         <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
           <NowButton
@@ -44,15 +44,19 @@ export function Header({
           <div
             key={c.id}
             className={twMerge(
-              "group relative flex flex-col items-center justify-center gap-1 rounded-md py-2 hover:bg-gray-100",
+              "group relative flex flex-col items-center justify-center gap-1 rounded-md py-2 hover:bg-gray-100 dark:hover:bg-gray-800",
             )}
             style={{ width: cellWidthPx }}
           >
             <div className="flex max-w-full items-center gap-1">
-              <span className="block truncate text-lg font-semibold text-gray-900">{c.label}</span>
+              <span className="block truncate text-lg font-semibold text-gray-900 dark:text-gray-100">
+                {c.label}
+              </span>
               <span className="opacity-90">{c.flag}</span>
             </div>
-            <span className="text-xs font-medium text-gray-500">UTC{c.utcOffset}</span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
+              UTC{c.utcOffset}
+            </span>
 
             {cities.length > 2 && (
               <CloseButton onClick={() => onRemoveCity(c.id)} />

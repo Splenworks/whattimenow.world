@@ -57,13 +57,15 @@ const NowRow = React.memo(
           }}
         >
           <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
-            <span className="text-xs font-semibold tracking-wide text-gray-900 uppercase">Now</span>
+            <span className="text-xs font-semibold tracking-wide text-gray-900 uppercase dark:text-gray-100">
+              Now
+            </span>
           </div>
 
           {cities.map((c) => (
             <div
               key={c.id}
-              className="text-center font-mono text-xl font-semibold tracking-tight text-gray-900"
+              className="text-center font-mono text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-100"
               style={{ width: cellWidthPx }}
             >
               {formatHHMMSS(now, c.tz)}
