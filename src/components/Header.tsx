@@ -4,6 +4,7 @@ import type { City } from "../types/city"
 import { AddButton } from "./AddButton"
 import { AddCityInline } from "./AddCityInline"
 import { CloseButton } from "./CloseButton"
+import { DarkmodeButton } from "./DarkmodeButton"
 import { NowButton } from "./NowButton"
 
 type HeaderProps = {
@@ -72,8 +73,9 @@ export function Header({
             onClose={() => setIsAdding(false)}
           />
         ) : (
-          <div className="flex items-center justify-left" style={{ width: labelWidthPx }}>
+          <div className="flex items-center justify-evenly" style={{ width: labelWidthPx }}>
             <AddButton onClick={() => setIsAdding(true)} />
+            <DarkmodeButton />
           </div>
         )}
       </div>
