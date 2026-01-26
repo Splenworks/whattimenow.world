@@ -174,7 +174,7 @@ export function TimeReel({
                 <div
                   key={c.id}
                   className={twJoin(
-                    "cursor-default py-2 text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
+                    "relative cursor-default py-2 text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
                     i !== closestStepIndex &&
                       "transition-colors group-hover:bg-gray-100 dark:group-hover:bg-gray-800",
                     (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
@@ -185,6 +185,9 @@ export function TimeReel({
                   style={{ width: cellWidthPx }}
                 >
                   {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
+                  <span className="absolute top-0 right-0 left-0 text-center font-mono text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
+                    Jan 2, 2026
+                  </span>
                 </div>
               ))}
               <div className="shrink-0" style={{ width: labelWidthPx }} />
