@@ -2,31 +2,28 @@ import * as React from "react"
 import { twJoin } from "tailwind-merge"
 import { addMinutes, ceilToStep, formatHHMM } from "../lib/time"
 import type { City } from "../types/city"
-import { Header } from "./Header"
 import NowRow from "./NowRow"
 import OffsetTime from "./OffsetTime"
 
 type Props = {
   cities: City[]
-  availableCities: City[]
-  onAddCity: (cityId: string) => void
-  onRemoveCity: (cityId: string) => void
+  cellWidthPx?: number // default: 170
   stepMinutes?: number // default: 15
   totalHours?: number // default: 48 (±24h)
   rowHeightPx?: number // default: 44
+  onGoToNowReady?: (handler: () => void) => void
+  onNowRowVisibilityChange?: (isVisible: boolean) => void
 }
 
 export function TimeReel({
   cities,
-  availableCities,
-  onAddCity,
-  onRemoveCity,
+  cellWidthPx = 170,
   stepMinutes = 15,
   totalHours = 48,
   rowHeightPx = 44,
+  onGoToNowReady,
+  onNowRowVisibilityChange,
 }: Props) {
-  const cellWidthPx = 170
-
   const [nowMinute, setNowMinute] = React.useState(() => new Date())
 
   // Build a stable step timeline ONCE (no shifting as seconds pass).
@@ -99,7 +96,6 @@ export function TimeReel({
 
   const contentRef = React.useRef<HTMLDivElement | null>(null)
   const nowRowRef = React.useRef<HTMLDivElement | null>(null)
-  const [isNowRowVisible, setIsNowRowVisible] = React.useState(true) // set initially true to avoid flicker
   const didInitialScroll = React.useRef(false)
 
   const handleGoToNow = React.useCallback(() => {
@@ -112,6 +108,10 @@ export function TimeReel({
 
     window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" })
   }, [getNowTopPx, rowHeightPx])
+
+  React.useEffect(() => {
+    onGoToNowReady?.(handleGoToNow)
+  }, [handleGoToNow, onGoToNowReady])
 
   React.useLayoutEffect(() => {
     if (didInitialScroll.current) return
@@ -132,7 +132,7 @@ export function TimeReel({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsNowRowVisible(entry.isIntersecting)
+        onNowRowVisibilityChange?.(entry.isIntersecting)
       },
       { root: null, threshold: 0.1 },
     )
@@ -143,16 +143,6 @@ export function TimeReel({
 
   return (
     <div>
-      <Header
-        cities={cities}
-        availableCities={availableCities}
-        onAddCity={onAddCity}
-        onRemoveCity={onRemoveCity}
-        cellWidthPx={cellWidthPx}
-        onGoToNow={handleGoToNow}
-        showNowButton={!isNowRowVisible}
-      />
-
       <div
         ref={contentRef}
         className="relative mx-auto w-max bg-white dark:bg-gray-950"
