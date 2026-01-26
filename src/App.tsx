@@ -5,6 +5,7 @@ import { TimeReel } from "./components/TimeReel"
 import { useScrollRestoration } from "./hooks/useScrollRestoration"
 import { allCities, cityMapping, defaultCityIds } from "./lib/city"
 import type { City } from "./types/city"
+import { Footer } from "./components/Footer"
 
 const STORAGE_KEY = "wtnw-cities"
 const STEP_MINUTES = 15
@@ -52,6 +53,7 @@ export default function App() {
         }}
         onNowRowVisibilityChange={setIsNowRowVisible}
       />
+      <Footer />
     </div>
   )
 }
