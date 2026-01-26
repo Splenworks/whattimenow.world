@@ -139,71 +139,69 @@ export function TimeReel({
 
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [onNowRowVisibilityChange])
 
   return (
-    <div>
-      <div
-        ref={contentRef}
-        className="relative mx-auto w-max bg-white dark:bg-gray-950"
-        style={{ height: contentHeight }}
-      >
-        {stepDates.map((d, i) => {
-          return (
-            <div
-              key={d.getTime()}
-              className="group flex flex-nowrap items-center px-4"
-              style={{
-                height: rowHeightPx,
-              }}
-            >
-              <div style={{ width: cellWidthPx }} />
-              {cities.map((c, cityIndex) => (
-                <div
-                  key={c.id}
-                  className={twJoin(
-                    "relative cursor-default py-2 text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
-                    i !== closestStepIndex &&
+    <div
+      ref={contentRef}
+      className="relative mx-auto w-max bg-white dark:bg-gray-950"
+      style={{ height: contentHeight }}
+    >
+      {stepDates.map((d, i) => {
+        return (
+          <div
+            key={d.getTime()}
+            className="group flex flex-nowrap items-center px-4"
+            style={{
+              height: rowHeightPx,
+            }}
+          >
+            <div style={{ width: cellWidthPx }} />
+            {cities.map((c, cityIndex) => (
+              <div
+                key={c.id}
+                className={twJoin(
+                  "relative cursor-default py-2 text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
+                  i !== closestStepIndex &&
                     "transition-colors group-hover:bg-gray-100 dark:group-hover:bg-gray-800",
-                    (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
+                  (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
                     "group-hover:bg-gray-50 dark:group-hover:bg-gray-900",
-                    cityIndex === 0 && "rounded-l-md",
-                    cityIndex === cities.length - 1 && "rounded-r-md",
-                  )}
-                  style={{ width: cellWidthPx }}
-                >
-                  {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
-                  {/* {i !== closestStepIndex && (
+                  cityIndex === 0 && "rounded-l-md",
+                  cityIndex === cities.length - 1 && "rounded-r-md",
+                )}
+                style={{ width: cellWidthPx }}
+              >
+                {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
+                {/* {i !== closestStepIndex && (
                     <span className="absolute top-0 right-0 left-0 text-center font-mono text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
                       {formatDateYYYYMMDD(d, c.tz)}
                     </span>
                   )} */}
-                </div>
-              ))}
-              <div className="shrink-0" style={{ width: cellWidthPx }} />
-            </div>
-          )
-        })}
+              </div>
+            ))}
+            <div className="shrink-0" style={{ width: cellWidthPx }} />
+          </div>
+        )
+      })}
 
-        {offsetHours.map((h) => (
-          <OffsetTime
-            key={h}
-            hourOffset={h}
-            nowMinute={nowMinute}
-            cellWidthPx={cellWidthPx}
-            rowHeightPx={rowHeightPx}
-            getNowTopPx={getNowTopPx}
-          />
-        ))}
-
-        <NowRow
-          ref={nowRowRef}
-          cities={cities}
+      {offsetHours.map((h) => (
+        <OffsetTime
+          key={h}
+          hourOffset={h}
+          nowMinute={nowMinute}
           cellWidthPx={cellWidthPx}
           rowHeightPx={rowHeightPx}
           getNowTopPx={getNowTopPx}
         />
-      </div>
+      ))}
+
+      <NowRow
+        ref={nowRowRef}
+        cities={cities}
+        cellWidthPx={cellWidthPx}
+        rowHeightPx={rowHeightPx}
+        getNowTopPx={getNowTopPx}
+      />
     </div>
   )
 }
