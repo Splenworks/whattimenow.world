@@ -12,8 +12,8 @@ export function CloseButton({ onClick, className }: CloseButtonProps) {
       type="button"
       onClick={onClick}
       className={twMerge(
-        "cursor-pointer rounded-md absolute top-1 right-2 p-1",
-        "text-gray-400 transition hover:bg-white hover:text-gray-700 dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-200",
+        "absolute top-1 right-2 cursor-pointer rounded-md p-1",
+        "text-gray-400 transition hover:bg-white hover:text-gray-700 dark:text-gray-500 dark:hover:bg-gray-700 dark:hover:text-gray-200",
         "pointer-events-none opacity-0",
         "group-hover:pointer-events-auto group-hover:opacity-100",
         "focus-visible:pointer-events-auto focus-visible:opacity-100 focus-visible:outline-none",
