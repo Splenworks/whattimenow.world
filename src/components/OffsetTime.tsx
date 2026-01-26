@@ -4,7 +4,7 @@ import { addMinutes } from "../lib/time"
 interface OffsetTimeProps {
   hourOffset: number
   nowMinute: Date
-  labelWidthPx: number
+  cellWidthPx: number
   rowHeightPx: number
   getNowTopPx: (now: Date) => number
 }
@@ -12,7 +12,7 @@ interface OffsetTimeProps {
 const OffsetTime = React.memo(function OffsetHourRow({
   hourOffset,
   nowMinute,
-  labelWidthPx,
+  cellWidthPx,
   rowHeightPx,
   getNowTopPx,
 }: OffsetTimeProps) {
@@ -29,7 +29,7 @@ const OffsetTime = React.memo(function OffsetHourRow({
     >
       <div
         className="text-right text-xs font-semibold tracking-wide text-gray-600 uppercase dark:text-gray-400"
-        style={{ width: labelWidthPx }}
+        style={{ width: cellWidthPx }}
       >
         {label}
       </div>

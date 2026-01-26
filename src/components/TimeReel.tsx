@@ -25,7 +25,6 @@ export function TimeReel({
   totalHours = 48,
   rowHeightPx = 44,
 }: Props) {
-  const labelWidthPx = 160
   const cellWidthPx = 170
 
   const [nowMinute, setNowMinute] = React.useState(() => new Date())
@@ -149,7 +148,6 @@ export function TimeReel({
         availableCities={availableCities}
         onAddCity={onAddCity}
         onRemoveCity={onRemoveCity}
-        labelWidthPx={labelWidthPx}
         cellWidthPx={cellWidthPx}
         onGoToNow={handleGoToNow}
         showNowButton={!isNowRowVisible}
@@ -169,7 +167,7 @@ export function TimeReel({
                 height: rowHeightPx,
               }}
             >
-              <div style={{ width: labelWidthPx }} />
+              <div style={{ width: cellWidthPx }} />
               {cities.map((c, cityIndex) => (
                 <div
                   key={c.id}
@@ -192,7 +190,7 @@ export function TimeReel({
                   )} */}
                 </div>
               ))}
-              <div className="shrink-0" style={{ width: labelWidthPx }} />
+              <div className="shrink-0" style={{ width: cellWidthPx }} />
             </div>
           )
         })}
@@ -202,7 +200,7 @@ export function TimeReel({
             key={h}
             hourOffset={h}
             nowMinute={nowMinute}
-            labelWidthPx={labelWidthPx}
+            cellWidthPx={cellWidthPx}
             rowHeightPx={rowHeightPx}
             getNowTopPx={getNowTopPx}
           />
@@ -211,7 +209,6 @@ export function TimeReel({
         <NowRow
           ref={nowRowRef}
           cities={cities}
-          labelWidthPx={labelWidthPx}
           cellWidthPx={cellWidthPx}
           rowHeightPx={rowHeightPx}
           getNowTopPx={getNowTopPx}

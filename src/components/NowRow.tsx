@@ -5,7 +5,6 @@ import { twJoin } from "tailwind-merge"
 
 interface NowRowProps {
   cities: City[]
-  labelWidthPx: number
   cellWidthPx: number
   rowHeightPx: number
   getNowTopPx: (now: Date) => number
@@ -17,7 +16,7 @@ interface NowRowProps {
  */
 const NowRow = React.memo(
   React.forwardRef<HTMLDivElement, NowRowProps>(
-    ({ cities, labelWidthPx, cellWidthPx, rowHeightPx, getNowTopPx }, forwardedRef) => {
+    ({ cities, cellWidthPx, rowHeightPx, getNowTopPx }, forwardedRef) => {
       const rowRef = React.useRef<HTMLDivElement | null>(null)
       const [now, setNow] = React.useState(() => new Date())
       const setRefs = React.useCallback(
@@ -57,7 +56,7 @@ const NowRow = React.memo(
             // top is set imperatively
           }}
         >
-          <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
+          <div className="flex items-center justify-end" style={{ width: cellWidthPx }}>
             <span className="text-xs font-semibold tracking-wide text-gray-900 uppercase dark:text-gray-100">
               Now
             </span>
@@ -81,7 +80,7 @@ const NowRow = React.memo(
               </span>
             </div>
           ))}
-          <div className="shrink-0" style={{ width: labelWidthPx }} />
+          <div className="shrink-0" style={{ width: cellWidthPx }} />
         </div>
       )
     },

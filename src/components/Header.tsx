@@ -12,7 +12,6 @@ type HeaderProps = {
   availableCities: City[]
   onAddCity: (cityId: string) => void
   onRemoveCity: (cityId: string) => void
-  labelWidthPx: number
   cellWidthPx: number
   onGoToNow: () => void
   showNowButton: boolean
@@ -23,7 +22,6 @@ export function Header({
   availableCities,
   onAddCity,
   onRemoveCity,
-  labelWidthPx,
   cellWidthPx,
   onGoToNow,
   showNowButton,
@@ -33,7 +31,7 @@ export function Header({
   return (
     <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
       <div className="mx-auto flex w-max flex-nowrap items-center px-4 py-2">
-        <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
+        <div className="flex items-center justify-end" style={{ width: cellWidthPx }}>
           <NowButton
             onClick={onGoToNow}
             className={showNowButton ? "opacity-100" : "pointer-events-none opacity-0"}
@@ -65,13 +63,13 @@ export function Header({
 
         {isAdding ? (
           <AddCityInline
-            widthPx={labelWidthPx}
+            widthPx={cellWidthPx}
             availableCities={availableCities}
             onAddCity={onAddCity}
             onClose={() => setIsAdding(false)}
           />
         ) : (
-          <div className="flex items-center justify-evenly" style={{ width: labelWidthPx }}>
+          <div className="flex items-center justify-evenly" style={{ width: cellWidthPx }}>
             <AddButton onClick={() => setIsAdding(true)} />
             <DarkmodeButton />
           </div>
