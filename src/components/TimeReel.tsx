@@ -185,9 +185,11 @@ export function TimeReel({
                   style={{ width: cellWidthPx }}
                 >
                   {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
-                  <span className="absolute top-0 right-0 left-0 text-center font-mono text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
-                    {formatDateYYYYMMDD(d, c.tz)}
-                  </span>
+                  {i !== closestStepIndex && (
+                    <span className="absolute top-0 right-0 left-0 text-center font-mono text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
+                      {formatDateYYYYMMDD(d, c.tz)}
+                    </span>
+                  )}
                 </div>
               ))}
               <div className="shrink-0" style={{ width: labelWidthPx }} />
