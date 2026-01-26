@@ -67,7 +67,7 @@ const NowRow = React.memo(
             <div
               key={c.id}
               className={twJoin(
-                "relative py-5 text-center group-hover:bg-gray-100 dark:group-hover:bg-gray-800",
+                "relative pt-5 pb-2 text-center group-hover:bg-gray-100 dark:group-hover:bg-gray-800",
                 i === 0 && "rounded-l-md",
                 i === cities.length - 1 && "rounded-r-md",
               )}
@@ -76,7 +76,7 @@ const NowRow = React.memo(
               <span className="font-mono text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">
                 {formatHHMMSS(now, c.tz)}
               </span>
-              <span className="absolute top-1 right-0 left-0 text-center text-xs font-medium text-gray-500 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-400">
+              <span className="absolute top-1 right-0 left-0 text-xs font-medium text-gray-900 opacity-0 transition-opacity group-hover:opacity-100 dark:text-white">
                 {formatDateYYYYMMDD(now, c.tz)}
               </span>
             </div>
