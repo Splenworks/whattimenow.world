@@ -25,3 +25,12 @@ export function formatHHMMSS(d: Date, tz: string) {
     hour12: false,
   }).format(d)
 }
+
+export function formatDateYYYYMMDD(d: Date, tz: string) {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: tz,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(d)
+}

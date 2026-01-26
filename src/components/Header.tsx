@@ -59,9 +59,7 @@ export function Header({
               UTC{c.utcOffset}
             </span>
 
-            {cities.length > 2 && (
-              <CloseButton onClick={() => onRemoveCity(c.id)} />
-            )}
+            {cities.length > 2 && <CloseButton onClick={() => onRemoveCity(c.id)} />}
           </div>
         ))}
 
