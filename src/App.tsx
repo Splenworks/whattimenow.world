@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useLocalStorage } from "usehooks-ts"
 import { Header } from "./components/Header"
 import { TimeReel } from "./components/TimeReel"
+import { useScrollRestoration } from "./hooks/useScrollRestoration"
 import { allCities, cityMapping, defaultCityIds } from "./lib/city"
 import type { City } from "./types/city"
 
@@ -12,14 +13,7 @@ const ROW_HEIGHT_PX = 44
 const CELL_WIDTH_PX = 170
 
 export default function App() {
-  useEffect(() => {
-    if (!("scrollRestoration" in history)) return
-    const previous = history.scrollRestoration
-    history.scrollRestoration = "manual"
-    return () => {
-      history.scrollRestoration = previous
-    }
-  }, [])
+  useScrollRestoration("manual")
 
   const [storedCityIds, setStoredCityIds] = useLocalStorage<string[]>(STORAGE_KEY, defaultCityIds)
   const storedCities = storedCityIds.map((id) => cityMapping.get(id)).filter(Boolean) as City[]
