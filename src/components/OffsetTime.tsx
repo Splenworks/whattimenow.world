@@ -1,22 +1,22 @@
-import React from "react"
+import { memo, useMemo } from "react"
 import { addMinutes } from "../lib/time"
 
 interface OffsetTimeProps {
   hourOffset: number
   nowMinute: Date
-  labelWidthPx: number
+  cellWidthPx: number
   rowHeightPx: number
   getNowTopPx: (now: Date) => number
 }
 
-const OffsetTime = React.memo(function OffsetHourRow({
+const OffsetTime = memo(function OffsetHourRow({
   hourOffset,
   nowMinute,
-  labelWidthPx,
+  cellWidthPx,
   rowHeightPx,
   getNowTopPx,
 }: OffsetTimeProps) {
-  const d = React.useMemo(() => addMinutes(nowMinute, hourOffset * 60), [nowMinute, hourOffset])
+  const d = useMemo(() => addMinutes(nowMinute, hourOffset * 60), [nowMinute, hourOffset])
   const label = hourOffset > 0 ? `${hourOffset} hrs later` : `${-hourOffset} hrs ago`
 
   return (
@@ -29,7 +29,7 @@ const OffsetTime = React.memo(function OffsetHourRow({
     >
       <div
         className="text-right text-xs font-semibold tracking-wide text-gray-600 uppercase dark:text-gray-400"
-        style={{ width: labelWidthPx }}
+        style={{ width: cellWidthPx }}
       >
         {label}
       </div>

@@ -1,50 +1,46 @@
-import * as React from "react"
+import { useState, useEffect, useMemo, useCallback, useRef, useLayoutEffect } from "react"
 import { twJoin } from "tailwind-merge"
 import { addMinutes, ceilToStep, formatHHMM } from "../lib/time"
 import type { City } from "../types/city"
-import { Header } from "./Header"
 import NowRow from "./NowRow"
 import OffsetTime from "./OffsetTime"
 
 type Props = {
   cities: City[]
-  availableCities: City[]
-  onAddCity: (cityId: string) => void
-  onRemoveCity: (cityId: string) => void
+  cellWidthPx?: number // default: 170
   stepMinutes?: number // default: 15
   totalHours?: number // default: 48 (±24h)
-  rowHeightPx?: number // default: 56
+  rowHeightPx?: number // default: 44
+  onGoToNowReady?: (handler: () => void) => void
+  onNowRowVisibilityChange?: (isVisible: boolean) => void
 }
 
 export function TimeReel({
   cities,
-  availableCities,
-  onAddCity,
-  onRemoveCity,
+  cellWidthPx = 170,
   stepMinutes = 15,
   totalHours = 48,
   rowHeightPx = 44,
+  onGoToNowReady,
+  onNowRowVisibilityChange,
 }: Props) {
-  const labelWidthPx = 160
-  const cellWidthPx = 170
-
-  const [nowMinute, setNowMinute] = React.useState(() => new Date())
+  const [nowMinute, setNowMinute] = useState(() => new Date())
 
   // Build a stable step timeline ONCE (no shifting as seconds pass).
   // We anchor around a step boundary at mount time.
-  const anchor = React.useMemo(() => ceilToStep(new Date(), stepMinutes), [stepMinutes])
+  const anchor = useMemo(() => ceilToStep(new Date(), stepMinutes), [stepMinutes])
 
   const stepsPerHour = Math.max(1, Math.round(60 / stepMinutes))
   const totalSteps = Math.max(stepsPerHour, totalHours * stepsPerHour)
   const half = Math.floor(totalSteps / 2)
 
   // Timeline start time (top of the scroll content)
-  const startDate = React.useMemo(
+  const startDate = useMemo(
     () => addMinutes(anchor, -half * stepMinutes),
     [anchor, half, stepMinutes],
   )
 
-  const stepDates = React.useMemo(() => {
+  const stepDates = useMemo(() => {
     const arr: Date[] = []
     for (let i = 0; i < totalSteps; i++) {
       arr.push(addMinutes(startDate, i * stepMinutes))
@@ -54,7 +50,7 @@ export function TimeReel({
 
   const contentHeight = totalSteps * rowHeightPx
 
-  const offsetHours = React.useMemo(() => {
+  const offsetHours = useMemo(() => {
     const halfHours = Math.floor(totalHours / 2)
     const arr: number[] = []
     for (let h = -halfHours; h <= halfHours; h += 2) {
@@ -63,7 +59,7 @@ export function TimeReel({
     return arr.slice(1, -1) // remove endpoints
   }, [totalHours])
 
-  React.useEffect(() => {
+  useEffect(() => {
     let intervalId: number | undefined
     const msToNextMinute = 60_000 - (Date.now() % 60_000)
     const timeoutId = window.setTimeout(() => {
@@ -77,7 +73,7 @@ export function TimeReel({
   }, [])
 
   // Convert "now" to a top offset within the scroll content (continuous).
-  const getNowTopPx = React.useCallback(
+  const getNowTopPx = useCallback(
     (now: Date) => {
       const minutesFromStart = (now.getTime() - startDate.getTime()) / 60_000
       const rowFloat = minutesFromStart / stepMinutes // continuous
@@ -91,19 +87,18 @@ export function TimeReel({
     [startDate, stepMinutes, rowHeightPx, contentHeight],
   )
 
-  const closestStepIndex = React.useMemo(() => {
+  const closestStepIndex = useMemo(() => {
     const minutesFromStart = (nowMinute.getTime() - startDate.getTime()) / 60_000
     const rowFloat = minutesFromStart / stepMinutes
     const nearest = Math.round(rowFloat)
     return Math.min(totalSteps - 1, Math.max(0, nearest))
   }, [nowMinute, startDate, stepMinutes, totalSteps])
 
-  const contentRef = React.useRef<HTMLDivElement | null>(null)
-  const nowRowRef = React.useRef<HTMLDivElement | null>(null)
-  const [isNowRowVisible, setIsNowRowVisible] = React.useState(true) // set initially true to avoid flicker
-  const didInitialScroll = React.useRef(false)
+  const contentRef = useRef<HTMLDivElement | null>(null)
+  const nowRowRef = useRef<HTMLDivElement | null>(null)
+  const didInitialScroll = useRef(false)
 
-  const handleGoToNow = React.useCallback(() => {
+  const handleGoToNow = useCallback(() => {
     const contentEl = contentRef.current
     if (!contentEl) return
 
@@ -114,7 +109,11 @@ export function TimeReel({
     window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" })
   }, [getNowTopPx, rowHeightPx])
 
-  React.useLayoutEffect(() => {
+  useEffect(() => {
+    onGoToNowReady?.(handleGoToNow)
+  }, [handleGoToNow, onGoToNowReady])
+
+  useLayoutEffect(() => {
     if (didInitialScroll.current) return
     const contentEl = contentRef.current
     if (!contentEl) return
@@ -127,96 +126,82 @@ export function TimeReel({
     didInitialScroll.current = true
   }, [getNowTopPx, rowHeightPx])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const el = nowRowRef.current
     if (!el) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsNowRowVisible(entry.isIntersecting)
+        onNowRowVisibilityChange?.(entry.isIntersecting)
       },
       { root: null, threshold: 0.1 },
     )
 
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [onNowRowVisibilityChange])
 
   return (
-    <div>
-      <Header
-        cities={cities}
-        availableCities={availableCities}
-        onAddCity={onAddCity}
-        onRemoveCity={onRemoveCity}
-        labelWidthPx={labelWidthPx}
-        cellWidthPx={cellWidthPx}
-        onGoToNow={handleGoToNow}
-        showNowButton={!isNowRowVisible}
-      />
-
-      <div
-        ref={contentRef}
-        className="relative mx-auto w-max bg-white dark:bg-gray-950"
-        style={{ height: contentHeight }}
-      >
-        {stepDates.map((d, i) => {
-          return (
-            <div
-              key={d.getTime()}
-              className="group flex flex-nowrap items-center px-4"
-              style={{
-                height: rowHeightPx,
-              }}
-            >
-              <div style={{ width: labelWidthPx }} />
-              {cities.map((c, cityIndex) => (
-                <div
-                  key={c.id}
-                  className={twJoin(
-                    "relative cursor-default py-2 text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
-                    i !== closestStepIndex &&
-                      "transition-colors group-hover:bg-gray-100 dark:group-hover:bg-gray-800",
-                    (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
-                      "group-hover:bg-gray-50 dark:group-hover:bg-gray-900",
-                    cityIndex === 0 && "rounded-l-md",
-                    cityIndex === cities.length - 1 && "rounded-r-md",
-                  )}
-                  style={{ width: cellWidthPx }}
-                >
-                  {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
-                  {/* {i !== closestStepIndex && (
+    <div
+      ref={contentRef}
+      className="relative mx-auto w-max bg-white dark:bg-gray-950"
+      style={{ height: contentHeight }}
+    >
+      {stepDates.map((d, i) => {
+        return (
+          <div
+            key={d.getTime()}
+            className="group flex flex-nowrap items-center px-4"
+            style={{
+              height: rowHeightPx,
+            }}
+          >
+            <div style={{ width: cellWidthPx }} />
+            {cities.map((c, cityIndex) => (
+              <div
+                key={c.id}
+                className={twJoin(
+                  "relative cursor-default py-2 text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
+                  i !== closestStepIndex &&
+                    "transition-colors group-hover:bg-gray-100 dark:group-hover:bg-gray-800",
+                  (i - closestStepIndex === 1 || i - closestStepIndex === -1) &&
+                    "group-hover:bg-gray-50 dark:group-hover:bg-gray-900",
+                  cityIndex === 0 && "rounded-l-md",
+                  cityIndex === cities.length - 1 && "rounded-r-md",
+                )}
+                style={{ width: cellWidthPx }}
+              >
+                {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
+                {/* {i !== closestStepIndex && (
                     <span className="absolute top-0 right-0 left-0 text-center font-mono text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
                       {formatDateYYYYMMDD(d, c.tz)}
                     </span>
                   )} */}
-                </div>
-              ))}
-              <div className="shrink-0" style={{ width: labelWidthPx }} />
-            </div>
-          )
-        })}
+              </div>
+            ))}
+            <div className="shrink-0" style={{ width: cellWidthPx }} />
+          </div>
+        )
+      })}
 
-        {offsetHours.map((h) => (
-          <OffsetTime
-            key={h}
-            hourOffset={h}
-            nowMinute={nowMinute}
-            labelWidthPx={labelWidthPx}
-            rowHeightPx={rowHeightPx}
-            getNowTopPx={getNowTopPx}
-          />
-        ))}
-
-        <NowRow
-          ref={nowRowRef}
-          cities={cities}
-          labelWidthPx={labelWidthPx}
+      {offsetHours.map((h) => (
+        <OffsetTime
+          key={h}
+          hourOffset={h}
+          nowMinute={nowMinute}
           cellWidthPx={cellWidthPx}
           rowHeightPx={rowHeightPx}
           getNowTopPx={getNowTopPx}
         />
-      </div>
+      ))}
+
+      <NowRow
+        ref={nowRowRef}
+        cities={cities}
+        cellWidthPx={cellWidthPx}
+        rowHeightPx={rowHeightPx}
+        getNowTopPx={getNowTopPx}
+      />
     </div>
   )
 }

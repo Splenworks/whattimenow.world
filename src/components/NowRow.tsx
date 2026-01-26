@@ -1,11 +1,10 @@
-import React from "react"
+import { forwardRef, useRef, memo, useState, useCallback, useEffect, useLayoutEffect } from "react"
 import { formatDateYYYYMMDD, formatHHMMSS } from "../lib/time"
 import type { City } from "../types/city"
 import { twJoin } from "tailwind-merge"
 
 interface NowRowProps {
   cities: City[]
-  labelWidthPx: number
   cellWidthPx: number
   rowHeightPx: number
   getNowTopPx: (now: Date) => number
@@ -15,12 +14,12 @@ interface NowRowProps {
  * Absolutely positioned inside the scroll content, so it scrolls naturally.
  * Only this component updates every second (position + HH:MM:SS text).
  */
-const NowRow = React.memo(
-  React.forwardRef<HTMLDivElement, NowRowProps>(
-    ({ cities, labelWidthPx, cellWidthPx, rowHeightPx, getNowTopPx }, forwardedRef) => {
-      const rowRef = React.useRef<HTMLDivElement | null>(null)
-      const [now, setNow] = React.useState(() => new Date())
-      const setRefs = React.useCallback(
+const NowRow = memo(
+  forwardRef<HTMLDivElement, NowRowProps>(
+    ({ cities, cellWidthPx, rowHeightPx, getNowTopPx }, forwardedRef) => {
+      const rowRef = useRef<HTMLDivElement | null>(null)
+      const [now, setNow] = useState(() => new Date())
+      const setRefs = useCallback(
         (node: HTMLDivElement | null) => {
           rowRef.current = node
           if (!forwardedRef) return
@@ -34,13 +33,13 @@ const NowRow = React.memo(
       )
 
       // Update time + position once per second (minimal scope: this component only).
-      React.useEffect(() => {
+      useEffect(() => {
         const id = window.setInterval(() => setNow(new Date()), 1000)
         return () => window.clearInterval(id)
       }, [])
 
       // Apply top position imperatively so layout is cheap.
-      React.useLayoutEffect(() => {
+      useLayoutEffect(() => {
         const el = rowRef.current
         if (!el) return
 
@@ -57,7 +56,7 @@ const NowRow = React.memo(
             // top is set imperatively
           }}
         >
-          <div className="flex items-center justify-end" style={{ width: labelWidthPx }}>
+          <div className="flex items-center justify-end" style={{ width: cellWidthPx }}>
             <span className="text-xs font-semibold tracking-wide text-gray-900 uppercase dark:text-gray-100">
               Now
             </span>
@@ -81,7 +80,7 @@ const NowRow = React.memo(
               </span>
             </div>
           ))}
-          <div className="shrink-0" style={{ width: labelWidthPx }} />
+          <div className="shrink-0" style={{ width: cellWidthPx }} />
         </div>
       )
     },

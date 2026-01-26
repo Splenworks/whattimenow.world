@@ -1,24 +1,26 @@
-import { useEffect } from "react"
+import { useRef, useState } from "react"
 import { useLocalStorage } from "usehooks-ts"
+import { Header } from "./components/Header"
 import { TimeReel } from "./components/TimeReel"
+import { useScrollRestoration } from "./hooks/useScrollRestoration"
 import { allCities, cityMapping, defaultCityIds } from "./lib/city"
 import type { City } from "./types/city"
 
 const STORAGE_KEY = "wtnw-cities"
+const STEP_MINUTES = 15
+const TOTAL_HOURS = 48
+const ROW_HEIGHT_PX = 44
+const CELL_WIDTH_PX = 170
 
 export default function App() {
-  useEffect(() => {
-    if (!("scrollRestoration" in history)) return
-    const previous = history.scrollRestoration
-    history.scrollRestoration = "manual"
-    return () => {
-      history.scrollRestoration = previous
-    }
-  }, [])
+  useScrollRestoration("manual")
 
   const [storedCityIds, setStoredCityIds] = useLocalStorage<string[]>(STORAGE_KEY, defaultCityIds)
   const storedCities = storedCityIds.map((id) => cityMapping.get(id)).filter(Boolean) as City[]
+  const cities = storedCities ?? (defaultCityIds.map((id) => cityMapping.get(id)) as City[])
   const availableCities = allCities.filter((city) => !storedCityIds.includes(city.id))
+  const goToNowRef = useRef<() => void>(() => {})
+  const [isNowRowVisible, setIsNowRowVisible] = useState(true) // set initially true to avoid flicker
 
   const handleAddCity = (cityId: string) => {
     setStoredCityIds((prev) => (prev.includes(cityId) ? prev : [...prev, cityId]))
@@ -30,13 +32,25 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
-      <TimeReel
-        cities={storedCities ?? defaultCityIds.map((id) => cityMapping.get(id)) as City[]}
+      <Header
+        cities={cities}
         availableCities={availableCities}
         onAddCity={handleAddCity}
         onRemoveCity={handleRemoveCity}
-        stepMinutes={15}
-        totalHours={48}
+        cellWidthPx={CELL_WIDTH_PX}
+        onGoToNow={() => goToNowRef.current()}
+        showNowButton={!isNowRowVisible}
+      />
+      <TimeReel
+        cities={cities}
+        cellWidthPx={CELL_WIDTH_PX}
+        stepMinutes={STEP_MINUTES}
+        totalHours={TOTAL_HOURS}
+        rowHeightPx={ROW_HEIGHT_PX}
+        onGoToNowReady={(handler) => {
+          goToNowRef.current = handler
+        }}
+        onNowRowVisibilityChange={setIsNowRowVisible}
       />
     </div>
   )
