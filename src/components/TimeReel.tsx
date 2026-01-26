@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useState, useEffect, useMemo, useCallback, useRef, useLayoutEffect } from "react"
 import { twJoin } from "tailwind-merge"
 import { addMinutes, ceilToStep, formatHHMM } from "../lib/time"
 import type { City } from "../types/city"
@@ -24,23 +24,23 @@ export function TimeReel({
   onGoToNowReady,
   onNowRowVisibilityChange,
 }: Props) {
-  const [nowMinute, setNowMinute] = React.useState(() => new Date())
+  const [nowMinute, setNowMinute] = useState(() => new Date())
 
   // Build a stable step timeline ONCE (no shifting as seconds pass).
   // We anchor around a step boundary at mount time.
-  const anchor = React.useMemo(() => ceilToStep(new Date(), stepMinutes), [stepMinutes])
+  const anchor = useMemo(() => ceilToStep(new Date(), stepMinutes), [stepMinutes])
 
   const stepsPerHour = Math.max(1, Math.round(60 / stepMinutes))
   const totalSteps = Math.max(stepsPerHour, totalHours * stepsPerHour)
   const half = Math.floor(totalSteps / 2)
 
   // Timeline start time (top of the scroll content)
-  const startDate = React.useMemo(
+  const startDate = useMemo(
     () => addMinutes(anchor, -half * stepMinutes),
     [anchor, half, stepMinutes],
   )
 
-  const stepDates = React.useMemo(() => {
+  const stepDates = useMemo(() => {
     const arr: Date[] = []
     for (let i = 0; i < totalSteps; i++) {
       arr.push(addMinutes(startDate, i * stepMinutes))
@@ -50,7 +50,7 @@ export function TimeReel({
 
   const contentHeight = totalSteps * rowHeightPx
 
-  const offsetHours = React.useMemo(() => {
+  const offsetHours = useMemo(() => {
     const halfHours = Math.floor(totalHours / 2)
     const arr: number[] = []
     for (let h = -halfHours; h <= halfHours; h += 2) {
@@ -59,7 +59,7 @@ export function TimeReel({
     return arr.slice(1, -1) // remove endpoints
   }, [totalHours])
 
-  React.useEffect(() => {
+  useEffect(() => {
     let intervalId: number | undefined
     const msToNextMinute = 60_000 - (Date.now() % 60_000)
     const timeoutId = window.setTimeout(() => {
@@ -73,7 +73,7 @@ export function TimeReel({
   }, [])
 
   // Convert "now" to a top offset within the scroll content (continuous).
-  const getNowTopPx = React.useCallback(
+  const getNowTopPx = useCallback(
     (now: Date) => {
       const minutesFromStart = (now.getTime() - startDate.getTime()) / 60_000
       const rowFloat = minutesFromStart / stepMinutes // continuous
@@ -87,18 +87,18 @@ export function TimeReel({
     [startDate, stepMinutes, rowHeightPx, contentHeight],
   )
 
-  const closestStepIndex = React.useMemo(() => {
+  const closestStepIndex = useMemo(() => {
     const minutesFromStart = (nowMinute.getTime() - startDate.getTime()) / 60_000
     const rowFloat = minutesFromStart / stepMinutes
     const nearest = Math.round(rowFloat)
     return Math.min(totalSteps - 1, Math.max(0, nearest))
   }, [nowMinute, startDate, stepMinutes, totalSteps])
 
-  const contentRef = React.useRef<HTMLDivElement | null>(null)
-  const nowRowRef = React.useRef<HTMLDivElement | null>(null)
-  const didInitialScroll = React.useRef(false)
+  const contentRef = useRef<HTMLDivElement | null>(null)
+  const nowRowRef = useRef<HTMLDivElement | null>(null)
+  const didInitialScroll = useRef(false)
 
-  const handleGoToNow = React.useCallback(() => {
+  const handleGoToNow = useCallback(() => {
     const contentEl = contentRef.current
     if (!contentEl) return
 
@@ -109,11 +109,11 @@ export function TimeReel({
     window.scrollTo({ top: Math.max(0, targetTop), behavior: "smooth" })
   }, [getNowTopPx, rowHeightPx])
 
-  React.useEffect(() => {
+  useEffect(() => {
     onGoToNowReady?.(handleGoToNow)
   }, [handleGoToNow, onGoToNowReady])
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (didInitialScroll.current) return
     const contentEl = contentRef.current
     if (!contentEl) return
@@ -126,7 +126,7 @@ export function TimeReel({
     didInitialScroll.current = true
   }, [getNowTopPx, rowHeightPx])
 
-  React.useEffect(() => {
+  useEffect(() => {
     const el = nowRowRef.current
     if (!el) return
 

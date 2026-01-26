@@ -1,4 +1,3 @@
-import * as React from "react"
 import { twMerge } from "tailwind-merge"
 import type { City } from "../types/city"
 import { AddButton } from "./AddButton"
@@ -6,6 +5,7 @@ import { AddCityInline } from "./AddCityInline"
 import { CloseButton } from "./CloseButton"
 import { DarkmodeButton } from "./DarkmodeButton"
 import { NowButton } from "./NowButton"
+import { useState } from "react"
 
 type HeaderProps = {
   cities: City[]
@@ -26,7 +26,7 @@ export function Header({
   onGoToNow,
   showNowButton,
 }: HeaderProps) {
-  const [isAdding, setIsAdding] = React.useState(false)
+  const [isAdding, setIsAdding] = useState(false)
 
   return (
     <div className="sticky top-0 z-10 border-b border-gray-100 bg-white/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">

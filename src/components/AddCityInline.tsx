@@ -1,4 +1,4 @@
-import * as React from "react"
+import { useRef, useEffect, useState, useMemo } from "react"
 import type { City } from "../types/city"
 
 type AddCityInlineProps = {
@@ -10,13 +10,18 @@ type AddCityInlineProps = {
 
 const normalize = (value: string) => value.trim().toLowerCase()
 
-export function AddCityInline({ availableCities, onAddCity, onClose, widthPx }: AddCityInlineProps) {
-  const rootRef = React.useRef<HTMLDivElement | null>(null)
-  const inputRef = React.useRef<HTMLInputElement | null>(null)
-  const [query, setQuery] = React.useState("")
+export function AddCityInline({
+  availableCities,
+  onAddCity,
+  onClose,
+  widthPx,
+}: AddCityInlineProps) {
+  const rootRef = useRef<HTMLDivElement | null>(null)
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const [query, setQuery] = useState("")
 
   const normalizedQuery = normalize(query)
-  const filteredCities = React.useMemo(() => {
+  const filteredCities = useMemo(() => {
     if (!normalizedQuery) return availableCities
     return availableCities.filter((city) => {
       const label = normalize(city.label)
@@ -26,12 +31,12 @@ export function AddCityInline({ availableCities, onAddCity, onClose, widthPx }: 
   }, [availableCities, normalizedQuery])
 
   // Focus on open
-  React.useEffect(() => {
+  useEffect(() => {
     window.requestAnimationFrame(() => inputRef.current?.focus())
   }, [])
 
   // Close on outside click
-  React.useEffect(() => {
+  useEffect(() => {
     const onPointerDown = (e: PointerEvent) => {
       const root = rootRef.current
       if (!root) return
@@ -42,7 +47,7 @@ export function AddCityInline({ availableCities, onAddCity, onClose, widthPx }: 
   }, [onClose])
 
   // Close on Escape
-  React.useEffect(() => {
+  useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
     }
@@ -78,7 +83,7 @@ export function AddCityInline({ availableCities, onAddCity, onClose, widthPx }: 
                   <button
                     type="button"
                     onClick={() => handleSelect(city.id)}
-                    className={`cursor-pointer flex w-full items-center justify-start gap-3 px-4 py-3 text-left transition hover:bg-gray-50 focus-visible:bg-gray-50 focus-visible:outline-none dark:hover:bg-gray-900 dark:focus-visible:bg-gray-900`}
+                    className={`flex w-full cursor-pointer items-center justify-start gap-3 px-4 py-3 text-left transition hover:bg-gray-50 focus-visible:bg-gray-50 focus-visible:outline-none dark:hover:bg-gray-900 dark:focus-visible:bg-gray-900`}
                   >
                     <div className="flex min-w-0 items-center gap-2">
                       {city.flag ? (

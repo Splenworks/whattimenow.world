@@ -1,4 +1,4 @@
-import React from "react"
+import { forwardRef, useRef, memo, useState, useCallback, useEffect, useLayoutEffect } from "react"
 import { formatDateYYYYMMDD, formatHHMMSS } from "../lib/time"
 import type { City } from "../types/city"
 import { twJoin } from "tailwind-merge"
@@ -14,12 +14,12 @@ interface NowRowProps {
  * Absolutely positioned inside the scroll content, so it scrolls naturally.
  * Only this component updates every second (position + HH:MM:SS text).
  */
-const NowRow = React.memo(
-  React.forwardRef<HTMLDivElement, NowRowProps>(
+const NowRow = memo(
+  forwardRef<HTMLDivElement, NowRowProps>(
     ({ cities, cellWidthPx, rowHeightPx, getNowTopPx }, forwardedRef) => {
-      const rowRef = React.useRef<HTMLDivElement | null>(null)
-      const [now, setNow] = React.useState(() => new Date())
-      const setRefs = React.useCallback(
+      const rowRef = useRef<HTMLDivElement | null>(null)
+      const [now, setNow] = useState(() => new Date())
+      const setRefs = useCallback(
         (node: HTMLDivElement | null) => {
           rowRef.current = node
           if (!forwardedRef) return
@@ -33,13 +33,13 @@ const NowRow = React.memo(
       )
 
       // Update time + position once per second (minimal scope: this component only).
-      React.useEffect(() => {
+      useEffect(() => {
         const id = window.setInterval(() => setNow(new Date()), 1000)
         return () => window.clearInterval(id)
       }, [])
 
       // Apply top position imperatively so layout is cheap.
-      React.useLayoutEffect(() => {
+      useLayoutEffect(() => {
         const el = rowRef.current
         if (!el) return
 
