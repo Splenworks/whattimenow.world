@@ -1,5 +1,5 @@
 import React from "react"
-import { formatHHMMSS } from "../lib/time"
+import { formatDateYYYYMMDD, formatHHMMSS } from "../lib/time"
 import type { City } from "../types/city"
 import { twJoin } from "tailwind-merge"
 
@@ -67,13 +67,18 @@ const NowRow = React.memo(
             <div
               key={c.id}
               className={twJoin(
-                "py-5 text-center font-mono text-xl font-semibold tracking-tight text-gray-900 group-hover:bg-gray-100 dark:text-gray-100 dark:group-hover:bg-gray-800",
+                "relative py-5 text-center group-hover:bg-gray-100 dark:group-hover:bg-gray-800",
                 i === 0 && "rounded-l-md",
                 i === cities.length - 1 && "rounded-r-md",
               )}
               style={{ width: cellWidthPx }}
             >
-              {formatHHMMSS(now, c.tz)}
+              <span className="font-mono text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">
+                {formatHHMMSS(now, c.tz)}
+              </span>
+              <span className="absolute top-1 right-0 left-0 text-center text-xs font-medium text-gray-500 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-400">
+                {formatDateYYYYMMDD(now, c.tz)}
+              </span>
             </div>
           ))}
           <div className="shrink-0" style={{ width: labelWidthPx }} />
