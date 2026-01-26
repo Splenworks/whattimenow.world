@@ -1,6 +1,7 @@
 import React from "react"
 import { formatHHMMSS } from "../lib/time"
 import type { City } from "../types/city"
+import { twJoin } from "tailwind-merge"
 
 interface NowRowProps {
   cities: City[]
@@ -50,7 +51,7 @@ const NowRow = React.memo(
       return (
         <div
           ref={setRefs}
-          className="absolute left-0 flex cursor-default flex-nowrap items-center px-4"
+          className="group absolute left-0 flex cursor-default flex-nowrap items-center px-4"
           style={{
             height: rowHeightPx,
             // top is set imperatively
@@ -62,10 +63,14 @@ const NowRow = React.memo(
             </span>
           </div>
 
-          {cities.map((c) => (
+          {cities.map((c, i) => (
             <div
               key={c.id}
-              className="text-center font-mono text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-100"
+              className={twJoin(
+                "py-5 text-center font-mono text-xl font-semibold tracking-tight text-gray-900 group-hover:bg-gray-100 dark:text-gray-100 dark:group-hover:bg-gray-800",
+                i === 0 && "rounded-l-md",
+                i === cities.length - 1 && "rounded-r-md",
+              )}
               style={{ width: cellWidthPx }}
             >
               {formatHHMMSS(now, c.tz)}
