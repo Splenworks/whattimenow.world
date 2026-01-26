@@ -5,6 +5,9 @@ import { allCities, cityMapping, defaultCityIds } from "./lib/city"
 import type { City } from "./types/city"
 
 const STORAGE_KEY = "wtnw-cities"
+const STEP_MINUTES = 15
+const TOTAL_HOURS = 48
+const ROW_HEIGHT_PX = 44
 
 export default function App() {
   useEffect(() => {
@@ -35,8 +38,9 @@ export default function App() {
         availableCities={availableCities}
         onAddCity={handleAddCity}
         onRemoveCity={handleRemoveCity}
-        stepMinutes={15}
-        totalHours={48}
+        stepMinutes={STEP_MINUTES}
+        totalHours={TOTAL_HOURS}
+        rowHeightPx={ROW_HEIGHT_PX}
       />
     </div>
   )
