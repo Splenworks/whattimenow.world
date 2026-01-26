@@ -1,6 +1,6 @@
 import * as React from "react"
 import { twJoin } from "tailwind-merge"
-import { addMinutes, ceilToStep, formatHHMM } from "../lib/time"
+import { addMinutes, ceilToStep, formatDateYYYYMMDD, formatHHMM } from "../lib/time"
 import type { City } from "../types/city"
 import { Header } from "./Header"
 import NowRow from "./NowRow"
@@ -186,7 +186,7 @@ export function TimeReel({
                 >
                   {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
                   <span className="absolute top-0 right-0 left-0 text-center font-mono text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
-                    Jan 2, 2026
+                    {formatDateYYYYMMDD(d, c.tz)}
                   </span>
                 </div>
               ))}
