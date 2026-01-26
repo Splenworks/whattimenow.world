@@ -1,4 +1,5 @@
 import { useRef, useState } from "react"
+import { Route, Routes } from "react-router-dom"
 import { useLocalStorage } from "usehooks-ts"
 import { Header } from "./components/Header"
 import { TimeReel } from "./components/TimeReel"
@@ -6,6 +7,7 @@ import { useScrollRestoration } from "./hooks/useScrollRestoration"
 import { allCities, cityMapping, defaultCityIds } from "./lib/city"
 import type { City } from "./types/city"
 import { Footer } from "./components/Footer"
+import { Privacy } from "./pages/Privacy"
 
 const STORAGE_KEY = "wtnw-cities"
 const STEP_MINUTES = 15
@@ -13,7 +15,7 @@ const TOTAL_HOURS = 48
 const ROW_HEIGHT_PX = 44
 const CELL_WIDTH_PX = 170
 
-export default function App() {
+function HomePage() {
   useScrollRestoration("manual")
 
   const [storedCityIds, setStoredCityIds] = useLocalStorage<string[]>(STORAGE_KEY, defaultCityIds)
@@ -55,5 +57,14 @@ export default function App() {
       />
       <Footer />
     </div>
+  )
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/privacy" element={<Privacy />} />
+    </Routes>
   )
 }
