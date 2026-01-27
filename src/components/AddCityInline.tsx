@@ -87,7 +87,10 @@ export function AddCityInline({
                   >
                     <div className="flex min-w-0 items-center gap-2">
                       {city.flag ? (
-                        <span className="text-base leading-none opacity-80">{city.flag}</span>
+                        <span
+                          className={`fi fi-${city.flag} text-base leading-none opacity-80`}
+                          aria-hidden="true"
+                        />
                       ) : null}
                       <span className="truncate text-sm font-medium text-gray-900 dark:text-gray-100">
                         {city.label}

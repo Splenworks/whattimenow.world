@@ -51,7 +51,9 @@ export function Header({
               <span className="block truncate text-lg font-semibold text-gray-900 dark:text-gray-100">
                 {c.label}
               </span>
-              <span className="opacity-90">{c.flag}</span>
+              {c.flag ? (
+                <span className={`fi fi-${c.flag} opacity-90`} aria-hidden="true" />
+              ) : null}
             </div>
             <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
               UTC{c.utcOffset}

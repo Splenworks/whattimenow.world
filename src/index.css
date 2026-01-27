@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@config '../tailwind.config.js';
+@config "../tailwind.config.js";
+@import "flag-icons/css/flag-icons.min.css";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
