@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useMemo } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import type { City } from "../types/city"
 
 type AddCityInlineProps = {
@@ -85,10 +85,10 @@ export function AddCityInline({
                     onClick={() => handleSelect(city.id)}
                     className={`flex w-full cursor-pointer items-center justify-start gap-3 px-4 py-3 text-left transition hover:bg-gray-50 focus-visible:bg-gray-50 focus-visible:outline-none dark:hover:bg-gray-900 dark:focus-visible:bg-gray-900`}
                   >
-                    <div className="flex min-w-0 items-center gap-2">
+                    <div className="flex min-w-0 items-center gap-3">
                       {city.flag ? (
                         <span
-                          className={`fi fi-${city.flag} text-base leading-none opacity-80`}
+                          className={`fi fi-${city.flag} text-sm leading-none opacity-90`}
                           aria-hidden="true"
                         />
                       ) : null}

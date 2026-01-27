@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { twMerge } from "tailwind-merge"
 import type { City } from "../types/city"
 import { AddButton } from "./AddButton"
@@ -5,7 +6,6 @@ import { AddCityInline } from "./AddCityInline"
 import { CloseButton } from "./CloseButton"
 import { DarkmodeButton } from "./DarkmodeButton"
 import { NowButton } from "./NowButton"
-import { useState } from "react"
 
 type HeaderProps = {
   cities: City[]
@@ -47,12 +47,12 @@ export function Header({
             )}
             style={{ width: cellWidthPx }}
           >
-            <div className="flex max-w-full items-center gap-1">
+            <div className="flex max-w-full items-center gap-2">
               <span className="block truncate text-lg font-semibold text-gray-900 dark:text-gray-100">
                 {c.label}
               </span>
               {c.flag ? (
-                <span className={`fi fi-${c.flag} opacity-90`} aria-hidden="true" />
+                <span className={`fi fi-${c.flag} text-sm opacity-90`} aria-hidden="true" />
               ) : null}
             </div>
             <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
