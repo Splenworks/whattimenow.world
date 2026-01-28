@@ -5,6 +5,15 @@ export function Footer() {
     <footer>
       <div className="mx-auto w-full pt-6 pb-8 text-center text-sm text-gray-500 dark:text-gray-400">
         <p>
+          <Link
+            to="https://github.com/Splenworks/whattimenow.world"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-gray-700 dark:hover:text-gray-300"
+          >
+            Open Source
+          </Link>
+          <span className="mx-2 text-gray-400 dark:text-gray-600">•</span>
           <Link to="/privacy" className="underline hover:text-gray-700 dark:hover:text-gray-300">
             Privacy
           </Link>
