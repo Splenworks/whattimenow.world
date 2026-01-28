@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { BackToAppLink } from "../components/BackToAppLink"
 import { useScrollToTop } from "../hooks/useScrollToTop"
 
 export function TermsPage() {
@@ -7,13 +7,8 @@ export function TermsPage() {
   return (
     <main className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
       <div className="mx-auto w-full max-w-180 px-4 py-10">
-        <div className="mb-6 flex items-center justify-between">
-          <Link
-            to="/"
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
-          >
-            ← Back to app
-          </Link>
+        <div className="mb-6">
+          <BackToAppLink />
         </div>
         <h1 className="text-2xl font-semibold tracking-tight">Terms of Service</h1>
         <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
