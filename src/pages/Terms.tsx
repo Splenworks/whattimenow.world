@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 export function TermsPage() {
   return (
     <main className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
-      <div className="mx-auto max-w-2xl px-6 py-12">
+      <div className="mx-auto w-full max-w-180 px-4 py-10">
         <div className="mb-6 flex items-center justify-between">
           <Link
             to="/"
@@ -12,11 +12,11 @@ export function TermsPage() {
             ← Back to app
           </Link>
         </div>
-        <h1 className="text-3xl font-semibold">Terms of Service</h1>
-        <p className="mt-4 text-base text-gray-600 dark:text-gray-400">
-          WhatTimeNow.world provides a simple world clock tool for personal and informational use.
+        <h1 className="text-2xl font-semibold tracking-tight">Terms of Service</h1>
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          WhatTimeNow.World provides a simple world clock tool for personal and informational use.
         </p>
-        <div className="mt-6 space-y-4 text-sm leading-6 text-gray-600 dark:text-gray-400">
+        <div className="mt-6 space-y-4 text-[15px] leading-7 text-gray-800 dark:text-gray-200">
           <p>
             By using this site, you agree to use it lawfully and not to attempt to disrupt or
             interfere with its operation.
@@ -33,7 +33,7 @@ export function TermsPage() {
             If you have questions, reach out at{" "}
             <a
               href="mailto:roylory@gmail.com"
-              className="underline decoration-gray-300 underline-offset-2 hover:text-gray-900 dark:hover:text-gray-100"
+              className="font-medium text-gray-900 underline underline-offset-4 hover:text-gray-700 dark:text-gray-100 dark:hover:text-gray-300"
             >
               roylory@gmail.com
             </a>
