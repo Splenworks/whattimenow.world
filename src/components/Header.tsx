@@ -31,7 +31,7 @@ export function Header({
   const [isAdding, setIsAdding] = useState(false)
 
   return (
-    <header className="sticky top-0 z-10 mb-2 border-b border-gray-100 bg-white/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
+    <header className="sticky top-0 z-10 mb-2 border-b border-gray-100 bg-gray-50/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
       <div className="mx-auto flex w-max flex-nowrap items-center px-4 py-2">
         <div className="flex items-center justify-end" style={{ width: cellWidthPx }}>
           <NowButton

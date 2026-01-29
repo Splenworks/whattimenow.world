@@ -5,7 +5,7 @@ export function AboutPage() {
   useScrollToTop()
 
   return (
-    <main className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+    <main className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
       <div className="mx-auto w-full max-w-180 px-4 py-10">
         <div className="mb-6">
           <BackToAppLink />
@@ -20,8 +20,8 @@ export function AboutPage() {
 
         <section className="space-y-4 text-[15px] leading-7 text-gray-800 dark:text-gray-200">
           <p>
-            <span className="font-medium">WhatTimeNow.World</span> is a simple tool for comparing time
-            across multiple cities at a glance.
+            <span className="font-medium">WhatTimeNow.World</span> is a simple tool for comparing
+            time across multiple cities at a glance.
           </p>
           <p>
             It is designed for people who regularly coordinate across time zones—remote teams,
@@ -49,8 +49,8 @@ export function AboutPage() {
               <li>How do multiple cities line up over the course of a day?</li>
             </ul>
             <p>
-              WhatTimeNow.World approaches this as a visual comparison problem rather than a numeric one,
-              prioritizing clarity, speed, and ease of use.
+              WhatTimeNow.World approaches this as a visual comparison problem rather than a numeric
+              one, prioritizing clarity, speed, and ease of use.
             </p>
           </div>
         </section>
@@ -95,7 +95,8 @@ export function AboutPage() {
             <li>Fast loading and predictable behavior</li>
           </ul>
           <p className="text-[15px] leading-7 text-gray-800 dark:text-gray-200">
-            It aims to be a practical, everyday tool rather than a full-featured scheduling platform.
+            It aims to be a practical, everyday tool rather than a full-featured scheduling
+            platform.
           </p>
         </section>
 

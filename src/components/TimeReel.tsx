@@ -144,7 +144,7 @@ export function TimeReel({
   return (
     <div
       ref={contentRef}
-      className="relative mx-auto w-max bg-white dark:bg-gray-950"
+      className="relative mx-auto w-max bg-gray-50 dark:bg-gray-950"
       style={{ height: contentHeight }}
     >
       {stepDates.map((d, i) => {

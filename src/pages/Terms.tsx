@@ -5,7 +5,7 @@ export function TermsPage() {
   useScrollToTop()
 
   return (
-    <main className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
+    <main className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100">
       <div className="mx-auto w-full max-w-180 px-4 py-10">
         <div className="mb-6">
           <BackToAppLink />
