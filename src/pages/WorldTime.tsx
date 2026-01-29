@@ -1,8 +1,8 @@
 import { useCityParams } from "../hooks/useCityParams"
-import { HomePage } from "./Home"
+import { WorldTimeApp } from "../components/WorldTimeApp"
 
 export function WorldTimePage() {
   const { cityIds } = useCityParams()
 
-  return <HomePage routeCityIds={cityIds} lockCities />
+  return <WorldTimeApp cityIds={cityIds} lockCities />
 }
