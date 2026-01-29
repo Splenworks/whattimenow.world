@@ -25,33 +25,15 @@ const buildTitle = (labels: string[]) => {
   return `${labels.slice(0, 3).join(", ")} Time Comparison | WhatTimeNow`
 }
 
-const buildDescription = (labels: string[]) => {
-  if (labels.length === 0) return "Compare time zones around the world with WhatTimeNow."
-  if (labels.length === 1) return `Check the current time in ${labels[0]} with WhatTimeNow.`
-  if (labels.length === 2) return `Compare times in ${labels[0]} and ${labels[1]} with WhatTimeNow.`
-  return `Compare times in ${labels.slice(0, 3).join(", ")} with WhatTimeNow.`
-}
-
-const updateMetaDescription = (description: string) => {
-  const existing = document.querySelector<HTMLMetaElement>('meta[name="description"]')
-  if (existing) {
-    existing.content = description
-    return
-  }
-
-  const meta = document.createElement("meta")
-  meta.name = "description"
-  meta.content = description
-  document.head.appendChild(meta)
-}
-
 export function HomePage({ routeCityIds, lockCities = false }: HomePageProps) {
   useScrollRestoration("manual")
 
   const [storedCityIds, setStoredCityIds] = useLocalStorage<string[]>(STORAGE_KEY, defaultCityIds)
   const selectedCityIds = routeCityIds ?? storedCityIds
   const selectedCities = selectedCityIds.map((id) => cityMapping.get(id)).filter(Boolean) as City[]
-  const cities = selectedCities.length ? selectedCities : defaultCityIds.map((id) => cityMapping.get(id)) as City[]
+  const cities = selectedCities.length
+    ? selectedCities
+    : (defaultCityIds.map((id) => cityMapping.get(id)) as City[])
   const availableCities = allCities.filter((city) => !selectedCityIds.includes(city.id))
   const goToNowRef = useRef<() => void>(() => {})
   const [isNowRowVisible, setIsNowRowVisible] = useState(true) // set initially true to avoid flicker
@@ -69,7 +51,6 @@ export function HomePage({ routeCityIds, lockCities = false }: HomePageProps) {
   useEffect(() => {
     const labels = cities.map((city) => city.label)
     document.title = buildTitle(labels)
-    updateMetaDescription(buildDescription(labels))
   }, [cities])
 
   return (
