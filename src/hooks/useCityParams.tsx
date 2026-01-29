@@ -26,22 +26,21 @@ const dedupeCityIds = (cityIds: string[]) => {
 }
 
 export const useCityParams = () => {
-  const location = useLocation()
+  const { pathname } = useLocation()
   const navigate = useNavigate()
-  const segments = normalizePathSegments(location.pathname)
+  const segments = normalizePathSegments(pathname)
   const hasInvalidSegment = segments.some((segment) => !cityMapping.has(segment))
   const uniqueSegments = dedupeCityIds(segments)
   const limitedSegments = uniqueSegments.slice(0, MAX_ROUTE_CITIES)
   const canonicalPath = toCanonicalPath(limitedSegments)
   const normalizedPath = toCanonicalPath(segments)
-  const suffix = `${location.search}${location.hash}`
 
   if (segments.length === 0 || hasInvalidSegment || limitedSegments.length === 0) {
     navigate("/", { replace: true })
   }
 
   if (canonicalPath !== normalizedPath) {
-    navigate(`${canonicalPath}${suffix}`, { replace: true })
+    navigate(canonicalPath, { replace: true })
   }
 
   return {
