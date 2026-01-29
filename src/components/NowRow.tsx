@@ -66,7 +66,7 @@ const NowRow = memo(
             <div
               key={c.id}
               className={twJoin(
-                "relative pt-5 pb-2 text-center group-hover:bg-gray-100 dark:group-hover:bg-gray-800",
+                "relative pt-5 pb-2 text-center group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
                 i === 0 && "rounded-l-md",
                 i === cities.length - 1 && "rounded-r-md",
               )}

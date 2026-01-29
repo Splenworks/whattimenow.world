@@ -31,7 +31,7 @@ export function Header({
   const [isAdding, setIsAdding] = useState(false)
 
   return (
-    <header className="sticky top-0 z-10 mb-2 border-b border-gray-100 bg-gray-50/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
+    <header className="sticky top-0 z-10 mb-2 border-b border-gray-200 bg-gray-100/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
       <div className="mx-auto flex w-max flex-nowrap items-center px-4 py-2">
         <div className="flex items-center justify-end" style={{ width: cellWidthPx }}>
           <NowButton
@@ -40,12 +40,11 @@ export function Header({
           />
         </div>
 
-        {/* City columns */}
         {cities.map((c) => (
           <div
             key={c.id}
             className={twMerge(
-              "group relative flex flex-col items-center justify-center gap-1 rounded-md py-2 hover:bg-gray-100 dark:hover:bg-gray-800",
+              "group relative flex flex-col items-center justify-center gap-1 rounded-md py-2 hover:bg-gray-200 dark:hover:bg-gray-800",
             )}
             style={{ width: cellWidthPx }}
           >

@@ -3,10 +3,10 @@ import { PillLink } from "./PillLink"
 
 export function Footer() {
   return (
-    <footer className="mt-4 border-t border-gray-100 dark:border-gray-800">
+    <footer className="mt-4 border-t border-gray-200 bg-gray-100/80 dark:border-gray-800 dark:bg-gray-950/80">
       <div className="mx-auto w-full space-y-6 p-6 text-center text-sm text-gray-500 dark:text-gray-400">
         <div className="space-y-3">
-          <h2 className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
+          <h2 className="text-xs font-semibold tracking-wide text-gray-400 uppercase dark:text-gray-500">
             Popular time comparisons
           </h2>
           <ul className="flex flex-wrap justify-center gap-2">
@@ -26,7 +26,7 @@ export function Footer() {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col md:flex-row gap-1 md:gap-4 text-sm justify-center md:items-center">
+        <div className="flex flex-col justify-center gap-1 text-sm md:flex-row md:items-center md:gap-4">
           <p className="space-x-4">
             <Link
               to="/about"
@@ -50,12 +50,22 @@ export function Footer() {
               to="https://github.com/Splenworks/whattimenow.world"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline hover:text-gray-700 dark:hover:text-gray-300"
+              className="hover:text-gray-700 hover:underline dark:hover:text-gray-300"
             >
               Open Source
             </Link>
           </p>
-          <p>&copy; {new Date().getFullYear()} <Link to="https://splenworks.com" target="_blank" className="hover:underline hover:text-gray-700 dark:hover:text-gray-300">Splenworks</Link> Inc.</p>
+          <p>
+            &copy; {new Date().getFullYear()}{" "}
+            <Link
+              to="https://splenworks.com"
+              target="_blank"
+              className="hover:text-gray-700 hover:underline dark:hover:text-gray-300"
+            >
+              Splenworks
+            </Link>{" "}
+            Inc.
+          </p>
         </div>
       </div>
     </footer>
