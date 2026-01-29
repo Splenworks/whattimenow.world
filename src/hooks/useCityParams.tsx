@@ -10,7 +10,7 @@ const parseCities = (pathname: string) =>
     .split("/")
     .filter(Boolean)
     .map((segment) => decodeURIComponent(segment).trim().toLowerCase())
-    .filter((segment) => cityMapping.has(segment))
+    .filter((segment) => cityMapping.has(segment) && segment !== "local" && segment !== "utc")
     .slice(0, MAX_ROUTE_CITIES)
 
 export const useCityParams = () => {

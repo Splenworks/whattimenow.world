@@ -4,5 +4,5 @@ import { WorldTimeApp } from "../components/WorldTimeApp"
 export function WorldTimePage() {
   const { cityIds } = useCityParams()
 
-  return <WorldTimeApp cityIds={cityIds} lockCities />
+  return <WorldTimeApp cityIds={["local", ...cityIds, "utc"]} lockCities />
 }
