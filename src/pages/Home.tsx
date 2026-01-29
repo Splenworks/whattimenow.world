@@ -16,6 +16,13 @@ export function HomePage() {
   }
 
   return (
-    <WorldTimeApp cityIds={storedCityIds} onAddCity={handleAddCity} onRemoveCity={handleRemoveCity} />
+    <>
+      <h1 className="sr-only">World clock and time zone comparison tool</h1>
+      <WorldTimeApp
+        cityIds={storedCityIds}
+        onAddCity={handleAddCity}
+        onRemoveCity={handleRemoveCity}
+      />
+    </>
   )
 }
