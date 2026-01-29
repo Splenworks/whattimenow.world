@@ -3,8 +3,7 @@ import { Link } from "react-router-dom"
 export function Footer() {
   return (
     <footer className="mt-4 border-t border-gray-100 dark:border-gray-800">
-      <div className="mx-auto w-full space-y-3 p-6 text-center text-sm text-gray-500 dark:text-gray-400">
-        <p>&copy; {new Date().getFullYear()} Splenworks Inc.</p>
+      <div className="mx-auto w-full space-y-4 p-6 text-center text-sm text-gray-500 dark:text-gray-400">
         <p>
           <Link
             to="/about"
@@ -36,6 +35,7 @@ export function Footer() {
             Open Source
           </Link> */}
         </p>
+        <p>&copy; {new Date().getFullYear()} Splenworks Inc.</p>
       </div>
     </footer>
   )
