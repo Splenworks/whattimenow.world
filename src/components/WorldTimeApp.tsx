@@ -5,6 +5,7 @@ import { TimeReel } from "./TimeReel"
 import { useScrollRestoration } from "../hooks/useScrollRestoration"
 import { allCities, cityMapping, defaultCityIds } from "../lib/city"
 import type { City } from "../types/city"
+import { formatList } from "../lib/string"
 
 const STEP_MINUTES = 15
 const TOTAL_HOURS = 48
@@ -16,13 +17,6 @@ type WorldTimeAppProps = {
   lockCities?: boolean
   onAddCity?: (cityId: string) => void
   onRemoveCity?: (cityId: string) => void
-}
-
-const buildTitle = (labels: string[]) => {
-  if (labels.length === 0) return "WhatTimeNow"
-  if (labels.length === 1) return `${labels[0]} Time | WhatTimeNow`
-  if (labels.length === 2) return `${labels[0]} ↔ ${labels[1]} Time Comparison | WhatTimeNow`
-  return `${labels.slice(0, 3).join(", ")} Time Comparison | WhatTimeNow`
 }
 
 export function WorldTimeApp({
@@ -37,7 +31,9 @@ export function WorldTimeApp({
   const cities = selectedCities.length
     ? selectedCities
     : (defaultCityIds.map((id) => cityMapping.get(id)) as City[])
-  const effectiveCityIds = selectedCities.length ? selectedCities.map((city) => city.id) : defaultCityIds
+  const effectiveCityIds = selectedCities.length
+    ? selectedCities.map((city) => city.id)
+    : defaultCityIds
   const availableCities = allCities.filter((city) => !effectiveCityIds.includes(city.id))
   const goToNowRef = useRef<() => void>(() => {})
   const [isNowRowVisible, setIsNowRowVisible] = useState(true) // set initially true to avoid flicker
@@ -53,9 +49,15 @@ export function WorldTimeApp({
   }
 
   useEffect(() => {
-    const labels = cities.map((city) => city.label)
-    document.title = buildTitle(labels)
-  }, [cities])
+    if (!lockCities) {
+      document.title = "What time now?"
+      return
+    }
+    const labels = cities
+      .filter((city) => city.id !== "utc" && city.id !== "local")
+      .map((city) => city.label)
+    document.title = `What time now in ${formatList(labels)}?`
+  }, [cities, lockCities])
 
   return (
     <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
