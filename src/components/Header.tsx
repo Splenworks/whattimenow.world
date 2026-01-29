@@ -15,6 +15,7 @@ type HeaderProps = {
   cellWidthPx: number
   onGoToNow: () => void
   showNowButton: boolean
+  isReadOnly?: boolean
 }
 
 export function Header({
@@ -25,6 +26,7 @@ export function Header({
   cellWidthPx,
   onGoToNow,
   showNowButton,
+  isReadOnly = false,
 }: HeaderProps) {
   const [isAdding, setIsAdding] = useState(false)
 
@@ -59,11 +61,15 @@ export function Header({
               UTC{c.utcOffset}
             </span>
 
-            {cities.length > 2 && <CloseButton onClick={() => onRemoveCity(c.id)} />}
+            {!isReadOnly && cities.length > 2 && <CloseButton onClick={() => onRemoveCity(c.id)} />}
           </div>
         ))}
 
-        {isAdding ? (
+        {isReadOnly ? (
+          <div className="flex items-center justify-evenly" style={{ width: cellWidthPx }}>
+            <DarkmodeButton />
+          </div>
+        ) : isAdding ? (
           <AddCityInline
             widthPx={cellWidthPx}
             availableCities={availableCities}
