@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { PillLink } from "./PillLink"
 
 export function Footer() {
   return (
@@ -10,36 +11,18 @@ export function Footer() {
           </h2>
           <ul className="flex flex-wrap justify-center gap-2">
             <li>
-              <Link
-                to="/los-angeles/seoul"
-                className="rounded-full border border-gray-200 bg-white/60 px-3 py-1 text-xs text-gray-600 transition hover:border-gray-300 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:text-gray-100"
-              >
-                Los Angeles • Seoul
-              </Link>
+              <PillLink to="/los-angeles/seoul">Los Angeles • Seoul</PillLink>
             </li>
             <li>
-              <Link
-                to="/new-york/paris"
-                className="rounded-full border border-gray-200 bg-white/60 px-3 py-1 text-xs text-gray-600 transition hover:border-gray-300 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:text-gray-100"
-              >
-                New York • Paris
-              </Link>
+              <PillLink to="/new-york/paris">New York • Paris</PillLink>
             </li>
             <li>
-              <Link
-                to="/san-francisco/tokyo/singapore"
-                className="rounded-full border border-gray-200 bg-white/60 px-3 py-1 text-xs text-gray-600 transition hover:border-gray-300 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:text-gray-100"
-              >
+              <PillLink to="/san-francisco/tokyo/singapore">
                 San Francisco • Tokyo • Singapore
-              </Link>
+              </PillLink>
             </li>
             <li>
-              <Link
-                to="/london/mumbai/dubai"
-                className="rounded-full border border-gray-200 bg-white/60 px-3 py-1 text-xs text-gray-600 transition hover:border-gray-300 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-300 dark:hover:border-gray-500 dark:hover:text-gray-100"
-              >
-                London • Mumbai • Dubai
-              </Link>
+              <PillLink to="/london/mumbai/dubai">London • Mumbai • Dubai</PillLink>
             </li>
           </ul>
         </div>
