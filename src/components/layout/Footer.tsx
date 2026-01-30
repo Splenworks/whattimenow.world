@@ -1,5 +1,5 @@
-import { PillLink } from "./PillLink"
-import { FooterLink } from "./FooterLink"
+import { PillLink } from "../PillLink"
+import { FooterLink } from "../FooterLink"
 
 export function Footer() {
   return (

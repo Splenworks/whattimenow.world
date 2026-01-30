@@ -1,11 +1,11 @@
 import { useState } from "react"
 import { twMerge } from "tailwind-merge"
-import type { City } from "../types/city"
-import { AddButton } from "./AddButton"
-import { AddCity } from "./AddCity"
-import { CloseButton } from "./CloseButton"
-import { DarkmodeButton } from "./DarkmodeButton"
-import { NowButton } from "./NowButton"
+import type { City } from "../../types/city"
+import { AddButton } from "../AddButton"
+import { AddCity } from "../AddCity"
+import { CloseButton } from "../CloseButton"
+import { DarkmodeButton } from "../DarkmodeButton"
+import { NowButton } from "../NowButton"
 
 type HeaderProps = {
   cities: City[]

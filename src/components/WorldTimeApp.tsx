@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
-import { Footer } from "./Footer"
-import { Header } from "./Header"
+import { Footer } from "./layout/Footer"
+import { Header } from "./layout/Header"
 import { TimeSteps } from "./TimeSteps"
 import { useScrollRestoration } from "../hooks/useScrollRestoration"
 import { allCities, cityMapping, defaultCityIds } from "../lib/city"
