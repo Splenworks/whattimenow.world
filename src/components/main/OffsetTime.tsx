@@ -1,5 +1,5 @@
 import { memo, useMemo } from "react"
-import { addMinutes } from "../lib/time"
+import { addMinutes } from "../../lib/time"
 
 interface OffsetTimeProps {
   hourOffset: number

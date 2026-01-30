@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback, useRef, useLayoutEffect } from "react"
 import { twJoin } from "tailwind-merge"
-import { addMinutes, ceilToStep, formatHHMM } from "../lib/time"
-import type { City } from "../types/city"
+import { addMinutes, ceilToStep, formatHHMM } from "../../lib/time"
+import type { City } from "../../types/city"
 import NowRow from "./NowRow"
 import OffsetTime from "./OffsetTime"
 

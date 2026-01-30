@@ -1,6 +1,6 @@
 import { forwardRef, useRef, memo, useState, useCallback, useEffect, useLayoutEffect } from "react"
-import { formatDateYYYYMMDD, formatHHMMSS } from "../lib/time"
-import type { City } from "../types/city"
+import { formatDateYYYYMMDD, formatHHMMSS } from "../../lib/time"
+import type { City } from "../../types/city"
 import { twJoin } from "tailwind-merge"
 
 interface NowRowProps {

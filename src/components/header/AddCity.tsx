@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import type { City } from "../types/city"
-import { normalize } from "../lib/string"
+import type { City } from "../../types/city"
+import { normalize } from "../../lib/string"
 
 type AddCityProps = {
   availableCities: City[]

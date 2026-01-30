@@ -1,6 +1,6 @@
 import { MoonIcon, SunIcon } from "lucide-react"
 import { twMerge } from "tailwind-merge"
-import { useDarkmode } from "../hooks/useDarkmode"
+import { useDarkmode } from "../../hooks/useDarkmode"
 
 type DarkmodeButtonProps = {
   className?: string
