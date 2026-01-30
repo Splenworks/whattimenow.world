@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Footer } from "./Footer"
 import { Header } from "./Header"
-import { TimeReel } from "./TimeReel"
+import { TimeSteps } from "./TimeSteps"
 import { useScrollRestoration } from "../hooks/useScrollRestoration"
 import { allCities, cityMapping, defaultCityIds } from "../lib/city"
 import type { City } from "../types/city"
@@ -73,7 +73,7 @@ export function WorldTimeApp({
         showNowButton={!isNowRowVisible}
         isReadOnly={lockCities}
       />
-      <TimeReel
+      <TimeSteps
         cities={cities}
         cellWidthPx={CELL_WIDTH_PX}
         stepMinutes={STEP_MINUTES}

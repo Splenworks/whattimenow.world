@@ -5,7 +5,7 @@ import type { City } from "../types/city"
 import NowRow from "./NowRow"
 import OffsetTime from "./OffsetTime"
 
-type Props = {
+type TimeStepsProps = {
   cities: City[]
   cellWidthPx?: number // default: 170
   stepMinutes?: number // default: 15
@@ -15,7 +15,7 @@ type Props = {
   onNowRowVisibilityChange?: (isVisible: boolean) => void
 }
 
-export function TimeReel({
+export function TimeSteps({
   cities,
   cellWidthPx = 170,
   stepMinutes = 15,
@@ -23,7 +23,7 @@ export function TimeReel({
   rowHeightPx = 44,
   onGoToNowReady,
   onNowRowVisibilityChange,
-}: Props) {
+}: TimeStepsProps) {
   const [nowMinute, setNowMinute] = useState(() => new Date())
 
   // Build a stable step timeline ONCE (no shifting as seconds pass).
@@ -143,6 +143,7 @@ export function TimeReel({
 
   return (
     <div
+      hidden
       ref={contentRef}
       className="relative mx-auto w-max bg-gray-50 dark:bg-gray-950"
       style={{ height: contentHeight }}

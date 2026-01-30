@@ -68,7 +68,7 @@ export function Header({
         ))}
 
         {isReadOnly ? (
-          <div className="flex items-center justify-evenly" style={{ width: cellWidthPx }}>
+          <div className="flex items-center" style={{ width: cellWidthPx }}>
             <DarkmodeButton />
           </div>
         ) : canAddCity && isAdding ? (
@@ -79,7 +79,7 @@ export function Header({
             onClose={() => setIsAdding(false)}
           />
         ) : (
-          <div className="flex items-center justify-evenly" style={{ width: cellWidthPx }}>
+          <div className="ml-2 flex items-center gap-4" style={{ width: cellWidthPx }}>
             {canAddCity ? <AddButton onClick={() => setIsAdding(true)} /> : null}
             <DarkmodeButton />
           </div>
