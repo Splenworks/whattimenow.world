@@ -13,6 +13,7 @@ type HeaderProps = {
   onAddCity: (cityId: string) => void
   onRemoveCity: (cityId: string) => void
   cellWidthPx: number
+  maxCities: number
   onGoToNow: () => void
   showNowButton: boolean
   isReadOnly?: boolean
@@ -24,11 +25,13 @@ export function Header({
   onAddCity,
   onRemoveCity,
   cellWidthPx,
+  maxCities,
   onGoToNow,
   showNowButton,
   isReadOnly = false,
 }: HeaderProps) {
   const [isAdding, setIsAdding] = useState(false)
+  const canAddCity = !isReadOnly && cities.length < maxCities
 
   return (
     <header className="sticky top-0 z-10 mb-2 border-b border-gray-200 bg-gray-100/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
@@ -68,7 +71,7 @@ export function Header({
           <div className="flex items-center justify-evenly" style={{ width: cellWidthPx }}>
             <DarkmodeButton />
           </div>
-        ) : isAdding ? (
+        ) : canAddCity && isAdding ? (
           <AddCity
             widthPx={cellWidthPx}
             availableCities={availableCities}
@@ -77,7 +80,7 @@ export function Header({
           />
         ) : (
           <div className="flex items-center justify-evenly" style={{ width: cellWidthPx }}>
-            <AddButton onClick={() => setIsAdding(true)} />
+            {canAddCity ? <AddButton onClick={() => setIsAdding(true)} /> : null}
             <DarkmodeButton />
           </div>
         )}

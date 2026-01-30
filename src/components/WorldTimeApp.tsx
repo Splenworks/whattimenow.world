@@ -11,6 +11,7 @@ const STEP_MINUTES = 15
 const TOTAL_HOURS = 48
 const ROW_HEIGHT_PX = 44
 const CELL_WIDTH_PX = 170
+const MAX_CITIES = 5
 
 type WorldTimeAppProps = {
   cityIds: string[]
@@ -39,7 +40,7 @@ export function WorldTimeApp({
   const [isNowRowVisible, setIsNowRowVisible] = useState(true) // set initially true to avoid flicker
 
   const handleAddCity = (cityId: string) => {
-    if (lockCities || !onAddCity) return
+    if (lockCities || !onAddCity || cities.length >= MAX_CITIES) return
     onAddCity(cityId)
   }
 
@@ -67,6 +68,7 @@ export function WorldTimeApp({
         onAddCity={handleAddCity}
         onRemoveCity={handleRemoveCity}
         cellWidthPx={CELL_WIDTH_PX}
+        maxCities={MAX_CITIES}
         onGoToNow={() => goToNowRef.current()}
         showNowButton={!isNowRowVisible}
         isReadOnly={lockCities}
