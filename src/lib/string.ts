@@ -19,3 +19,5 @@ export function capitalizeWords(s: string): string {
     .map((word) => capitalize(word))
     .join(" ")
 }
+
+export const normalize = (value: string) => value.trim().toLowerCase()

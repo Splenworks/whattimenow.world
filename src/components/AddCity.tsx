@@ -1,21 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import type { City } from "../types/city"
+import { normalize } from "../lib/string"
 
-type AddCityInlineProps = {
+type AddCityProps = {
   availableCities: City[]
   onAddCity: (cityId: string) => void
   onClose: () => void
   widthPx: number
 }
 
-const normalize = (value: string) => value.trim().toLowerCase()
-
-export function AddCityInline({
-  availableCities,
-  onAddCity,
-  onClose,
-  widthPx,
-}: AddCityInlineProps) {
+export function AddCity({ availableCities, onAddCity, onClose, widthPx }: AddCityProps) {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [query, setQuery] = useState("")
@@ -75,7 +69,7 @@ export function AddCityInline({
           className={`w-full rounded-md border border-gray-100 px-2 py-1.5 text-sm text-gray-700 transition outline-none placeholder:text-gray-400 hover:bg-gray-100 focus:border-gray-200 focus:bg-white focus:ring-0 dark:border-gray-800 dark:text-gray-200 dark:placeholder:text-gray-500 dark:hover:bg-gray-900 dark:focus:border-gray-700 dark:focus:bg-gray-900`}
         />
 
-        <div className="absolute left-0 right-0 mt-2 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-950 dark:shadow-black/40">
+        <div className="absolute right-0 left-0 mt-2 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-950 dark:shadow-black/40">
           {filteredCities.length ? (
             <ul className="max-h-72 divide-y divide-gray-100 overflow-y-auto dark:divide-gray-800">
               {filteredCities.map((city) => (

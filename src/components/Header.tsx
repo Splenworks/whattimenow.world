@@ -2,7 +2,7 @@ import { useState } from "react"
 import { twMerge } from "tailwind-merge"
 import type { City } from "../types/city"
 import { AddButton } from "./AddButton"
-import { AddCityInline } from "./AddCityInline"
+import { AddCity } from "./AddCity"
 import { CloseButton } from "./CloseButton"
 import { DarkmodeButton } from "./DarkmodeButton"
 import { NowButton } from "./NowButton"
@@ -69,7 +69,7 @@ export function Header({
             <DarkmodeButton />
           </div>
         ) : isAdding ? (
-          <AddCityInline
+          <AddCity
             widthPx={cellWidthPx}
             availableCities={availableCities}
             onAddCity={onAddCity}
