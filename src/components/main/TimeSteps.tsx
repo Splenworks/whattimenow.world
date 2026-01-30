@@ -26,17 +26,14 @@ export function TimeSteps({
 }: TimeStepsProps) {
   const [nowMinute, setNowMinute] = useState(() => new Date())
 
-  // Re-anchor every minute so the timeline stays fresh.
-  const anchor = useMemo(() => ceilToStep(nowMinute, stepMinutes), [nowMinute, stepMinutes])
-
+  const centerTime = useMemo(() => ceilToStep(nowMinute, stepMinutes), [nowMinute, stepMinutes])
   const stepsPerHour = Math.max(1, Math.round(60 / stepMinutes))
   const totalSteps = Math.max(stepsPerHour, totalHours * stepsPerHour)
   const half = Math.floor(totalSteps / 2)
 
-  // Timeline start time (top of the scroll content)
   const startDate = useMemo(
-    () => addMinutes(anchor, -half * stepMinutes),
-    [anchor, half, stepMinutes],
+    () => addMinutes(centerTime, -half * stepMinutes),
+    [centerTime, half, stepMinutes],
   )
 
   const stepDates = useMemo(() => {
@@ -71,14 +68,11 @@ export function TimeSteps({
     }
   }, [])
 
-  // Convert "now" to a top offset within the scroll content (continuous).
   const getNowTopPx = useCallback(
     (now: Date) => {
       const minutesFromStart = (now.getTime() - startDate.getTime()) / 60_000
       const rowFloat = minutesFromStart / stepMinutes // continuous
       const top = rowFloat * rowHeightPx
-
-      // Clamp so it stays within scroll content bounds.
       const min = 0
       const max = Math.max(0, contentHeight - rowHeightPx)
       return Math.min(max, Math.max(min, top))
