@@ -34,7 +34,7 @@ export function Header({
   const canAddCity = !isReadOnly && cities.length < maxCities
 
   return (
-    <header className="sticky top-0 z-10 mb-2 min-w-full w-max border-b border-gray-200 bg-gray-100/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
+    <header className="sticky top-0 z-10 mb-2 w-max min-w-full border-b border-gray-200 bg-gray-100/80 backdrop-blur dark:border-gray-800 dark:bg-gray-950/80">
       <div className="mx-auto flex w-max flex-nowrap items-center px-4 py-2">
         <div className="flex items-center justify-end" style={{ width: cellWidthPx }}>
           <NowButton
@@ -79,7 +79,7 @@ export function Header({
             onClose={() => setIsAdding(false)}
           />
         ) : (
-          <div className="ml-2 flex items-center gap-4" style={{ width: cellWidthPx }}>
+          <div className="flex items-center gap-4" style={{ width: cellWidthPx }}>
             {canAddCity ? <AddButton onClick={() => setIsAdding(true)} /> : null}
             <DarkmodeButton />
           </div>
