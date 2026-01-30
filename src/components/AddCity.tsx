@@ -20,7 +20,12 @@ export function AddCity({ availableCities, onAddCity, onClose, widthPx }: AddCit
     return availableCities.filter((city) => {
       const label = normalize(city.label)
       const id = normalize(city.id)
-      return label.includes(normalizedQuery) || id.includes(normalizedQuery)
+      const tz = normalize(city.tz)
+      return (
+        label.includes(normalizedQuery) ||
+        id.includes(normalizedQuery) ||
+        tz.includes(normalizedQuery)
+      )
     })
   }, [availableCities, normalizedQuery])
 
@@ -96,9 +101,7 @@ export function AddCity({ availableCities, onAddCity, onClose, widthPx }: AddCit
             </ul>
           ) : (
             <p className="px-4 py-6 text-sm text-gray-500 dark:text-gray-400">
-              {availableCities.length
-                ? `No cities match “${query}”.`
-                : "No cities available to add."}
+              {availableCities.length ? `No match.` : "No cities available to add."}
             </p>
           )}
         </div>
