@@ -1,6 +1,7 @@
 import type { City } from "../types/city"
+import { countryByFlag } from "./countries"
 
-export const cities: City[] = [
+const baseCities: City[] = [
   { id: "abidjan", label: "Abidjan", flag: "ci", tz: "Africa/Abidjan", utcOffset: "+00:00" },
   { id: "abu-dhabi", label: "Abu Dhabi", flag: "ae", tz: "Asia/Dubai", utcOffset: "+04:00" },
   { id: "accra", label: "Accra", flag: "gh", tz: "Africa/Accra", utcOffset: "+00:00" },
@@ -341,3 +342,8 @@ export const cities: City[] = [
   { id: "zagreb", label: "Zagreb", flag: "hr", tz: "Europe/Zagreb", utcOffset: "+01:00" },
   { id: "zurich", label: "Zurich", flag: "ch", tz: "Europe/Zurich", utcOffset: "+01:00" },
 ]
+
+export const cities: City[] = baseCities.map((city) => ({
+  ...city,
+  country: city.country ?? countryByFlag[city.flag ?? ""] ?? "",
+}))

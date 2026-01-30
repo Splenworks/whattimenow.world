@@ -21,10 +21,12 @@ export function AddCity({ availableCities, onAddCity, onClose, widthPx }: AddCit
       const label = normalize(city.label)
       const id = normalize(city.id)
       const tz = normalize(city.tz)
+      const country = normalize(city.country ?? "")
       return (
         label.includes(normalizedQuery) ||
         id.includes(normalizedQuery) ||
-        tz.includes(normalizedQuery)
+        tz.includes(normalizedQuery) ||
+        country.includes(normalizedQuery)
       )
     })
   }, [availableCities, normalizedQuery])
