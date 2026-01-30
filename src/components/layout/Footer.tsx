@@ -1,4 +1,4 @@
-import { PillLink } from "../PillLink"
+import { PillLink } from "../ui/PillLink"
 import { FooterLink } from "../FooterLink"
 
 export function Footer() {

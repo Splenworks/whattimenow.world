@@ -143,7 +143,6 @@ export function TimeSteps({
 
   return (
     <div
-      hidden
       ref={contentRef}
       className="relative mx-auto w-max bg-gray-50 dark:bg-gray-950"
       style={{ height: contentHeight }}
