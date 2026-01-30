@@ -26,9 +26,8 @@ export function TimeSteps({
 }: TimeStepsProps) {
   const [nowMinute, setNowMinute] = useState(() => new Date())
 
-  // Build a stable step timeline ONCE (no shifting as seconds pass).
-  // We anchor around a step boundary at mount time.
-  const anchor = useMemo(() => ceilToStep(new Date(), stepMinutes), [stepMinutes])
+  // Re-anchor every minute so the timeline stays fresh.
+  const anchor = useMemo(() => ceilToStep(nowMinute, stepMinutes), [nowMinute, stepMinutes])
 
   const stepsPerHour = Math.max(1, Math.round(60 / stepMinutes))
   const totalSteps = Math.max(stepsPerHour, totalHours * stepsPerHour)
