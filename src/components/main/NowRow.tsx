@@ -1,7 +1,7 @@
-import { forwardRef, useRef, memo, useState, useCallback, useEffect, useLayoutEffect } from "react"
+import { forwardRef, memo, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { twJoin } from "tailwind-merge"
 import { formatDateYYYYMMDD, formatHHMMSS } from "../../lib/time"
 import type { City } from "../../types/city"
-import { twJoin } from "tailwind-merge"
 
 interface NowRowProps {
   cities: City[]
@@ -66,17 +66,17 @@ const NowRow = memo(
             <div
               key={c.id}
               className={twJoin(
-                "relative pt-5 pb-2 text-center group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
+                "-mt-3.5 flex flex-col py-2 text-center group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
                 i === 0 && "rounded-l-md",
                 i === cities.length - 1 && "rounded-r-md",
               )}
               style={{ width: cellWidthPx }}
             >
+              <span className="text-xs font-medium text-gray-900 opacity-0 transition-opacity group-hover:opacity-100 dark:text-white">
+                {formatDateYYYYMMDD(now, c.tz)}
+              </span>
               <span className="font-mono text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">
                 {formatHHMMSS(now, c.tz)}
-              </span>
-              <span className="absolute top-1 right-0 left-0 text-xs font-medium text-gray-900 opacity-0 transition-opacity group-hover:opacity-100 dark:text-white">
-                {formatDateYYYYMMDD(now, c.tz)}
               </span>
             </div>
           ))}
