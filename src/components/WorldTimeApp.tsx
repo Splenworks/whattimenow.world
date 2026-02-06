@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react"
+import { useScrollRestoration } from "../hooks/useScrollRestoration"
+import { allCities, cityMapping, defaultCityIds } from "../lib/city"
+import { formatList } from "../lib/string"
+import type { City } from "../types/city"
 import { Footer } from "./footer/Footer"
 import { Header } from "./header/Header"
 import { TimeSteps } from "./main/TimeSteps"
-import { useScrollRestoration } from "../hooks/useScrollRestoration"
-import { allCities, cityMapping, defaultCityIds } from "../lib/city"
-import type { City } from "../types/city"
-import { formatList } from "../lib/string"
 
 const STEP_MINUTES = 15
 const TOTAL_HOURS = 48
-const ROW_HEIGHT_PX = 44
+const ROW_HEIGHT_PX = 52
 const CELL_WIDTH_PX = 170
 const MAX_CITIES = 5
 
@@ -36,7 +36,7 @@ export function WorldTimeApp({
     ? selectedCities.map((city) => city.id)
     : defaultCityIds
   const availableCities = allCities.filter((city) => !effectiveCityIds.includes(city.id))
-  const goToNowRef = useRef<() => void>(() => {})
+  const goToNowRef = useRef<() => void>(() => { })
   const [isNowRowVisible, setIsNowRowVisible] = useState(true) // set initially true to avoid flicker
 
   const handleAddCity = (cityId: string) => {

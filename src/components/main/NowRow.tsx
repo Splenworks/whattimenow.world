@@ -66,13 +66,14 @@ const NowRow = memo(
             <div
               key={c.id}
               className={twJoin(
-                "-mt-3.5 flex flex-col py-2 text-center group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
+                "relative text-center group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
+                "-mt-4 pt-5 pb-1", // adjust spacing for hover effect
                 i === 0 && "rounded-l-md",
                 i === cities.length - 1 && "rounded-r-md",
               )}
               style={{ width: cellWidthPx }}
             >
-              <span className="text-xs font-medium text-gray-900 opacity-0 transition-opacity group-hover:opacity-100 dark:text-white">
+              <span className="absolute top-1 right-0 left-0 text-center text-xs font-medium text-gray-900 opacity-0 transition-opacity group-hover:opacity-100 dark:text-white">
                 {formatDateYYYYMMDD(now, c.tz)}
               </span>
               <span className="font-mono text-lg font-semibold tracking-tight text-gray-900 dark:text-gray-100">

@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo, useCallback, useRef, useLayoutEffect } from "react"
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { twJoin } from "tailwind-merge"
-import { addMinutes, ceilToStep, formatHHMM } from "../../lib/time"
+import { addMinutes, ceilToStep, formatDateYYYYMMDD, formatHHMM } from "../../lib/time"
 import type { City } from "../../types/city"
 import NowRow from "./NowRow"
 import OffsetTime from "./OffsetTime"
@@ -10,7 +10,7 @@ type TimeStepsProps = {
   cellWidthPx?: number // default: 170
   stepMinutes?: number // default: 15
   totalHours?: number // default: 48 (±24h)
-  rowHeightPx?: number // default: 44
+  rowHeightPx?: number // default: 52
   onGoToNowReady?: (handler: () => void) => void
   onNowRowVisibilityChange?: (isVisible: boolean) => void
 }
@@ -20,7 +20,7 @@ export function TimeSteps({
   cellWidthPx = 170,
   stepMinutes = 15,
   totalHours = 48,
-  rowHeightPx = 44,
+  rowHeightPx = 52,
   onGoToNowReady,
   onNowRowVisibilityChange,
 }: TimeStepsProps) {
@@ -154,20 +154,25 @@ export function TimeSteps({
               <div
                 key={c.id}
                 className={twJoin(
-                  "relative cursor-default py-2 text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
+                  "relative cursor-default text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
+                  "-mt-4 pt-5 pb-1", // adjust spacing for hover effect
                   i !== closestStepIndex &&
-                    "transition-colors group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
+                  "transition-colors group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
                   cityIndex === 0 && "rounded-l-md",
                   cityIndex === cities.length - 1 && "rounded-r-md",
                 )}
                 style={{ width: cellWidthPx }}
               >
-                {i === closestStepIndex ? "" : formatHHMM(d, c.tz)}
-                {/* {i !== closestStepIndex && (
-                    <span className="absolute top-0 right-0 left-0 text-center font-mono text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
+                {i !== closestStepIndex && (
+                  <>
+                    <span className="absolute top-1 right-0 left-0 text-center font-medium text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
                       {formatDateYYYYMMDD(d, c.tz)}
                     </span>
-                  )} */}
+                    <span className="tracking-tight">
+                      {formatHHMM(d, c.tz)}
+                    </span>
+                  </>
+                )}
               </div>
             ))}
             <div className="shrink-0" style={{ width: cellWidthPx }} />
