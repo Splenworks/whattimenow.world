@@ -21,7 +21,7 @@ const OffsetTime = memo(function OffsetHourRow({
 
   return (
     <div
-      className="absolute left-0 flex items-center"
+      className="absolute left-0 pl-4 flex items-center"
       style={{
         top: getNowTopPx(d),
         height: rowHeightPx,
