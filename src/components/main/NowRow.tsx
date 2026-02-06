@@ -6,7 +6,6 @@ import type { City } from "../../types/city"
 interface NowRowProps {
   cities: City[]
   cellWidthPx: number
-  rowHeightPx: number
   getNowTopPx: (now: Date) => number
 }
 
@@ -16,7 +15,7 @@ interface NowRowProps {
  */
 const NowRow = memo(
   forwardRef<HTMLDivElement, NowRowProps>(
-    ({ cities, cellWidthPx, rowHeightPx, getNowTopPx }, forwardedRef) => {
+    ({ cities, cellWidthPx, getNowTopPx }, forwardedRef) => {
       const rowRef = useRef<HTMLDivElement | null>(null)
       const [now, setNow] = useState(() => new Date())
       const setRefs = useCallback(
@@ -51,13 +50,9 @@ const NowRow = memo(
         <div
           ref={setRefs}
           className="group absolute left-0 flex cursor-default flex-nowrap items-center px-4"
-          style={{
-            height: rowHeightPx,
-            // top is set imperatively
-          }}
         >
           <div className="flex items-center justify-end" style={{ width: cellWidthPx }}>
-            <span className="text-xs font-semibold tracking-wide text-gray-900 uppercase dark:text-gray-100">
+            <span className="pt-4 text-xs font-semibold tracking-wide text-gray-900 uppercase dark:text-gray-100">
               Now
             </span>
           </div>
@@ -66,8 +61,8 @@ const NowRow = memo(
             <div
               key={c.id}
               className={twJoin(
-                "relative text-center group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
-                "-mt-4 pt-5 pb-1", // adjust spacing for hover effect
+                "relative text-center group-hover:bg-gray-200/90 dark:group-hover:bg-gray-800/90",
+                "pt-5 pb-1", // adjust spacing for hover effect
                 i === 0 && "rounded-l-md",
                 i === cities.length - 1 && "rounded-r-md",
               )}

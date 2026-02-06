@@ -21,14 +21,14 @@ const OffsetTime = memo(function OffsetHourRow({
 
   return (
     <div
-      className="absolute left-0 px-4"
+      className="absolute left-0 flex items-center"
       style={{
         top: getNowTopPx(d),
         height: rowHeightPx,
       }}
     >
       <div
-        className="text-right text-xs font-semibold tracking-wide text-gray-600 uppercase dark:text-gray-400"
+        className="pt-3 text-right text-xs font-semibold tracking-wide text-gray-600 uppercase dark:text-gray-400"
         style={{ width: cellWidthPx }}
       >
         {label}

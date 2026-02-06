@@ -10,7 +10,7 @@ type TimeStepsProps = {
   cellWidthPx?: number // default: 170
   stepMinutes?: number // default: 15
   totalHours?: number // default: 48 (±24h)
-  rowHeightPx?: number // default: 52
+  rowHeightPx?: number // default: 44
   onGoToNowReady?: (handler: () => void) => void
   onNowRowVisibilityChange?: (isVisible: boolean) => void
 }
@@ -20,7 +20,7 @@ export function TimeSteps({
   cellWidthPx = 170,
   stepMinutes = 15,
   totalHours = 48,
-  rowHeightPx = 52,
+  rowHeightPx = 44,
   onGoToNowReady,
   onNowRowVisibilityChange,
 }: TimeStepsProps) {
@@ -155,7 +155,7 @@ export function TimeSteps({
                 key={c.id}
                 className={twJoin(
                   "relative cursor-default text-center font-mono text-lg font-light tracking-tight text-gray-400 dark:text-gray-500",
-                  "-mt-4 pt-5 pb-1", // adjust spacing for hover effect
+                  "pt-4 pb-0", // adjust spacing for hover effect
                   i !== closestStepIndex &&
                   "transition-colors group-hover:bg-gray-200 dark:group-hover:bg-gray-800",
                   cityIndex === 0 && "rounded-l-md",
@@ -165,7 +165,7 @@ export function TimeSteps({
               >
                 {i !== closestStepIndex && (
                   <>
-                    <span className="absolute top-1 right-0 left-0 text-center font-medium text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
+                    <span className="absolute top-0.5 right-0 left-0 text-center font-medium text-xs text-gray-400 opacity-0 transition-opacity group-hover:opacity-100 dark:text-gray-500">
                       {formatDateYYYYMMDD(d, c.tz)}
                     </span>
                     <span className="tracking-tight">
@@ -195,7 +195,6 @@ export function TimeSteps({
         ref={nowRowRef}
         cities={cities}
         cellWidthPx={cellWidthPx}
-        rowHeightPx={rowHeightPx}
         getNowTopPx={getNowTopPx}
       />
     </div>
